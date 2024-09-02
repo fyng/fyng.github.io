@@ -16,4 +16,6 @@ social: true # includes social icons at the bottom of the page
 
 I am a Computational Biology PhD student at Memorial Sloan Kettering. I work on generative models for therapeutic design, advised by [Wesley Tansey](https://wesleytansey.com/). 
 
-Previously, I completed my undergraduate studies at Johns Hopkins in Biomedical Engineering and Computer Science, where I worked on spatial genomics technology with [Jean Fan](https://jef.works/) and rapid diagnostics with [Alex Trick](https://www.linkedin.com/in/alextrickphd/). I also worked on molecular diagnostics for internal hemorrhage and and sedation monitoring in the pediatric ICU.  
+Previously, I completed my undergraduate studies at Johns Hopkins in Biomedical Engineering and Computer Science. My research focus was spatial genomics methods development with [Jean Fan](https://jef.works/). I also worked on [rapid PCR diagnostics](https://prompt-dx.com/) and [sedation monitoring](https://www.bme.jhu.edu/academics/bme-design/bme-project-gallery/imeds-automated-sedation-assessment-in-the-picu/) in the pediatric ICU .  
+
+I co-founded [DioTeX Diagnostics](https://www.diotexdiagnostics.com/), a start-up developing point-of-care molecular diagnostics for internal hemorrhage for EMTs and combat medics.
