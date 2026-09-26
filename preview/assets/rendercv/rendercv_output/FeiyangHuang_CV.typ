@@ -10,8 +10,8 @@
   locale-catalog-language: "en",
   text-direction: ltr,
   page-size: "us-letter",
-  page-top-margin: 0.65in,
-  page-bottom-margin: 0.65in,
+  page-top-margin: 0.55in,
+  page-bottom-margin: 0.55in,
   page-left-margin: 0.75in,
   page-right-margin: 0.75in,
   page-show-footer: true,
@@ -24,7 +24,7 @@
   colors-links: rgb(31, 78, 121),
   colors-footer: rgb(150, 150, 150),
   colors-top-note: rgb(150, 150, 150),
-  typography-line-spacing: 0.55em,
+  typography-line-spacing: 0.5em,
   typography-alignment: "left",
   typography-date-and-location-column-alignment: right,
   typography-font-family-body: "IBM Plex Sans",
@@ -32,7 +32,7 @@
   typography-font-family-headline: "IBM Plex Sans",
   typography-font-family-connections: "IBM Plex Sans",
   typography-font-family-section-titles: "IBM Plex Sans",
-  typography-font-size-body: 9.5pt,
+  typography-font-size-body: 9.3pt,
   typography-font-size-name: 32pt,
   typography-font-size-headline: 10pt,
   typography-font-size-connections: 9pt,
@@ -59,11 +59,11 @@
   header-connections-space-between-connections: 0.45cm,
   section-titles-type: "with_full_line",
   section-titles-line-thickness: 0.4pt,
-  section-titles-space-above: 0.45cm,
-  section-titles-space-below: 0.25cm,
+  section-titles-space-above: 0.4cm,
+  section-titles-space-below: 0.2cm,
   sections-allow-page-break: true,
   sections-space-between-text-based-entries: 0.3em,
-  sections-space-between-regular-entries: 1.2em,
+  sections-space-between-regular-entries: 0.85em,
   entries-date-and-location-width: 3.6cm,
   entries-side-space: 0.2cm,
   entries-space-between-columns: 0.1cm,
@@ -127,6 +127,8 @@
 
     - GPA 3.96
 
+    - Activities: President, Singapore Students' Association (2021–2023); Theta Tau Professional Engineering Fraternity (2020–2022)
+
   ],
   [
     Baltimore, MD
@@ -147,7 +149,7 @@
 
     #summary[Bayesian and generative models for cancer biology and therapeutic design.]
 
-    - Contributed to a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
+    - Contributed to #link("https://panpreclinical.org")[PPC], a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
 
     - Contributed to a population-scale study of clinical and genetic determinants of systemic-therapy toxicity.
 
@@ -162,9 +164,56 @@
 
 #regular-entry(
   [
-    #strong[Sloan Kettering Institute, Morris Lab], Rotation Student
+    #strong[Memorial Sloan Kettering Cancer Center, Tansey Lab], PhD Rotation
 
-    #summary[Language models for tumour mutations.]
+    #summary[Bayesian active learning to nominate combination therapies from ex vivo drug screens; groundwork for the PPC atlas.]
+
+  ],
+  [
+    New York, NY
+
+    Mar 2024 – May 2024
+
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[Memorial Sloan Kettering Cancer Center, Chodera Lab], PhD Rotation
+
+    #summary[Graph neural networks for small-molecule property prediction.]
+
+    - Integrated the ViSNet equivariant GNN into #link("https://github.com/choderalab/mtenn")[mtenn] (model conversion, configuration, tests) and set up CI against stable and nightly PyTorch Geometric.
+
+  ],
+  [
+    New York, NY
+
+    Jan 2024 – Mar 2024
+
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[Memorial Sloan Kettering Cancer Center, CMO Innovation Lab], PhD Rotation
+
+    #summary[Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumor samples, with Brian Loomis.]
+
+  ],
+  [
+    New York, NY
+
+    Nov 2023 – Jan 2024
+
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[Sloan Kettering Institute, Morris Lab], PhD Rotation
+
+    #summary[BERT model for representation learning from tumor mutation profiles.]
 
   ],
   [
@@ -201,6 +250,21 @@
   ],
   [
     May 2022 – Aug 2022
+
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[Johns Hopkins University, Biomedical Design], Team Lead, iMEDS
+
+    - Led a team of 7 building an algorithm to continuously monitor sedation in pediatric ICU patients; interviewed 20+ clinicians at Johns Hopkins, Boston Children's and Stanford.
+
+  ],
+  [
+    Baltimore, MD
+
+    Aug 2022 – May 2023
 
   ],
 )
@@ -246,6 +310,21 @@
     Singapore
 
     Nov 2019 – Dec 2020
+
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[Singapore Armed Forces], 3rd Sergeant
+
+    - Led a detachment of 3 soldiers and co-supervised daily training for 15.
+
+  ],
+  [
+    Singapore
+
+    Jan 2018 – Oct 2019
 
   ],
 )
@@ -376,12 +455,6 @@
 == Teaching
 
 - Course Assistant, EN.601.230 Mathematical Foundations for Computer Science, Johns Hopkins University (Fall 2022).
-
-== Service and Leadership
-
-- President, Singapore Students' Association, Johns Hopkins University (2021–2023).
-
-- Team Lead, iMEDS pediatric-ICU sedation monitoring, JHU Biomedical Design (2022–2023).
 
 == Additional Information
 

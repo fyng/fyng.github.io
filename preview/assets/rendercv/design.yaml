@@ -5,8 +5,8 @@ design:
   theme: classic
   page:
     size: us-letter
-    top_margin: 0.65in
-    bottom_margin: 0.65in
+    top_margin: 0.55in
+    bottom_margin: 0.55in
     left_margin: 0.75in
     right_margin: 0.75in
     show_footer: true
@@ -21,7 +21,7 @@ design:
     footer: rgb(150, 150, 150)
     top_note: rgb(150, 150, 150)
   typography:
-    line_spacing: 0.55em
+    line_spacing: 0.5em
     alignment: left
     font_family:
       body: IBM Plex Sans
@@ -30,7 +30,7 @@ design:
       connections: IBM Plex Sans
       section_titles: IBM Plex Sans
     font_size:
-      body: 9.5pt
+      body: 9.3pt
       name: 32pt
       headline: 10pt
       connections: 9pt
@@ -51,10 +51,11 @@ design:
   section_titles:
     type: with_full_line
     line_thickness: 0.4pt
-    space_above: 0.45cm
-    space_below: 0.25cm
+    space_above: 0.4cm
+    space_below: 0.2cm
   sections:
     show_time_spans_in: []
+    space_between_regular_entries: 0.85em
   entries:
     date_and_location_width: 3.6cm
   templates:
