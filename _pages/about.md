@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: PhD student · Computational Biology · Memorial Sloan Kettering & Weill Cornell
+subtitle: PhD Candidate · Computational Biology & Medicine · Memorial Sloan Kettering & Weill Cornell
 
 profile:
   align: right
