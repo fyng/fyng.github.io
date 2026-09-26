@@ -33,4 +33,5 @@
 @use "typograms";
 
 // Site-specific design layer (local addition to the al_folio_core main.scss).
+// Bump when _sass/_fyng.scss changes so the ?v= cache-bust hash changes too: rev 2
 @use "fyng";
