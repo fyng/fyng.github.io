@@ -52,32 +52,16 @@ cv:
           - "Developing OncoState, a self-supervised transformer learning patient states from multimodal clinical trajectories of 99,000+ MSK-IMPACT patients; outperforms the IMDC risk model in advanced clear cell RCC."
           - Contributed to [PPC](https://panpreclinical.org), a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
           - Contributed to a population-scale study of clinical and genetic determinants of systemic-therapy toxicity.
-      - company: Memorial Sloan Kettering Cancer Center, Tansey Lab
-        position: PhD Rotation
-        location: New York, NY
-        start_date: 2024-03
-        end_date: 2024-05
-        summary: Bayesian active learning to nominate combination therapies from ex vivo drug screens; groundwork for the PPC atlas.
-      - company: Memorial Sloan Kettering Cancer Center, Chodera Lab
-        position: PhD Rotation
-        location: New York, NY
-        start_date: 2024-01
-        end_date: 2024-03
-        summary: Graph neural networks for small-molecule property prediction.
-        highlights:
-          - Integrated the ViSNet equivariant GNN into [mtenn](https://github.com/choderalab/mtenn) (model conversion, configuration, tests) and set up CI against stable and nightly PyTorch Geometric.
-      - company: Memorial Sloan Kettering Cancer Center, CMO Innovation Lab
-        position: PhD Rotation
-        location: New York, NY
-        start_date: 2023-11
-        end_date: 2024-01
-        summary: Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumor samples, with Brian Loomis.
-      - company: Sloan Kettering Institute, Morris Lab
-        position: PhD Rotation
+      - company: Memorial Sloan Kettering Cancer Center
+        position: PhD Rotations
         location: New York, NY
         start_date: 2023-08
-        end_date: 2023-11
-        summary: BERT model for representation learning from tumor mutation profiles.
+        end_date: 2024-05
+        highlights:
+          - "**Tansey Lab**: Bayesian active learning for nominating combination therapies from ex vivo drug screens"
+          - "**Chodera Lab**: Equivariant graph neural networks for small-molecule property prediction ([mtenn](https://github.com/choderalab/mtenn))"
+          - "**CMO Innovation Lab**: Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumors"
+          - "**Morris Lab**: BERT representation learning from tumor mutation profiles"
       - company: Johns Hopkins University, Fan Lab
         position: Undergraduate Researcher
         location: Baltimore, MD
