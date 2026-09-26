@@ -113,6 +113,20 @@ cv:
           - Led a detachment of 3 soldiers and co-supervised daily training for 15.
 
     Publications:
+      - title: Population-Scale Precision Safety in Oncology Reveals Clinical and Genetic Determinants of Systemic Therapy Toxicity
+        authors:
+          - Ziad Bakouny\*
+          - X Alex Guo\*
+          - "**Feiyang Huang\\***"
+          - Saksham Mohan\*
+          - Rohan Walser\*
+          - et al.
+          - Wesley Tansey
+          - Jian Carrot-Zhang
+          - Ed Reznik
+        journal: "medRxiv preprint; \\*equal contribution"
+        date: 2026-09
+        url: https://www.medrxiv.org/content/10.64898/2026.09.16.26363259
       - title: A Pan-Cancer Ex Vivo Drug Screen Atlas for Functional Precision Oncology
         authors:
           - Karl Pichotta
@@ -124,23 +138,9 @@ cv:
           - Erin Coyne
           - "**Feiyang Huang**"
           - Wesley Tansey
-        journal: bioRxiv (preprint)
+        journal: bioRxiv preprint
         date: 2026-02
         url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12934811/
-      - title: Population-Scale Precision Safety in Oncology Reveals Clinical and Genetic Determinants of Systemic Therapy Toxicity
-        authors:
-          - Ziad Bakouny
-          - X Alex Guo
-          - "**Feiyang Huang**"
-          - Saksham Mohan
-          - Rohan Walser
-          - et al.
-          - Wesley Tansey
-          - Jian Carrot-Zhang
-          - Ed Reznik
-        journal: medRxiv (preprint)
-        date: 2026-09
-        url: https://www.medrxiv.org/content/10.64898/2026.09.16.26363259
       - title: Reference-free cell type deconvolution of multi-cellular pixel-resolution spatially resolved transcriptomics data
         authors:
           - Brendan F Miller
