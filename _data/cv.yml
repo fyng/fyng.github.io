@@ -50,8 +50,8 @@ cv:
         end_date: present
         highlights:
           - "Developing OncoState, a self-supervised transformer learning patient states from multimodal clinical trajectories of 99,000+ MSK-IMPACT patients; outperforms the IMDC risk model in advanced clear cell RCC."
+          - "Co-led a population-scale study of clinical and genetic determinants of systemic-therapy toxicity (co-first author, medRxiv 2026): developed the random forest toxicity model and the analysis and narrative for Figure 3."
           - Contributed to [PPC](https://panpreclinical.org), a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
-          - Contributed to a population-scale study of clinical and genetic determinants of systemic-therapy toxicity.
       - company: Memorial Sloan Kettering Cancer Center
         position: PhD Rotations
         location: New York, NY
