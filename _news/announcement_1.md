@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-:tada: I graduated from Johns Hopkins! Huge thank you to everyone who supported me along the way.
+I graduated from Johns Hopkins! Huge thank you to everyone who supported me along the way.

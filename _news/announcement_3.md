@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-:statue_of_liberty: I am starting my PhD at the [Tri-Institutional Program in Computational Biology & Medicine](https://compbio.triiprograms.org/) in New York City.
+I am starting my PhD at the [Tri-Institutional Program in Computational Biology & Medicine](https://compbio.triiprograms.org/) in New York City.
