@@ -6,7 +6,7 @@ subtitle: PhD Candidate · Computational Biology & Medicine · Memorial Sloan Ke
 
 profile:
   align: right
-  image: headshot_1.jpeg
+  image: headshot_square.jpg
   image_circular: false # crops the image to make it circular
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
