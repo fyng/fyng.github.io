@@ -17,6 +17,10 @@ cv:
       username: fyng
     - network: LinkedIn
       username: feiyang-huang
+  custom_connections:
+    - fontawesome_icon: language
+      placeholder: English, Mandarin
+      url:
 
   sections:
     Education:
@@ -44,8 +48,8 @@ cv:
         location: New York, NY
         start_date: 2024-06
         end_date: present
-        summary: Bayesian and generative models for cancer biology and therapeutic design.
         highlights:
+          - "Developing OncoState, a self-supervised transformer learning patient states from multimodal clinical trajectories of 99,000+ MSK-IMPACT patients; outperforms the IMDC risk model in advanced clear cell RCC."
           - Contributed to [PPC](https://panpreclinical.org), a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
           - Contributed to a population-scale study of clinical and genetic determinants of systemic-therapy toxicity.
       - company: Memorial Sloan Kettering Cancer Center, Tansey Lab
@@ -94,7 +98,7 @@ cv:
         start_date: 2022-08
         end_date: 2023-05
         highlights:
-          - Led a team of 7 building an algorithm to continuously monitor sedation in pediatric ICU patients; interviewed 20+ clinicians at Johns Hopkins, Boston Children's and Stanford.
+          - Led a team of 7 building an algorithm to continuously monitor pediatric ICU sedation; interviewed 20+ clinicians.
       - company: Johns Hopkins University, Institute for NanoBioTechnology
         position: Research Intern
         location: Baltimore, MD
@@ -196,6 +200,7 @@ cv:
       - bullet: "Eng R, Parent C, Hayat A, Ruci A, Krishnan A, **Huang F**, Simon E, Zhang E. Methods and devices for quantitatively estimating syndecan-1. US Patent App. 17/715,294 (2022)."
 
     Presentations:
+      - bullet: "45th Vincent du Vigneaud Research Symposium, Weill Cornell Medicine, New York, NY (2026). **Huang F**, Tansey W. OncoState: learning patient states from clinical trajectories in cancer. Poster #66."
       - bullet: "Military Health System Research Symposium, Kissimmee, FL (2022). Towards point-of-care internal hemorrhage detection through a syndecan-1 lateral flow assay. Oral presentation."
       - bullet: "Johns Hopkins BME Design Day, Baltimore, MD (2022). DioTeX: Hemorrhage Diagnostics. Poster."
 
@@ -209,7 +214,3 @@ cv:
 
     Teaching:
       - bullet: "Course Assistant, EN.601.230 Mathematical Foundations for Computer Science, Johns Hopkins University (Fall 2022)."
-
-    Additional Information:
-      - label: Languages
-        details: English, Mandarin

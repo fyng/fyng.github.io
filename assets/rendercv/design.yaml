@@ -55,7 +55,7 @@ design:
     space_below: 0.2cm
   sections:
     show_time_spans_in: []
-    space_between_regular_entries: 0.85em
+    space_between_regular_entries: 0.7em
   entries:
     date_and_location_width: 3.6cm
   templates:
