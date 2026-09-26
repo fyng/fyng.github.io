@@ -165,62 +165,21 @@
 
 #regular-entry(
   [
-    #strong[Memorial Sloan Kettering Cancer Center, Tansey Lab], PhD Rotation
+    #strong[Memorial Sloan Kettering Cancer Center], PhD Rotations
 
-    #summary[Bayesian active learning to nominate combination therapies from ex vivo drug screens; groundwork for the PPC atlas.]
+    - #strong[Tansey Lab]: Bayesian active learning for nominating combination therapies from ex vivo drug screens
 
-  ],
-  [
-    New York, NY
+    - #strong[Chodera Lab]: Equivariant graph neural networks for small-molecule property prediction (#link("https://github.com/choderalab/mtenn")[mtenn])
 
-    Mar 2024 – May 2024
+    - #strong[CMO Innovation Lab]: Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumors
 
-  ],
-)
-
-#regular-entry(
-  [
-    #strong[Memorial Sloan Kettering Cancer Center, Chodera Lab], PhD Rotation
-
-    #summary[Graph neural networks for small-molecule property prediction.]
-
-    - Integrated the ViSNet equivariant GNN into #link("https://github.com/choderalab/mtenn")[mtenn] (model conversion, configuration, tests) and set up CI against stable and nightly PyTorch Geometric.
+    - #strong[Morris Lab]: BERT representation learning from tumor mutation profiles
 
   ],
   [
     New York, NY
 
-    Jan 2024 – Mar 2024
-
-  ],
-)
-
-#regular-entry(
-  [
-    #strong[Memorial Sloan Kettering Cancer Center, CMO Innovation Lab], PhD Rotation
-
-    #summary[Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumor samples, with Brian Loomis.]
-
-  ],
-  [
-    New York, NY
-
-    Nov 2023 – Jan 2024
-
-  ],
-)
-
-#regular-entry(
-  [
-    #strong[Sloan Kettering Institute, Morris Lab], PhD Rotation
-
-    #summary[BERT model for representation learning from tumor mutation profiles.]
-
-  ],
-  [
-    New York, NY
-
-    Aug 2023 – Nov 2023
+    Aug 2023 – May 2024
 
   ],
 )
