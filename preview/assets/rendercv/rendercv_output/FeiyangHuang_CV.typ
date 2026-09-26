@@ -293,30 +293,30 @@
 
 #regular-entry(
   [
-    #strong[A Pan-Cancer Ex Vivo Drug Screen Atlas for Functional Precision Oncology]
+    #strong[Population-Scale Precision Safety in Oncology Reveals Clinical and Genetic Determinants of Systemic Therapy Toxicity]
 
-    Karl Pichotta, Jessica B White, Jeffrey F Quinn, Anneliese Markus, Christopher Tosh, Antoine De Mathelin, Erin Coyne, #strong[Feiyang Huang], Wesley Tansey
+    Ziad Bakouny#sym.ast.basic#h(0pt, weak: true) , X Alex Guo#sym.ast.basic#h(0pt, weak: true) , #strong[Feiyang Huang#sym.ast.basic#h(0pt, weak: true) ], Saksham Mohan#sym.ast.basic#h(0pt, weak: true) , Rohan Walser#sym.ast.basic#h(0pt, weak: true) , et al., Wesley Tansey, Jian Carrot-Zhang, Ed Reznik
 
-    #link("https://pmc.ncbi.nlm.nih.gov/articles/PMC12934811/")[pmc.ncbi.nlm.nih.gov\/articles\/PMC12934811] (bioRxiv (preprint))
+    #link("https://www.medrxiv.org/content/10.64898/2026.09.16.26363259")[www.medrxiv.org\/content\/10.64898\/2026.09.16.26363259] (medRxiv preprint; #sym.ast.basic#h(0pt, weak: true) equal contribution)
 
   ],
   [
-    Feb 2026
+    Sept 2026
 
   ],
 )
 
 #regular-entry(
   [
-    #strong[Population-Scale Precision Safety in Oncology Reveals Clinical and Genetic Determinants of Systemic Therapy Toxicity]
+    #strong[A Pan-Cancer Ex Vivo Drug Screen Atlas for Functional Precision Oncology]
 
-    Ziad Bakouny, X Alex Guo, #strong[Feiyang Huang], Saksham Mohan, Rohan Walser, et al., Wesley Tansey, Jian Carrot-Zhang, Ed Reznik
+    Karl Pichotta, Jessica B White, Jeffrey F Quinn, Anneliese Markus, Christopher Tosh, Antoine De Mathelin, Erin Coyne, #strong[Feiyang Huang], Wesley Tansey
 
-    #link("https://www.medrxiv.org/content/10.64898/2026.09.16.26363259")[www.medrxiv.org\/content\/10.64898\/2026.09.16.26363259] (medRxiv (preprint))
+    #link("https://pmc.ncbi.nlm.nih.gov/articles/PMC12934811/")[pmc.ncbi.nlm.nih.gov\/articles\/PMC12934811] (bioRxiv preprint)
 
   ],
   [
-    Sept 2026
+    Feb 2026
 
   ],
 )
