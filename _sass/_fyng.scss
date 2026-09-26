@@ -282,9 +282,10 @@ footer.sticky-bottom {
     .social {
       margin-top: 0.75rem;
       .contact-icons {
-        font-size: 1.25rem !important;
+        font-size: 1.15rem !important;
+        white-space: nowrap;
         a {
-          margin-right: 0.9rem !important;
+          margin-right: 0.7rem !important;
         }
       }
     }
@@ -295,4 +296,10 @@ footer.sticky-bottom {
       margin-top: 2.2rem;
     }
   }
+}
+
+/* News dates: keep on one line. */
+.news th {
+  white-space: nowrap;
+  padding-right: 1rem !important;
 }
