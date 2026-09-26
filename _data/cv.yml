@@ -1,35 +1,184 @@
+# Single source for the CV page (/cv/) and the PDF (assets/pdf/FeiyangHuang_CV.pdf).
+# The PDF is rendered by RenderCV (https://docs.rendercv.com) in CI, using
+# assets/rendercv/{design,settings,locale}.yaml and the fonts in _data/fonts/.
+# Keep to RenderCV's schema: unknown keys fail validation.
 cv:
   name: Feiyang Huang
-  label: PhD Student, Computational Biology
-  email: feh4005@med.cornell.edu
+  headline: PhD Candidate, Computational Biology & Medicine
   location: New York, NY
-  image: ""
-  summary: Computational Biology PhD student at Memorial Sloan Kettering working on generative models for therapeutic design.
-
+  email: feh4005@med.cornell.edu
+  website: https://fyng.github.io
   social_networks:
+    - network: Google Scholar
+      username: MFllmkIAAAAJ
+    - network: ORCID
+      username: 0000-0002-7241-1509
     - network: GitHub
       username: fyng
     - network: LinkedIn
       username: feiyang-huang
-    - network: X
-      username: fyng_h
 
   sections:
     Education:
-      - institution: Weill Cornell Medicine / Memorial Sloan Kettering (Tri-I CBM)
+      - institution: Weill Cornell Graduate School of Medical Sciences
+        area: Tri-Institutional PhD Program in Computational Biology & Medicine
+        degree: PhD
         location: New York, NY
-        area: Computational Biology and Medicine
-        studyType: PhD
-        start_date: 2023
+        start_date: 2023-08
         end_date: present
-
+        highlights:
+          - "Advisor: Wesley Tansey, Memorial Sloan Kettering Cancer Center"
       - institution: Johns Hopkins University
-        location: Baltimore, MD
         area: Computer Science and Biomedical Engineering
-        studyType: BS
-        start_date: 2020
-        end_date: 2023
+        degree: BS
+        location: Baltimore, MD
+        start_date: 2020-09
+        end_date: 2023-05
+        highlights:
+          - "GPA 3.96"
 
-    Languages:
-      - name: English
-      - name: Mandarin
+    Experience:
+      - company: Memorial Sloan Kettering Cancer Center, Tansey Lab
+        position: PhD Researcher
+        location: New York, NY
+        start_date: 2024-06
+        end_date: present
+        summary: Bayesian and generative models for cancer biology and therapeutic design.
+        highlights:
+          - Contributed to a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
+          - Contributed to a population-scale study of clinical and genetic determinants of systemic-therapy toxicity.
+      - company: Sloan Kettering Institute, Morris Lab
+        position: Rotation Student
+        location: New York, NY
+        start_date: 2023-08
+        end_date: 2023-11
+        summary: Language models for tumour mutations.
+      - company: Johns Hopkins University, Fan Lab
+        position: Undergraduate Researcher
+        location: Baltimore, MD
+        start_date: 2021-01
+        end_date: 2023-05
+        highlights:
+          - Built and benchmarked a reference-free LDA pipeline to deconvolve spatial transcriptomics data (STdeconvolve, *Nature Communications* 2022).
+          - Developed a torque-based method and simulation framework to quantify subcellular mRNA polarization.
+      - company: Hologic
+        position: Software Engineering Intern
+        start_date: 2022-05
+        end_date: 2022-08
+        highlights:
+          - Built an internal work-history search tool and automated release-note generation (3 h to 20 min).
+      - company: Johns Hopkins University, Institute for NanoBioTechnology
+        position: Research Intern
+        location: Baltimore, MD
+        start_date: 2021-05
+        end_date: 2021-08
+        highlights:
+          - Optimized a point-of-care PCR assay (15% lower detection limit) and its embedded image-analysis and motor-control code.
+      - company: DioTeX Diagnostics
+        position: Co-Founder
+        location: Baltimore, MD
+        start_date: 2020-11
+        end_date: 2023-08
+        highlights:
+          - Led assay development for a lateral-flow test for internal hemorrhage; raised over $60,000 in non-dilutive funding.
+      - company: National University of Singapore, Yu Lab
+        position: Research Intern
+        location: Singapore
+        start_date: 2019-11
+        end_date: 2020-12
+        highlights:
+          - Trained a CNN for endoscopic image classification (91% accuracy); co-author in *Gastrointestinal Endoscopy*.
+
+    Publications:
+      - title: A Pan-Cancer Ex Vivo Drug Screen Atlas for Functional Precision Oncology
+        authors:
+          - Karl Pichotta
+          - Jessica B White
+          - Jeffrey F Quinn
+          - Anneliese Markus
+          - Christopher Tosh
+          - Antoine De Mathelin
+          - Erin Coyne
+          - "**Feiyang Huang**"
+          - Wesley Tansey
+        journal: bioRxiv (preprint)
+        date: 2026-02
+        url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12934811/
+      - title: Population-Scale Precision Safety in Oncology Reveals Clinical and Genetic Determinants of Systemic Therapy Toxicity
+        authors:
+          - Ziad Bakouny
+          - X Alex Guo
+          - "**Feiyang Huang**"
+          - Saksham Mohan
+          - Rohan Walser
+          - et al.
+          - Wesley Tansey
+          - Jian Carrot-Zhang
+          - Ed Reznik
+        journal: medRxiv (preprint)
+        date: 2026-09
+        url: https://www.medrxiv.org/content/10.64898/2026.09.16.26363259
+      - title: Reference-free cell type deconvolution of multi-cellular pixel-resolution spatially resolved transcriptomics data
+        authors:
+          - Brendan F Miller
+          - "**Feiyang Huang**"
+          - Lyla Atta
+          - Arpan Sahoo
+          - Jean Fan
+        journal: Nature Communications 13, 2339
+        date: 2022-04
+        doi: 10.1038/s41467-022-30033-z
+      - title: Artificial intelligence-enhanced white-light colonoscopy with attention guidance predicts colorectal cancer invasion depth
+        authors:
+          - Xiaobei Luo
+          - Jiahao Wang
+          - Zelong Han
+          - Yang Yu
+          - Zhenyu Chen
+          - "**Feiyang Huang**"
+          - et al.
+          - Hanry Yu
+        journal: Gastrointestinal Endoscopy 94(3), 627–638
+        date: 2021-09
+        doi: 10.1016/j.gie.2021.03.936
+      - title: Roles and regulation of long noncoding RNAs in hepatocellular carcinoma
+        authors:
+          - Lee Jin Lim
+          - Samuel YS Wong
+          - "**Feiyang Huang**"
+          - et al.
+          - Caroline G Lee
+        journal: Cancer Research 79(20), 5131–5139
+        date: 2019-10
+        doi: 10.1158/0008-5472.CAN-19-0255
+
+    Conference Abstracts:
+      - bullet: "Bakouny Z, Guo XA, Walser R, **Huang F**, et al. Pan-cancer discovery of clinical and genomic determinants of immune-related adverse events. *Journal of Clinical Oncology* 44(16_suppl):11132 (ASCO 2026)."
+      - bullet: "Wu S, Pejic B, Roy S, **Huang F**, et al. Development of a computational model of SBS scores in critically ill children. *Pediatric Critical Care Medicine* 25(11S):e87 (2024)."
+
+    Patents:
+      - bullet: "Parent C, Simon E, **Huang F**, Ruci A, Zhang E. Methods and devices for quantitatively estimating thrombomodulin. US Patent App. 19/240,058 (2025)."
+      - bullet: "Eng R, Parent C, Hayat A, Ruci A, Krishnan A, **Huang F**, Simon E, Zhang E. Methods and devices for quantitatively estimating syndecan-1. US Patent App. 17/715,294 (2022)."
+
+    Presentations:
+      - bullet: "Military Health System Research Symposium, Kissimmee, FL (2022). Towards point-of-care internal hemorrhage detection through a syndecan-1 lateral flow assay. Oral presentation."
+      - bullet: "Johns Hopkins BME Design Day, Baltimore, MD (2022). DioTeX: Hemorrhage Diagnostics. Poster."
+
+    Honors and Awards:
+      - name: NIH DEBUT Challenge, Healthcare Technologies for Low-Resource Settings Prize
+        date: 2023
+        summary: With the DioTeX team; $15,000.
+      - name: VentureWell e-Fest Prize
+        date: 2023
+        summary: With the DioTeX team; $10,000.
+
+    Teaching:
+      - bullet: "Course Assistant, EN.601.230 Mathematical Foundations for Computer Science, Johns Hopkins University (Fall 2022)."
+
+    Service and Leadership:
+      - bullet: "President, Singapore Students' Association, Johns Hopkins University (2021–2023)."
+      - bullet: "Team Lead, iMEDS pediatric-ICU sedation monitoring, JHU Biomedical Design (2022–2023)."
+
+    Additional Information:
+      - label: Languages
+        details: English, Mandarin
