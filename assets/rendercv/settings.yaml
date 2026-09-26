@@ -1,0 +1,17 @@
+# for details on settings, see https://docs.rendercv.com
+settings:
+  current_date: today
+  render_command:
+    # Paths are relative to _data/cv.yml
+    design: ../assets/rendercv/design.yaml
+    locale: ../assets/rendercv/locale.yaml
+    output_folder: ../assets/rendercv/rendercv_output
+    typst_path: ../assets/rendercv/rendercv_output/FeiyangHuang_CV.typ
+    pdf_path: ../assets/pdf/FeiyangHuang_CV.pdf
+    dont_generate_markdown: true
+    dont_generate_html: true
+    dont_generate_typst: false
+    dont_generate_pdf: false
+    dont_generate_png: true
+  bold_keywords: []
+  pdf_title: Feiyang Huang - CV
