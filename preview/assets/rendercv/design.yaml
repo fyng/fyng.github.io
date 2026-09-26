@@ -1,7 +1,62 @@
-# for more options, see https://docs.rendercv.com/user_guide/yaml_input_structure/design/
+# Matches the website: Instrument Serif name, IBM Plex Sans body, Prussian-blue accents.
+# Fonts live in _data/fonts/ (RenderCV loads a `fonts` folder next to the input file).
+# Options: https://docs.rendercv.com/user_guide/yaml_input_structure/design/
 design:
   theme: classic
   page:
-    size: a4
-    show_footer: false
-    show_top_note: false
+    size: us-letter
+    top_margin: 0.65in
+    bottom_margin: 0.65in
+    left_margin: 0.75in
+    right_margin: 0.75in
+    show_footer: true
+    show_top_note: true
+  colors:
+    body: rgb(22, 24, 29)
+    name: rgb(22, 24, 29)
+    headline: rgb(112, 116, 128)
+    connections: rgb(112, 116, 128)
+    section_titles: rgb(31, 78, 121)
+    links: rgb(31, 78, 121)
+    footer: rgb(150, 150, 150)
+    top_note: rgb(150, 150, 150)
+  typography:
+    line_spacing: 0.55em
+    alignment: left
+    font_family:
+      body: IBM Plex Sans
+      name: Instrument Serif
+      headline: IBM Plex Sans
+      connections: IBM Plex Sans
+      section_titles: IBM Plex Sans
+    font_size:
+      body: 9.5pt
+      name: 32pt
+      headline: 10pt
+      connections: 9pt
+      section_titles: 0.95em
+    small_caps:
+      section_titles: true
+    bold:
+      name: false
+      section_titles: false
+  header:
+    alignment: left
+    space_below_name: 0.45cm
+    space_below_headline: 0.35cm
+    connections:
+      show_icons: true
+      separator: ""
+      space_between_connections: 0.45cm
+  section_titles:
+    type: with_full_line
+    line_thickness: 0.4pt
+    space_above: 0.45cm
+    space_below: 0.25cm
+  sections:
+    show_time_spans_in: []
+  entries:
+    date_and_location_width: 3.6cm
+  templates:
+    footer: "*NAME · PAGE_NUMBER/TOTAL_PAGES*"
+    top_note: "*Updated CURRENT_DATE*"
