@@ -36,6 +36,7 @@ cv:
         end_date: 2023-05
         highlights:
           - "GPA 3.96"
+          - "Activities: President, Singapore Students' Association (2021–2023); Theta Tau Professional Engineering Fraternity (2020–2022)"
 
     Experience:
       - company: Memorial Sloan Kettering Cancer Center, Tansey Lab
@@ -45,14 +46,34 @@ cv:
         end_date: present
         summary: Bayesian and generative models for cancer biology and therapeutic design.
         highlights:
-          - Contributed to a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
+          - Contributed to [PPC](https://panpreclinical.org), a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
           - Contributed to a population-scale study of clinical and genetic determinants of systemic-therapy toxicity.
+      - company: Memorial Sloan Kettering Cancer Center, Tansey Lab
+        position: PhD Rotation
+        location: New York, NY
+        start_date: 2024-03
+        end_date: 2024-05
+        summary: Bayesian active learning to nominate combination therapies from ex vivo drug screens; groundwork for the PPC atlas.
+      - company: Memorial Sloan Kettering Cancer Center, Chodera Lab
+        position: PhD Rotation
+        location: New York, NY
+        start_date: 2024-01
+        end_date: 2024-03
+        summary: Graph neural networks for small-molecule property prediction.
+        highlights:
+          - Integrated the ViSNet equivariant GNN into [mtenn](https://github.com/choderalab/mtenn) (model conversion, configuration, tests) and set up CI against stable and nightly PyTorch Geometric.
+      - company: Memorial Sloan Kettering Cancer Center, CMO Innovation Lab
+        position: PhD Rotation
+        location: New York, NY
+        start_date: 2023-11
+        end_date: 2024-01
+        summary: Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumor samples, with Brian Loomis.
       - company: Sloan Kettering Institute, Morris Lab
-        position: Rotation Student
+        position: PhD Rotation
         location: New York, NY
         start_date: 2023-08
         end_date: 2023-11
-        summary: Language models for tumour mutations.
+        summary: BERT model for representation learning from tumor mutation profiles.
       - company: Johns Hopkins University, Fan Lab
         position: Undergraduate Researcher
         location: Baltimore, MD
@@ -67,6 +88,13 @@ cv:
         end_date: 2022-08
         highlights:
           - Built an internal work-history search tool and automated release-note generation (3 h to 20 min).
+      - company: Johns Hopkins University, Biomedical Design
+        position: Team Lead, iMEDS
+        location: Baltimore, MD
+        start_date: 2022-08
+        end_date: 2023-05
+        highlights:
+          - Led a team of 7 building an algorithm to continuously monitor sedation in pediatric ICU patients; interviewed 20+ clinicians at Johns Hopkins, Boston Children's and Stanford.
       - company: Johns Hopkins University, Institute for NanoBioTechnology
         position: Research Intern
         location: Baltimore, MD
@@ -88,6 +116,13 @@ cv:
         end_date: 2020-12
         highlights:
           - Trained a CNN for endoscopic image classification (91% accuracy); co-author in *Gastrointestinal Endoscopy*.
+      - company: Singapore Armed Forces
+        position: 3rd Sergeant
+        location: Singapore
+        start_date: 2018-01
+        end_date: 2019-10
+        highlights:
+          - Led a detachment of 3 soldiers and co-supervised daily training for 15.
 
     Publications:
       - title: A Pan-Cancer Ex Vivo Drug Screen Atlas for Functional Precision Oncology
@@ -174,10 +209,6 @@ cv:
 
     Teaching:
       - bullet: "Course Assistant, EN.601.230 Mathematical Foundations for Computer Science, Johns Hopkins University (Fall 2022)."
-
-    Service and Leadership:
-      - bullet: "President, Singapore Students' Association, Johns Hopkins University (2021–2023)."
-      - bullet: "Team Lead, iMEDS pediatric-ICU sedation monitoring, JHU Biomedical Design (2022–2023)."
 
     Additional Information:
       - label: Languages
