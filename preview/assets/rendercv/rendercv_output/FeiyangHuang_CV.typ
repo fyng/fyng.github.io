@@ -63,7 +63,7 @@
   section-titles-space-below: 0.2cm,
   sections-allow-page-break: true,
   sections-space-between-text-based-entries: 0.3em,
-  sections-space-between-regular-entries: 0.85em,
+  sections-space-between-regular-entries: 0.7em,
   entries-date-and-location-width: 3.6cm,
   entries-side-space: 0.2cm,
   entries-space-between-columns: 0.1cm,
@@ -98,6 +98,7 @@
   [#link("https://orcid.org/0000-0002-7241-1509", icon: false, if-underline: false, if-color: false)[#connection-with-icon("orcid")[0000-0002-7241-1509]]],
   [#link("https://github.com/fyng", icon: false, if-underline: false, if-color: false)[#connection-with-icon("github")[fyng]]],
   [#link("https://linkedin.com/in/feiyang-huang", icon: false, if-underline: false, if-color: false)[#connection-with-icon("linkedin")[feiyang-huang]]],
+  [#connection-with-icon("language")[English, Mandarin]],
 )
 
 
@@ -147,7 +148,7 @@
   [
     #strong[Memorial Sloan Kettering Cancer Center, Tansey Lab], PhD Researcher
 
-    #summary[Bayesian and generative models for cancer biology and therapeutic design.]
+    - Developing OncoState, a self-supervised transformer learning patient states from multimodal clinical trajectories of 99,000+ MSK-IMPACT patients; outperforms the IMDC risk model in advanced clear cell RCC.
 
     - Contributed to #link("https://panpreclinical.org")[PPC], a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
 
@@ -258,7 +259,7 @@
   [
     #strong[Johns Hopkins University, Biomedical Design], Team Lead, iMEDS
 
-    - Led a team of 7 building an algorithm to continuously monitor sedation in pediatric ICU patients; interviewed 20+ clinicians at Johns Hopkins, Boston Children's and Stanford.
+    - Led a team of 7 building an algorithm to continuously monitor pediatric ICU sedation; interviewed 20+ clinicians.
 
   ],
   [
@@ -420,6 +421,8 @@
 
 == Presentations
 
+- 45th Vincent du Vigneaud Research Symposium, Weill Cornell Medicine, New York, NY (2026). #strong[Huang F], Tansey W. OncoState: learning patient states from clinical trajectories in cancer. Poster \#66.
+
 - Military Health System Research Symposium, Kissimmee, FL (2022). Towards point-of-care internal hemorrhage detection through a syndecan-1 lateral flow assay. Oral presentation.
 
 - Johns Hopkins BME Design Day, Baltimore, MD (2022). DioTeX: Hemorrhage Diagnostics. Poster.
@@ -455,7 +458,3 @@
 == Teaching
 
 - Course Assistant, EN.601.230 Mathematical Foundations for Computer Science, Johns Hopkins University (Fall 2022).
-
-== Additional Information
-
-#strong[Languages:] English, Mandarin
