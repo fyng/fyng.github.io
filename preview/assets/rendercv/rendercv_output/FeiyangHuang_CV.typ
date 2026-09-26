@@ -150,9 +150,9 @@
 
     - Developing OncoState, a self-supervised transformer learning patient states from multimodal clinical trajectories of 99,000+ MSK-IMPACT patients; outperforms the IMDC risk model in advanced clear cell RCC.
 
-    - Contributed to #link("https://panpreclinical.org")[PPC], a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
+    - Co-led a population-scale study of clinical and genetic determinants of systemic-therapy toxicity (co-first author, medRxiv 2026): developed the random forest toxicity model and the analysis and narrative for Figure 3.
 
-    - Contributed to a population-scale study of clinical and genetic determinants of systemic-therapy toxicity.
+    - Contributed to #link("https://panpreclinical.org")[PPC], a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
 
   ],
   [
