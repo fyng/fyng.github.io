@@ -211,10 +211,12 @@ from `graphical_abstracts/`; the render fails if lint fails.
 
 1. `./publish.sh <slug>` copies the PNG, MP4 and WebM to `assets/img/graphical_abstracts/`
    and makes a 640 px `<slug>-thumb.png`.
-2. Add `graphical_abstract={<slug>}` (and no `preview`) to the paper's entry in
+2. Add `graphical_abstract={<slug>}` to the paper's entry in
    `_bibliography/papers.bib`. The local `_layouts/bib.liquid` (an override of the
    al-folio theme template) then renders `_includes/graphical_abstract.liquid` in the
-   entry's preview slot, where other papers show their preview image.
+   entry's preview slot, where other papers show their preview image. If the entry
+   also has a `preview`, that image stays as the thumbnail and the animation opens
+   from it (STdeconvolve keeps its paper figure this way).
 3. The slot shows the static poster, scaled to the column. The animation plays in an
    expanded view sized to fit the viewport (portrait and landscape):
    - on laptops, while hovering the thumbnail; a click opens it as an overlay;

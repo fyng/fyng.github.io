@@ -2,8 +2,9 @@
 ---
 {%- comment -%}
   Local override of al_folio_core 1.0.15 _layouts/bib.liquid.
-  Only change: an entry with a `graphical_abstract` field (and no `preview`)
-  shows it in the preview slot (see _includes/graphical_abstract.liquid).
+  Only change: an entry with a `graphical_abstract` field shows it in the preview
+  slot (see _includes/graphical_abstract.liquid). If the entry also has a `preview`
+  image, that image stays as the thumbnail and the animation opens from it.
 {%- endcomment -%}
 <div class="row">
   {% if site.enable_publication_thumbnails %}
@@ -30,7 +31,9 @@
           <abbr class="badge rounded w-100">{{ entry.abbr }}</abbr>
         {% endif %}
       {% endif %}
-      {% if entry.preview %}
+      {% if entry.graphical_abstract %}
+        {% include graphical_abstract.liquid slug=entry.graphical_abstract title=entry.title thumb=entry.preview %}
+      {% elsif entry.preview %}
         {%- comment -%}
           A preview may be a video file rather than an image. Rendering one through the
           image path below produces a broken <img>, so hand it to video.liquid instead.
@@ -62,8 +65,6 @@
             alt=entry.preview
           %}
         {% endif %}
-      {% elsif entry.graphical_abstract %}
-        {% include graphical_abstract.liquid slug=entry.graphical_abstract title=entry.title %}
       {% endif %}
     </div>
   {% endif %}

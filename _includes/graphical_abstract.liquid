@@ -8,7 +8,8 @@
   copied from graphical_abstracts/out/ by graphical_abstracts/publish.sh.
   Styles and script are linked once per page with a per-build version, so a
   deploy never pairs new markup with cached old styles or behaviour.
-  Params: slug (required), title (for alt text).
+  Params: slug (required), title (for alt text), thumb (optional: a
+  publication_preview image to keep as the thumbnail instead of <slug>-thumb.png).
 {%- endcomment -%}
 {% unless ga_assets_included %}
   {% assign ga_assets_included = true %}
@@ -29,13 +30,17 @@
   data-alt="{{ ga_alt | escape }}"
   aria-label="Play {{ ga_alt | escape }}"
 >
+  {% if include.thumb %}
+    {% assign ga_thumb = '/assets/img/publication_preview/' | append: include.thumb | relative_url %}
+  {% else %}
+    {% assign ga_thumb = ga_base | append: '-thumb.png' %}
+  {% endif %}
   <img
     class="preview z-depth-1 rounded"
     style="width: 100%; height: auto"
-    src="{{ ga_base }}-thumb.png"
+    src="{{ ga_thumb }}"
     alt="{{ ga_alt | escape }}"
-    width="640"
-    height="360"
+    {% unless include.thumb %}width="640" height="360"{% endunless %}
     loading="lazy"
     decoding="async"
   >
