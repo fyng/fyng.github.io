@@ -22,6 +22,3 @@ __pycache__/
 
 # Graphical abstract renders: animated WebP is regenerated, not versioned
 graphical_abstracts/out/*.webp
-graphical_abstracts/revideo/node_modules/
-graphical_abstracts/revideo/output/
-graphical_abstracts/revideo/src/icons.ts
