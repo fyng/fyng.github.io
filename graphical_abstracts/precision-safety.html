@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precision Safety — graphical abstract</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ---- Tokens (shared across all graphical abstracts) ---------------------- */
+:root {
+  --paper: #ffffff;
+  --ink: #16181d;        /* primary text */
+  --ink-2: #4a4e58;      /* secondary text */
+  --muted: #8a8e98;      /* captions, axis */
+  --rule: #d9dbe0;       /* hairlines */
+  --wash: #f4f5f7;       /* panel fills */
+  --prussian: #1f4e79;   /* method / structure */
+  --vermilion: #d0503a;  /* THE finding — one accent per frame */
+  --verm-wash: #fbe9e5;
+  --blue-wash: #e8eff7;
+  /* categorical (validated: blue, vermilion, teal, ochre, plum) */
+  --c1: #2f6fb0; --c2: #d0503a; --c3: #1f9a8a; --c4: #c98f1f; --c5: #8a5cb8;
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+html, body { margin: 0; background: var(--paper); }
+body { display: grid; place-items: center; min-height: 100vh; }
+svg.ga { width: 100vw; max-width: 1600px; height: auto; display: block; }
+text { font-family: var(--sans); fill: var(--ink); }
+.serif { font-family: var(--serif); }
+.mono { font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.lbl { font-size: 17px; fill: var(--ink-2); }
+.cap { font-size: 15px; fill: var(--muted); }
+.kicker { font-family: var(--mono); font-size: 15px; font-weight: 500; letter-spacing: .16em; fill: var(--muted); }
+.step { font-family: var(--mono); font-size: 14px; font-weight: 500; letter-spacing: .16em; fill: var(--prussian); }
+.h { font-family: var(--serif); font-size: 34px; fill: var(--ink); }
+.line { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.hair { fill: none; stroke: var(--rule); stroke-width: 1.5; }
+.arrow { fill: none; stroke: var(--prussian); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- Motion primitives ---------------------------------------------------
+   Every animated element carries --d (delay, seconds). The renderer pauses
+   all animations and seeks them, so keep everything in CSS keyframes. */
+.in, .pop, .draw, .grow, .growy, .out { animation-fill-mode: both; animation-delay: var(--d, 0s); animation-timing-function: cubic-bezier(.2,.7,.2,1); }
+.in   { animation-name: in;   animation-duration: .7s; }
+.pop  { animation-name: pop;  animation-duration: .45s; transform-box: fill-box; transform-origin: center; }
+.draw { animation-name: draw; animation-duration: var(--t, .9s); stroke-dasharray: 1; }
+.grow { animation-name: grow; animation-duration: var(--t, .8s); transform-box: fill-box; transform-origin: left center; }
+.growy{ animation-name: growy;animation-duration: var(--t, .8s); transform-box: fill-box; transform-origin: center bottom; }
+.stage { animation: out .5s ease-in both; animation-delay: calc(var(--dur) - .5s); }
+@keyframes in   { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes pop  { 0% { opacity: 0; transform: scale(.3); } 70% { transform: scale(1.12); } 100% { opacity: 1; transform: none; } }
+@keyframes draw { 0% { stroke-dashoffset: 1; opacity: 0; } 1% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes grow { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes growy{ from { transform: scaleY(0); } to { transform: none; } }
+@keyframes out  { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { * { animation-delay: -100s !important; animation-play-state: paused !important; } .stage { animation: none !important; } }
+</style>
+</head>
+<body>
+<svg class="ga" viewBox="0 0 1600 900" role="img" aria-labelledby="ga-title ga-desc" style="--dur:16s">
+<title id="ga-title">Population-scale precision safety in oncology</title>
+<desc id="ga-desc">Clinical notes from over 50,000 patients are converted by a large language model into MSK-Tox, a record of the incidence, timing and grade of therapy toxicities. Pretreatment clinical features predict each patient's individual toxicity risk, and germline variants confer risk through organ-intrinsic and immune-mediated modes, such as HLA-DRB1*15 and adrenal insufficiency.</desc>
+<defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#1f4e79" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="ahv" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#d0503a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+
+  <!-- Organ glyphs: ~40x40, centred on 0,0; colour comes from `color` on the <use>. -->
+  <g id="o-lung" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M0-19V-4M0-4l-5 5M0-4l5 5" fill="none"/>
+    <path d="M-4-9c-7-3-15 6-16 16-1 8 2 12 7 12 5 0 8-3 9-8 1-6 2-13 0-20z"/>
+    <path d="M4-9c7-3 15 6 16 16 1 8-2 12-7 12-5 0-8-3-9-8-1-6-2-13 0-20z"/>
+  </g>
+  <g id="o-liver"><path d="M-19-4c3-10 24-13 36-8 4 2 3 6 0 10-6 9-16 16-25 16-9 0-14-7-11-18z" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M4-11c-2 8-4 14-10 21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".6"/></g>
+  <g id="o-colon"><path d="M-13 17V-9c0-4 3-7 7-7h12c4 0 7 3 7 7v16c0 5-3 9-8 10" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="o-thyroid"><path d="M-2-11c-9-6-17-2-17 8s7 13 13 9l3-3h6l3 3c6 4 13 1 13-9s-8-14-17-8z" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></g>
+  <g id="o-adrenal" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round">
+    <path d="M1-2c-9 0-12 9-11 14 1 6 6 8 10 7 4-1 3-5 5-7 2-2 5-3 5-7 0-5-4-7-9-7z" fill="none" stroke-opacity=".5"/>
+    <path d="M-7-5c1-8 6-14 11-14 5 0 7 7 6 13-5-2-12-2-17 1z" fill="currentColor"/>
+  </g>
+
+  <g id="note"><rect x="0" y="0" width="84" height="104" rx="6" fill="#fff" stroke="#16181d" stroke-width="2"/><path d="M14 22h56M14 36h44M14 50h56M14 64h36M14 78h50" stroke="#c7cad1" stroke-width="4" stroke-linecap="round"/></g>
+  <g id="person"><circle cx="0" cy="-46" r="11" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M-19 0v-12c0-12 8-20 19-20s19 8 19 20V0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></g>
+  <g id="tree"><path d="M0 0v-12" stroke="#1f4e79" stroke-width="2.4" stroke-linecap="round"/><circle cx="0" cy="-20" r="10" fill="#fff" stroke="#1f4e79" stroke-width="2.4"/></g>
+  <g id="dna"><path d="M-10-30c20 10 20 20 0 30s-20 20 0 30M10-30c-20 10-20 20 0 30s20 20 0 30" fill="none" stroke="#1f4e79" stroke-width="2.6" stroke-linecap="round"/><path d="M-6-22h12M-9-10h18M-6 7h12M-9 20h18" stroke="#1f4e79" stroke-width="2" stroke-linecap="round" opacity=".55"/></g>
+</defs>
+
+<g class="stage">
+  <!-- ======================= Header ======================= -->
+  <g class="in" style="--d:.1s">
+    <text x="64" y="74" class="kicker">PRECISION SAFETY · MEDRXIV 2026</text>
+    <text x="64" y="128" class="serif" font-size="48">Who will be harmed by cancer therapy, <tspan font-style="italic" fill="#d0503a">and can we tell before it starts?</tspan></text>
+  </g>
+  <line x1="64" y1="168" x2="1536" y2="168" class="hair"/>
+  <line x1="548" y1="200" x2="548" y2="760" class="hair"/>
+  <line x1="1060" y1="200" x2="1060" y2="760" class="hair"/>
+
+  <!-- ======================= 01 · MSK-Tox ======================= -->
+  <g class="in" style="--d:.7s">
+    <text x="64" y="214" class="step">01 · RESOURCE</text>
+    <text x="64" y="256" class="h">MSK-Tox</text>
+    <text x="64" y="284" class="cap">LLM-read clinical notes, &gt;50,000 patients</text>
+  </g>
+  <g class="in" style="--d:1.1s"><use href="#note" x="84" y="310"/></g>
+  <g class="in" style="--d:1.25s"><use href="#note" x="72" y="322"/></g>
+  <g class="in" style="--d:1.4s"><use href="#note" x="60" y="334"/></g>
+  <path d="M166 386 H236" class="arrow draw" pathLength="1" marker-end="url(#ah)" style="--d:1.8s"/>
+  <g class="pop" style="--d:2.1s">
+    <rect x="248" y="346" width="96" height="80" rx="12" fill="#1f4e79"/>
+    <text x="296" y="393" text-anchor="middle" font-family="IBM Plex Mono" font-size="20" font-weight="500" letter-spacing="2" style="fill:#fff">LLM</text>
+  </g>
+  <path d="M352 386 H408" class="arrow draw" pathLength="1" marker-end="url(#ah)" style="--d:2.4s"/>
+  <g class="in" style="--d:2.5s">
+    <text x="420" y="366" class="lbl">incidence</text>
+    <text x="420" y="392" class="lbl">timing</text>
+    <text x="420" y="418" class="lbl">grade</text>
+  </g>
+
+  <!-- legend: organ = colour + glyph + name -->
+  <g class="in" style="--d:2.7s">
+    <use href="#o-lung"    transform="translate(78 480) scale(.62)" style="color:var(--c1)"/><text x="96"  y="486" class="cap" style="fill:#4a4e58">lung</text>
+    <use href="#o-colon"   transform="translate(160 480) scale(.62)" style="color:var(--c3)"/><text x="178" y="486" class="cap" style="fill:#4a4e58">colon</text>
+    <use href="#o-liver"   transform="translate(248 480) scale(.62)" style="color:var(--c4)"/><text x="266" y="486" class="cap" style="fill:#4a4e58">liver</text>
+    <use href="#o-thyroid" transform="translate(328 480) scale(.62)" style="color:var(--c5)"/><text x="346" y="486" class="cap" style="fill:#4a4e58">thyroid</text>
+    <use href="#o-adrenal" transform="translate(426 480) scale(.62)" style="color:var(--c2)"/><text x="444" y="486" class="cap" style="fill:#4a4e58">adrenal</text>
+  </g>
+
+  <!-- patient timelines; glyph size = grade -->
+  <g class="in" style="--d:2.9s">
+    <line x1="116" y1="522" x2="116" y2="712" stroke="#16181d" stroke-width="2" stroke-dasharray="3 5"/>
+    <text x="116" y="738" class="cap" text-anchor="middle">therapy start</text>
+    <text x="508" y="738" class="cap" text-anchor="end">time →</text>
+  </g>
+  <path d="M72 538H508" class="hair draw" pathLength="1" style="--d:3.0s"/>
+  <path d="M72 580H508" class="hair draw" pathLength="1" style="--d:3.1s"/>
+  <path d="M72 622H508" class="hair draw" pathLength="1" style="--d:3.2s"/>
+  <path d="M72 664H508" class="hair draw" pathLength="1" style="--d:3.3s"/>
+  <path d="M72 706H508" class="hair draw" pathLength="1" style="--d:3.4s"/>
+  <g class="pop" style="--d:3.6s"><use href="#o-lung"    transform="translate(250 538) scale(.9)"  style="color:var(--c1)"/></g>
+  <g class="pop" style="--d:3.7s"><use href="#o-colon"   transform="translate(190 580) scale(.6)"  style="color:var(--c3)"/></g>
+  <g class="pop" style="--d:3.8s"><use href="#o-liver"   transform="translate(400 580) scale(.95)" style="color:var(--c4)"/></g>
+  <g class="pop" style="--d:3.9s"><use href="#o-thyroid" transform="translate(330 622) scale(.65)" style="color:var(--c5)"/></g>
+  <g class="pop" style="--d:4.0s"><use href="#o-adrenal" transform="translate(462 664) scale(.9)"  style="color:var(--c2)"/></g>
+  <g class="pop" style="--d:4.1s"><use href="#o-colon"   transform="translate(170 706) scale(.9)"  style="color:var(--c3)"/></g>
+  <g class="pop" style="--d:4.2s"><use href="#o-thyroid" transform="translate(300 706) scale(.6)"  style="color:var(--c5)"/></g>
+
+  <!-- ======================= 02 · Clinical risk ======================= -->
+  <g class="in" style="--d:5.0s">
+    <text x="588" y="214" class="step">02 · CLINICAL RISK</text>
+    <text x="588" y="256" class="h">Risk is predictable</text>
+    <text x="588" y="284" class="cap">from features known before the first dose</text>
+  </g>
+  <g class="in" style="--d:5.4s">
+    <use href="#person" x="616" y="448" style="color:#16181d"/>
+    <text x="616" y="474" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" letter-spacing="1.5" style="fill:#4a4e58">PT A</text>
+    <use href="#person" x="616" y="648" style="color:#16181d"/>
+    <text x="616" y="674" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" letter-spacing="1.5" style="fill:#4a4e58">PT B</text>
+  </g>
+  <g class="in" style="--d:5.7s">
+    <text x="652" y="376" class="cap" style="fill:#4a4e58">lung cancer · immunotherapy</text>
+    <text x="652" y="398" class="cap">age 71 · COPD</text>
+    <text x="652" y="664" class="cap" style="fill:#4a4e58">melanoma · combination ICI</text>
+    <text x="652" y="686" class="cap">age 48 · history of IBD</text>
+  </g>
+  <path d="M652 424 C712 424 716 492 750 494" class="arrow draw" pathLength="1" style="--d:6.0s"/>
+  <path d="M652 624 C712 624 716 522 750 520" class="arrow draw" pathLength="1" style="--d:6.0s"/>
+  <g class="pop" style="--d:6.3s">
+    <rect x="752" y="458" width="120" height="96" rx="12" fill="#e8eff7"/>
+    <use href="#tree" x="782" y="514"/><use href="#tree" x="812" y="508"/><use href="#tree" x="842" y="514"/>
+    <text x="812" y="540" text-anchor="middle" class="cap" font-size="13" style="fill:#1f4e79">random forest</text>
+  </g>
+  <path d="M880 490 C904 482 902 422 920 412" class="arrow draw" pathLength="1" marker-end="url(#ah)" style="--d:6.7s"/>
+  <path d="M880 522 C904 530 902 600 920 610" class="arrow draw" pathLength="1" marker-end="url(#ah)" style="--d:6.7s"/>
+  <g class="in" style="--d:6.9s"><text x="932" y="344" class="cap">predicted risk</text></g>
+  <g class="in" style="--d:6.9s">
+    <use href="#o-lung"    transform="translate(944 371) scale(.46)" style="color:var(--c1)"/>
+    <use href="#o-colon"   transform="translate(944 397) scale(.42)" style="color:var(--c3)"/>
+    <use href="#o-liver"   transform="translate(944 423) scale(.46)" style="color:var(--c4)"/>
+    <use href="#o-thyroid" transform="translate(944 449) scale(.46)" style="color:var(--c5)"/>
+  </g>
+  <rect x="962" y="364" width="80" height="14" rx="3" fill="#2f6fb0" class="grow" style="--d:7.1s"/>
+  <rect x="962" y="390" width="12" height="14" rx="3" fill="#1f9a8a" class="grow" style="--d:7.2s"/>
+  <rect x="962" y="416" width="24" height="14" rx="3" fill="#c98f1f" class="grow" style="--d:7.3s"/>
+  <rect x="962" y="442" width="18" height="14" rx="3" fill="#8a5cb8" class="grow" style="--d:7.4s"/>
+  <g class="in" style="--d:7.3s">
+    <use href="#o-lung"    transform="translate(944 571) scale(.46)" style="color:var(--c1)"/>
+    <use href="#o-colon"   transform="translate(944 597) scale(.42)" style="color:var(--c3)"/>
+    <use href="#o-liver"   transform="translate(944 623) scale(.46)" style="color:var(--c4)"/>
+    <use href="#o-thyroid" transform="translate(944 649) scale(.46)" style="color:var(--c5)"/>
+  </g>
+  <rect x="962" y="564" width="14" height="14" rx="3" fill="#2f6fb0" class="grow" style="--d:7.5s"/>
+  <rect x="962" y="590" width="82" height="14" rx="3" fill="#1f9a8a" class="grow" style="--d:7.6s"/>
+  <rect x="962" y="616" width="36" height="14" rx="3" fill="#c98f1f" class="grow" style="--d:7.7s"/>
+  <rect x="962" y="642" width="52" height="14" rx="3" fill="#8a5cb8" class="grow" style="--d:7.8s"/>
+  <g class="in" style="--d:8.1s">
+    <text x="588" y="740" class="lbl"><tspan font-weight="500" style="fill:#d0503a">Individual</tspan> risk profiles, not one-size-fits-all</text>
+  </g>
+
+  <!-- ======================= 03 · Germline risk ======================= -->
+  <g class="in" style="--d:9.0s">
+    <text x="1100" y="214" class="step">03 · GERMLINE RISK</text>
+    <text x="1100" y="256" class="h">Inherited susceptibility</text>
+    <text x="1100" y="284" class="cap">matched germline sequencing, ~36,000 patients</text>
+  </g>
+  <g class="in" style="--d:9.5s">
+    <text x="1100" y="344" font-family="IBM Plex Mono" font-size="14" font-weight="500" letter-spacing="2" style="fill:#4a4e58">ORGAN-INTRINSIC</text>
+    <use href="#dna" x="1126" y="430"/>
+  </g>
+  <g class="in" style="--d:9.9s">
+    <rect x="1172" y="372" width="132" height="30" rx="15" fill="#f4f5f7"/><text x="1238" y="392" text-anchor="middle" class="cap" style="fill:#4a4e58">chemotherapy</text>
+    <rect x="1172" y="414" width="132" height="30" rx="15" fill="#f4f5f7"/><text x="1238" y="434" text-anchor="middle" class="cap" style="fill:#4a4e58">targeted</text>
+    <rect x="1172" y="456" width="132" height="30" rx="15" fill="#f4f5f7"/><text x="1238" y="476" text-anchor="middle" class="cap" style="fill:#4a4e58">immunotherapy</text>
+  </g>
+  <path d="M1310 387 C1340 390 1346 422 1374 428" class="arrow draw" pathLength="1" style="--d:10.3s"/>
+  <path d="M1310 429 H1374" class="arrow draw" pathLength="1" marker-end="url(#ah)" style="--d:10.3s"/>
+  <path d="M1310 471 C1340 468 1346 436 1374 430" class="arrow draw" pathLength="1" style="--d:10.3s"/>
+  <g class="pop" style="--d:10.7s"><use href="#o-liver" transform="translate(1416 430) scale(1.25)" style="color:var(--c4)"/></g>
+  <g class="in" style="--d:10.9s"><text x="1446" y="420" class="cap">same organ,</text><text x="1446" y="440" class="cap">any therapy</text></g>
+
+  <g class="in" style="--d:11.4s">
+    <text x="1100" y="552" font-family="IBM Plex Mono" font-size="14" font-weight="500" letter-spacing="2" style="fill:#4a4e58">IMMUNE-MEDIATED</text>
+    <use href="#dna" x="1126" y="636"/>
+  </g>
+  <g class="pop" style="--d:11.8s">
+    <rect x="1172" y="614" width="160" height="44" rx="22" fill="#fbe9e5"/>
+    <text x="1252" y="642" text-anchor="middle" font-family="IBM Plex Mono" font-size="16" font-weight="500" style="fill:#d0503a">HLA-DRB1*15</text>
+  </g>
+  <path d="M1340 636 H1380" class="arrow draw" pathLength="1" marker-end="url(#ahv)" style="--d:12.2s;stroke:#d0503a"/>
+  <g class="pop" style="--d:12.5s"><use href="#o-adrenal" transform="translate(1416 636) scale(1.25)" style="color:var(--c2)"/></g>
+  <g class="in" style="--d:12.7s"><text x="1446" y="628" class="cap">adrenal</text><text x="1446" y="648" class="cap">insufficiency</text></g>
+
+  <!-- ======================= Takeaway ======================= -->
+  <line x1="64" y1="790" x2="1536" y2="790" class="hair"/>
+  <g class="in" style="--d:13.4s">
+    <text x="64" y="840" class="serif" font-size="32">Toxicity can be anticipated, like response: the basis for <tspan font-style="italic" style="fill:#d0503a">precision safety.</tspan></text>
+  </g>
+</g>
+</svg>
+<script>
+  // Timing contract read by render.cjs
+  window.GA_DURATION = 16;   // seconds, loop length
+  window.GA_POSTER = 15.0;   // seconds, frame used as the static abstract
+  // Live view: loop. Render mode (?render) leaves the clock to the renderer.
+  if (!location.search.includes("render")) {
+    setInterval(() => document.getAnimations().forEach((a) => { a.currentTime = 0; a.play(); }), window.GA_DURATION * 1000);
+  }
+</script>
+</body>
+</html>

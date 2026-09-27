@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+// Render a graphical abstract (HTML + CSS keyframes) to a poster PNG, an MP4
+// and an animated WebP preview.
+//
+// Every animation on the page is paused and seeked to an exact time, so each
+// frame is deterministic; the poster is simply the frame at --poster seconds.
+//
+//   node render.cjs precision-safety.html [--fps 30] [--poster 14.5] [--still]
+//
+// Needs Playwright (global install is fine: NODE_PATH=$(npm root -g)) and an
+// ffmpeg binary (FFMPEG env var, `ffmpeg` on PATH, or python's imageio-ffmpeg).
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
+const { execFileSync } = require("child_process");
+const { chromium } = require("playwright");
+
+const args = process.argv.slice(2);
+const file = path.resolve(args.find((a) => a.endsWith(".html")));
+const opt = (name, dflt) => {
+  const i = args.indexOf(`--${name}`);
+  return i >= 0 ? Number(args[i + 1]) : dflt;
+};
+const stillOnly = args.includes("--still");
+const slug = path.basename(file, ".html");
+const outDir = path.join(path.dirname(file), "out");
+fs.mkdirSync(outDir, { recursive: true });
+
+function ffmpegBin() {
+  if (process.env.FFMPEG) return process.env.FFMPEG;
+  try {
+    execFileSync("ffmpeg", ["-version"], { stdio: "ignore" });
+    return "ffmpeg";
+  } catch {}
+  return execFileSync("python3", ["-c", "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())"]).toString().trim();
+}
+
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 1 });
+  await page.goto("file://" + file + "?render");
+  await page.evaluate(() => document.fonts.ready);
+  const duration = opt("duration", await page.evaluate(() => window.GA_DURATION || 16));
+  const poster = opt("poster", await page.evaluate(() => window.GA_POSTER || 14.5));
+  const fps = opt("fps", 30);
+
+  const seek = (t) =>
+    page.evaluate((ms) => {
+      for (const a of document.getAnimations()) {
+        a.pause();
+        a.currentTime = ms;
+      }
+    }, t * 1000);
+
+  // Poster at 2x for print / retina.
+  const hi = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 2 });
+  await hi.goto("file://" + file + "?render");
+  await hi.evaluate(() => document.fonts.ready);
+  await hi.evaluate((ms) => {
+    for (const a of document.getAnimations()) {
+      a.pause();
+      a.currentTime = ms;
+    }
+  }, poster * 1000);
+  const posterPath = path.join(outDir, `${slug}.png`);
+  await hi.screenshot({ path: posterPath });
+  console.log("poster ->", posterPath);
+  if (stillOnly) return browser.close();
+
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), `ga-${slug}-`));
+  const n = Math.round(duration * fps);
+  for (let i = 0; i < n; i++) {
+    await seek(i / fps);
+    await page.screenshot({ path: path.join(tmp, `f${String(i).padStart(5, "0")}.png`) });
+  }
+  await browser.close();
+
+  const ff = ffmpegBin();
+  const inp = ["-y", "-loglevel", "error", "-framerate", String(fps), "-i", path.join(tmp, "f%05d.png")];
+  const mp4 = path.join(outDir, `${slug}.mp4`);
+  execFileSync(ff, [...inp, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", "-movflags", "+faststart", mp4]);
+  console.log("video  ->", mp4);
+  const webp = path.join(outDir, `${slug}.webp`);
+  execFileSync(ff, [...inp, "-vf", "fps=15,scale=800:-1:flags=lanczos", "-c:v", "libwebp", "-lossless", "0", "-q:v", "70", "-loop", "0", webp]);
+  console.log("webp   ->", webp);
+  fs.rmSync(tmp, { recursive: true, force: true });
+})();

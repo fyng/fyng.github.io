@@ -19,3 +19,6 @@ vendor
 # Python bytecode from bin/ helper scripts
 __pycache__/
 *.pyc
+
+# Graphical abstract renders: animated WebP is regenerated, not versioned
+graphical_abstracts/out/*.webp
