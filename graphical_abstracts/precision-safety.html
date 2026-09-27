@@ -16,7 +16,7 @@ GA.build({
   title: "Precision safety in oncology",
   desc: "An LLM extracts the incidence, timing and grade of adverse events from clinical notes of over 50,000 patients (MSK-Tox). A random forest integrates pretreatment clinical and demographic risk factors specific to each adverse event. In 35,669 patients with germline sequencing, HLA-DRB1*15 predicts immune-related adrenal insufficiency on immune checkpoint inhibitors. Precision safety should complement response prediction in personalized medicine.",
 }, (ga) => {
-  const ORGAN = { lungs: "var(--c1)", colon: "var(--c3)", liver: "var(--c4)", thyroid: "var(--c5)", adrenal: "var(--c2)" };
+  const ORGAN = { lungs: "var(--organ-lungs)", colon: "var(--organ-colon)", liver: "var(--organ-liver)", thyroid: "var(--organ-thyroid)", adrenal: "var(--organ-adrenal)" };
   const NAME = { lungs: "lung", colon: "colon", liver: "liver", thyroid: "thyroid", adrenal: "adrenal" };
 
   // ---------------- header ----------------

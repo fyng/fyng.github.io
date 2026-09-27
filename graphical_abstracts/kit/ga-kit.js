@@ -27,6 +27,8 @@
     cap: { size: 15, lh: 1.35 },
     tag: { size: 13, lh: 1.3 },
     take: { size: 32, lh: 1.2 },
+    axis: { size: 14, lh: 1.3 }, // chart axis titles
+    tick: { size: 13, lh: 1.2 }, //  chart tick labels
   };
   const ASCENT = 0.78; // first baseline sits this fraction of the size below the top
 
@@ -288,6 +290,16 @@
           const p = ar.path.getPointAtLength(s);
           const o = others.find((i) => p.x > i.box.x0 && p.x < i.box.x1 && p.y > i.box.y0 && p.y < i.box.y1);
           if (o) { flag(`arrow crosses ${name(o)}`, ar, o); break; }
+        }
+      }
+      // chart curves (GA.chart line/fn): sample the path against every text box
+      for (const cv of this.items.filter((i) => i.kind === "curve")) {
+        const n = cv.path.getTotalLength();
+        for (const t of texts) {
+          for (let s = 0; s < n; s += 3) {
+            const p = cv.path.getPointAtLength(s);
+            if (p.x > t.box.x0 && p.x < t.box.x1 && p.y > t.box.y0 && p.y < t.box.y1) { flag(`curve crosses ${name(t)}`, cv, t); break; }
+          }
         }
       }
       return bad;
