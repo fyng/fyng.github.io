@@ -96,6 +96,17 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
   use ink or prussian.
 - Icon size can encode a quantity (grade, for example) only if a caption says so.
 
+## Arrows and method boxes
+
+- Arrows are prussian (or the finding's colour), 2.5 px, with open chevron heads.
+- **Arrows between side-by-side items are straight.** The kit's `connect()` runs them
+  along the middle of the two items' overlap. Curves are only for endpoints that are
+  offset (fan-in, fan-out), and then they leave and enter perpendicular to the box edge.
+- **Method boxes** all look the same: wash fill, an icon, and a short label ("LLM",
+  "ML model"). Name the method by what readers know, not the algorithm, unless the
+  algorithm is the point. Icons: `sparkles` for LLMs and generative AI, `network` for
+  trained models.
+
 ## Deliverables per figure
 
 `out/<slug>.png` (poster, 2×), `out/<slug>.mp4` (H.264), `out/<slug>.webp` (preview,

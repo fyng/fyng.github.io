@@ -230,6 +230,18 @@
         return { x: B.x0 + f * B.w, y: B.y1 + gap, dir: [0, 1] };
       };
       const s = pt(a, o.from || "r", o.fromAt), e = pt(b, o.to || "l", o.toAt);
+      // Side-by-side items get a straight arrow: when the two boxes overlap across
+      // the arrow's direction and no attachment points were given, run it along
+      // the middle of the overlap instead of curving between the two centres.
+      const horiz = /[lr]/.test(o.from || "r") && /[lr]/.test(o.to || "l");
+      if (a.box && b.box && o.fromAt === undefined && o.toAt === undefined && !o.bend) {
+        const [lo, hi] = horiz ? [Math.max(a.box.y0, b.box.y0), Math.min(a.box.y1, b.box.y1)] : [Math.max(a.box.x0, b.box.x0), Math.min(a.box.x1, b.box.x1)];
+        if (hi - lo > 8) {
+          const m = (lo + hi) / 2;
+          if (horiz) s.y = e.y = m; else s.x = e.x = m;
+          o = { ...o, straight: true };
+        }
+      }
       const dist = Math.hypot(e.x - s.x, e.y - s.y);
       const k = o.straight ? 0 : Math.max(16, dist * (o.bend ?? 0.45));
       const c1 = { x: s.x + s.dir[0] * k, y: s.y + s.dir[1] * k };

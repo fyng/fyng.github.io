@@ -150,8 +150,8 @@ axes, up- and down-regulation.
 Structure is not data, so it takes no data colours.
 
 - **Arrows and flow:** prussian, 2.5 px.
-- **Method boxes** (LLM, model, pipeline step): prussian fill with white text, or a
-  benefit-wash fill with prussian text.
+- **Method boxes** (LLM, model, pipeline step): benefit-wash fill, 12 px corners, a
+  prussian icon above a short prussian label. Never a solid dark block.
 - **Dividers, axes and gridlines:** `rule` and `ink-2` hairlines.
 - **Pills and tags:** a wash fill with the matching `*-text` colour.
 

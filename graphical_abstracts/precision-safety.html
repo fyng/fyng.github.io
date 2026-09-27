@@ -15,7 +15,7 @@
 GA.build({
   duration: 16, poster: 15,
   title: "Precision safety in oncology",
-  desc: "An LLM extracts the incidence, timing and grade of adverse events from clinical notes of over 50,000 patients (MSK-Tox). A random forest integrates pretreatment clinical and demographic risk factors specific to each adverse event. In 35,669 patients with germline sequencing, HLA-DRB1*15 predicts immune-related adrenal insufficiency on immune checkpoint inhibitors. Precision safety should complement response prediction in personalized medicine.",
+  desc: "An LLM extracts the incidence, timing and grade of adverse events from clinical notes of over 50,000 patients (MSK-Tox). A machine learning model integrates pretreatment clinical and demographic risk factors specific to each adverse event. In 35,669 patients with germline sequencing, HLA-DRB1*15 predicts immune-related adrenal insufficiency on immune checkpoint inhibitors. Precision safety should complement response prediction in personalized medicine.",
 }, (ga) => {
   const ORGAN = { lungs: "var(--organ-lungs)", colon: "var(--organ-colon)", liver: "var(--organ-liver)", thyroid: "var(--organ-thyroid)", adrenal: "var(--organ-adrenal)" };
   const NAME = { lungs: "lung", colon: "colon", liver: "liver", thyroid: "thyroid", adrenal: "adrenal" };
@@ -35,6 +35,13 @@ GA.build({
     return s.y;
   };
   const conclusion = (c, str, at) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at });
+  // Method box: wash fill, prussian icon over a short label (the same for every method)
+  const method = (x, y, icon, label, at) => {
+    const box = ga.rect({ x, y, w: 112, h: 92, fill: "var(--benefit-wash)", at });
+    ga.icon(icon, { cx: box.cx, cy: box.t + 35, size: 44, color: "var(--prussian)", at });
+    ga.text(label, { x: box.cx, y: box.b - 28, anchor: "middle", role: "tick", weight: 500, color: "var(--prussian)", at, anim: "pop" });
+    return box;
+  };
   // Lamina bar: rounded 4px at the data end only, square at the baseline
   const bar = (x, y, w, h, fill, at) =>
     ga.raw(`<path d="M${x} ${y}h${w - 4}a4 4 0 0 1 4 4v${h - 8}a4 4 0 0 1 -4 4h${-(w - 4)}Z" fill="${fill}"/>`, { at, anim: "grow", t: 0.7 });
@@ -45,8 +52,7 @@ GA.build({
   ga.icon("note", { cx: c1.x0 + 58, cy: rowY - 12, size: 80, color: "var(--ink)", at: 1.1, anim: "in", lint: false });
   ga.icon("note", { cx: c1.x0 + 50, cy: rowY - 4, size: 80, color: "var(--ink)", at: 1.25, anim: "in", lint: false });
   const notes = ga.icon("note", { cx: c1.x0 + 42, cy: rowY + 4, size: 80, color: "var(--ink)", at: 1.4, anim: "in" });
-  const llm = ga.rect({ x: c1.x0 + 170, y: rowY - 38, w: 96, h: 76, fill: "var(--prussian)", at: 2.1 });
-  ga.text("LLM", { x: llm.cx, y: llm.cy - 12, anchor: "middle", role: "label", size: 20, weight: 500, color: "var(--paper)", at: 2.1, anim: "pop" });
+  const llm = method(c1.x0 + 166, rowY - 46, "sparkles", "LLM", 2.1);
   const outs = ga.text("incidence\ntiming\ngrade", { x: llm.r + 76, y: rowY - 36, role: "label", at: 2.5 });
   ga.connect(notes, llm, { at: 1.8 });
   ga.connect(llm, outs, { at: 2.4 });
@@ -85,9 +91,7 @@ GA.build({
   ga.text("lung cancer · immunotherapy\nage 71 · COPD", { x: pA.r + 16, y: pA.t - 56, role: "label", size: 15, at: 5.7 });
   ga.text("melanoma · combination ICI\nage 48 · history of IBD", { x: pB.r + 16, y: pB.b + 4, role: "label", size: 15, at: 5.7 });
 
-  const rf = ga.rect({ x: c2.x0 + 146, y: (pA.cy + pB.cy) / 2 - 48, w: 116, h: 96, fill: "var(--benefit-wash)", at: 6.3 });
-  [-28, 0, 28].forEach((dx, i) => ga.icon("tree", { cx: rf.cx + dx, cy: rf.t + 34 - (i === 1 ? 4 : 0), size: 30, color: "var(--prussian)", at: 6.3 }));
-  ga.text("random forest", { x: rf.cx, y: rf.b - 30, anchor: "middle", role: "tick", weight: 500, color: "var(--prussian)", at: 6.3, anim: "pop" });
+  const rf = method(c2.x0 + 146, (pA.cy + pB.cy) / 2 - 46, "network", "ML model", 6.3);
   ga.connect(pA, rf, { toAt: 0.3, at: 6.0 });
   ga.connect(pB, rf, { toAt: 0.7, at: 6.0 });
 
