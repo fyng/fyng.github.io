@@ -2,8 +2,8 @@
 ---
 {%- comment -%}
   Local override of al_folio_core 1.0.15 _layouts/bib.liquid.
-  Only change: entries with a `graphical_abstract` field render the figure
-  (see _includes/graphical_abstract.liquid) at the end of the entry.
+  Only change: an entry with a `graphical_abstract` field (and no `preview`)
+  shows it in the preview slot (see _includes/graphical_abstract.liquid).
 {%- endcomment -%}
 <div class="row">
   {% if site.enable_publication_thumbnails %}
@@ -62,6 +62,8 @@
             alt=entry.preview
           %}
         {% endif %}
+      {% elsif entry.graphical_abstract %}
+        {% include graphical_abstract.liquid slug=entry.graphical_abstract title=entry.title %}
       {% endif %}
     </div>
   {% endif %}
@@ -411,10 +413,6 @@
       <div class="abstract hidden">
         <div style="text-align: center;">{% include video.liquid path=entry.video class="img-fluid rounded z-depth-1" controls=true %}</div>
       </div>
-    {% endif %}
-
-    {% if entry.graphical_abstract %}
-      {% include graphical_abstract.liquid slug=entry.graphical_abstract title=entry.title %}
     {% endif %}
   </div>
 </div>

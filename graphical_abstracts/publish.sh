@@ -10,4 +10,7 @@ mkdir -p "$dest"
 for ext in png mp4 webm; do
   cp "out/$slug.$ext" "$dest/$slug.$ext"
 done
+# small poster for the publication preview slot
+ff=${FFMPEG:-$(command -v ffmpeg || python3 -c "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())")}
+"$ff" -loglevel error -y -i "out/$slug.png" -vf "scale=640:-1:flags=lanczos" "$dest/$slug-thumb.png"
 echo "published $slug -> $dest"
