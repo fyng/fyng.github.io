@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pan-PreClinical atlas — graphical abstract</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kit/ga-kit.css">
+<script src="kit/icons.js"></script>
+<script src="kit/ga-kit.js"></script>
+<script src="kit/ga-bio.js"></script>
+</head>
+<body>
+<script>
+GA.build({
+  duration: 16, poster: 15,
+  title: "A pan-cancer ex vivo drug screen atlas",
+  desc: "The Pan-PreClinical (PPC) atlas assembles 2.1 million drug screen experiments on 1,982 ex vivo samples and 3,100 drugs, spanning 134 cancer indications, from 26 studies. A contrastive Bayesian model harmonizes the studies, embedding samples guided by primary site and drugs guided by mechanism, and identifies 303 tissue-specific drug sensitivities. Compared with cell line databases across 55 cancer subtypes, cell line screens favor drugs targeting highly proliferative cells and undervalue cell-cell communication targets (schematic slope chart).",
+}, (ga) => {
+  const B = GA.bio(ga);
+  // seeded random, so every render is identical
+  let seed = 7;
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+
+  // ---------------- header ----------------
+  const hd = ga.stack(ga.M, 44, { w: 1400 });
+  hd.text("PAN-PRECLINICAL ATLAS · BIORXIV 2026", { role: "kicker", at: 0.1, gap: 14 });
+  hd.text("Can we unify ex vivo drug screens across studies\ninto one atlas for functional precision oncology?", { role: "title", at: 0.1 });
+
+  const [c1, c2, c3] = ga.columns(3, { top: 204, bottom: 766, dividers: false });
+  const header = (c, num, head, at) => {
+    const n = ga.text(num, { x: c.x0, y: c.top, role: "head", color: "var(--prussian)", at });
+    ga.text(head, { x: n.r + 14, y: c.top, role: "head", at });
+    return c.top + 74;
+  };
+  const conclusion = (c, str, at) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at });
+
+  // ---------------- 01 · Atlas ----------------
+  header(c1, "01", "Atlas", 0.8);
+  const cs = 13, rows = 22, cols = 24;
+  const mx = B.matrix({ x: c1.x0 + 110, y: 330, rows, cols, cell: cs, at: 1.0 });
+  // each study screened its own samples (rows) against its own drug panel (columns)
+  const studies = [[0, 3, 0, 9], [4, 8, 4, 16], [9, 11, 10, 23], [12, 15, 0, 12], [16, 18, 6, 19], [19, 21, 14, 23]];
+  const blocks = studies.map(([r0, r1, k0, k1], i) => {
+    let m = "";
+    for (let r = r0; r <= r1; r++)
+      for (let k = k0; k <= k1; k++)
+        if (rnd() < 0.85) m += `<rect x="${mx.l + k * cs + 1.5}" y="${mx.t + r * cs + 1.5}" width="${cs - 3}" height="${cs - 3}" fill="var(--quantity)" opacity="${(0.2 + 0.8 * rnd()).toFixed(2)}"/>`;
+    m += `<rect x="${mx.l + k0 * cs}" y="${mx.t + r0 * cs}" width="${(k1 - k0 + 1) * cs}" height="${(r1 - r0 + 1) * cs}" fill="none" stroke="var(--ink-2)" stroke-width="1.5"/>`;
+    // studies start apart, then assemble into the atlas
+    const side = i % 2 ? 1 : -1;
+    B.moving(m, { appear: 1.3 + i * 0.1, at: 2.0 + i * 0.14, dx: side * (40 + 20 * (i % 3)), dy: (i - 2.5) * 14 });
+    return { x0: mx.l + k0 * cs, x1: mx.l + (k1 + 1) * cs, y0: mx.t + r0 * cs };
+  });
+  B.brace({ side: "left", x: mx.l - 10, y0: mx.t, y1: mx.b, at: 3.2 });
+  ga.text("1,982\nsamples", { x: mx.l - 34, y: mx.cy - 22, anchor: "end", role: "label", at: 3.2 });
+  B.brace({ side: "bottom", x0: mx.l, x1: mx.r, y: mx.b + 6, at: 3.2 });
+  ga.text("3,100 drugs", { x: mx.cx, y: mx.b + 26, anchor: "middle", role: "label", at: 3.2 });
+  ga.text("26 studies, one block each", { x: mx.l, y: mx.t - 30, role: "note", at: 3.5 });
+  conclusion(c1, "2.1M ex vivo drug screen experiments across 134 cancer indications", 4.0);
+
+  // ---------------- 02 · Harmonize ----------------
+  header(c2, "02", "Harmonize", 4.8);
+  const mb = ga.rect({ x: c2.x0, y: 292, w: 112, h: 92, fill: "var(--benefit-wash)", at: 5.2 });
+  ga.icon("network", { cx: mb.cx, cy: mb.t + 35, size: 44, color: "var(--prussian)", at: 5.2 });
+  ga.text("Bayesian model", { x: mb.cx, y: mb.b - 28, anchor: "middle", role: "tick", weight: 500, color: "var(--prussian)", at: 5.2, anim: "pop" });
+  const guide = ga.text("guided by primary site\nand drug mechanism", { x: mb.r + 72, y: mb.cy - 24, role: "label", at: 5.6 });
+  ga.connect(guide, mb, { from: "l", to: "r", at: 5.7 });
+
+  // sample embedding: contrastive learning pulls samples of one site together
+  const SITES = [["colon", "colon", 700, 560], ["lungs", "lungs", 880, 540], ["liver", "liver", 790, 650]];
+  const E = { x0: c2.x0 + 10, x1: c2.x1 - 10, y0: 450, y1: 690 };
+  ga.connect(mb, { x: mb.cx, y: E.y0 - 6 }, { from: "b", to: "t", at: 6.0 });
+  ga.text("Samples", { x: mb.cx + 18, y: E.y0 - 30, role: "label", at: 6.2 });
+  SITES.forEach(([k, icon, cx, cy], si) => {
+    const placed = [];
+    for (let i = 0; i < 14; i++) {
+      let px, py;
+      // rejection sampling: dots in a cluster never overlap
+      do { const a = rnd() * 2 * Math.PI, r = 34 * Math.sqrt(rnd()); px = cx + r * Math.cos(a); py = cy + r * Math.sin(a) * 0.8; }
+      while (placed.some(([qx, qy]) => Math.hypot(px - qx, py - qy) < 11));
+      placed.push([px, py]);
+      const sx = E.x0 + rnd() * (E.x1 - E.x0), sy = E.y0 + rnd() * (E.y1 - E.y0);
+      B.moving(`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="4.5" fill="var(--organ-${k})" stroke="var(--paper)" stroke-width="1"/>`,
+        { appear: 6.3 + rnd() * 0.3, at: 7.0 + si * 0.15, t: 1.1, dx: sx - px, dy: sy - py });
+    }
+  });
+  // site labels: icon beside each cluster, in the organ's registered colour
+  ga.icon("colon", { cx: 700 - 64, cy: 560, size: 30, color: "var(--organ-colon)", at: 8.3 });
+  ga.icon("lungs", { cx: 880 + 64, cy: 540, size: 30, color: "var(--organ-lungs)", at: 8.3 });
+  ga.icon("liver", { cx: 790 + 66, cy: 650, size: 30, color: "var(--organ-liver)", at: 8.3 });
+  conclusion(c2, "A contrastive Bayesian model harmonizes the studies and finds 303 tissue-specific drug sensitivities", 8.8);
+
+  // ---------------- 03 · Cell line bias ----------------
+  header(c3, "03", "Cell line bias", 9.6);
+  const xA = c3.x0 + 58, xB = c3.x0 + 226, top = 400, bot = 630;
+  B.monolayer({ cx: xA, cy: 300, w: 72, at: 10.0 });
+  B.organoid({ cx: xB, cy: 298, r: 26, at: 10.0 });
+  ga.text("cell lines", { x: xA, y: 336, anchor: "middle", role: "label", at: 10.1 });
+  ga.text("ex vivo", { x: xB, y: 336, anchor: "middle", role: "label", at: 10.1 });
+  ga.raw(`<path d="M${xA} ${top - 16}V${bot + 10}M${xB} ${top - 16}V${bot + 10}" stroke="var(--rule)" stroke-width="1.5"/>`, { at: 10.4, anim: "fade" });
+  const slope = (ya, yb, color, width, at) => {
+    ga.raw(`<path d="M${xA} ${ya}L${xB} ${yb}" stroke="${color}" stroke-width="${width}" stroke-linecap="round" pathLength="1" class="a-draw" style="--d:${at}s;--t:.8s"/>`, {});
+    ga.raw(`<circle cx="${xA}" cy="${ya}" r="4.5" fill="${color}" stroke="var(--paper)"/><circle cx="${xB}" cy="${yb}" r="4.5" fill="${color}" stroke="var(--paper)"/>`, { at, anim: "fade", t: 0.3 });
+  };
+  // other drug classes: roughly level (context)
+  [[478, 496], [520, 506], [560, 552], [590, 600], [450, 470]].forEach(([a, b], i) => slope(a, b, "var(--context)", 2, 10.7 + i * 0.06));
+  slope(top, 560, "var(--cat-2)", 2.5, 11.4);
+  slope(bot, 418, "var(--cat-1)", 2.5, 11.9);
+  ga.text("proliferation\ntargets", { x: xB + 16, y: 560 - 12, role: "label", color: "var(--cat-2-text)", at: 12.4 });
+  ga.text("cell–cell\ncommunication", { x: xB + 16, y: 418 - 12, role: "label", color: "var(--cat-1-text)", at: 12.5 });
+  ga.text("Relative sensitivity, 55 cancer subtypes (schematic)", { x: c3.x0, y: bot + 22, role: "cap", at: 10.6, anim: "fade" });
+  conclusion(c3, "Cell line screens favor drugs against proliferating cells and undervalue cell–cell communication targets", 12.9);
+
+  // ---------------- take-home ----------------
+  ga.text("Harmonized ex vivo screens reveal drug sensitivities that cell line screens systematically undervalue.", { x: ga.M, y: 816, w: 1472, role: "take", at: 13.6 });
+});
+</script>
+</body>
+</html>

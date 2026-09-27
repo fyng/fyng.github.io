@@ -90,7 +90,9 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
 - **Vocabulary:** `in` (rise 12 px and fade) for text; `pop` for icons and boxes;
   `draw` for arrows and curves; `grow` for bars; `fade` for chart frames and fields;
   `zoom` for an inset growing out of its source; `sweep` for a proportion wedge
-  filling clockwise from 12 o'clock. Nothing else.
+  filling clockwise from 12 o'clock; `move` for marks travelling into place when the
+  travel is the point (studies assembling into an atlas, samples clustering in an
+  embedding). Nothing else.
 - **Timing:** enter 0.6–0.8 s, draws 0.8–1.2 s, stagger 80 ms. Arrowheads appear
   as their line finishes. Chart frames come before the data, and labels come after
   the marks land.
@@ -117,6 +119,9 @@ explanation. The kit's `GA.bio` layer (`kit/ga-bio.js`) draws each of these.
 - **Tissue.** A silhouette in neutral wash with a slightly darker core for inner
   anatomy, outlined in `context`. Tissue is never coloured: colour is kept for the
   cell types measured in it.
+- **Model systems.** Drawn neutral (wash fill, ink-2 outline and nucleus), because the
+  comparison, not the system, carries colour. An **organoid** is a ring of cells around
+  a lumen; a **cell line** is a monolayer of flattened cells on a dish line.
 - **Spots (pixels).** Paper-filled rings with a `context` outline on a regular
   lattice inside the tissue.
 - **Zoom.** To look inside one thing, ink its outline, run two dotted tangent leaders
@@ -130,6 +135,8 @@ explanation. The kit's `GA.bio` layer (`kit/ga-bio.js`) draws each of these.
 - **Matrices.** A hairline grid in `rule` with a glyph at each row (a spot ring, a
   cell) and braces labelled with the dimension (*D*, *N*). Cells stay empty unless
   their values are the point; then they take the quantity ramp or the entity's colour.
+  When a matrix is assembled from sources (studies, batches), outline each source's
+  block in ink-2 so the patchwork and the missing entries both show.
 - **Model notation.** Variables are circles (r 26, ink-2 ring, paper fill; observed
   ones filled `rule`), labelled with `math` type. Plates are 1.5 px ink-2 rectangles
   with a 4 px radius and the index top-left (`d = 1…D`). Edges are the standard

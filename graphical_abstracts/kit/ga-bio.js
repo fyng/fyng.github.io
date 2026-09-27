@@ -64,13 +64,51 @@
     };
 
     // ---- cell: cytoplasm (family tint, 1.5px mark stroke) + offset nucleus (mark)
-    const cellMarkup = (cx, cy, r, k) =>
-      `<circle cx="${f1(cx)}" cy="${f1(cy)}" r="${r}" fill="${Cw(k)}" stroke="${C(k)}" stroke-width="1.5"/>` +
-      `<circle cx="${f1(cx + r * 0.1)}" cy="${f1(cy + r * 0.08)}" r="${f1(r * 0.5)}" fill="${C(k)}"/>`;
+    // k: a family member (1-4), or "neutral" for cells whose type is not the point
+    const cellMarkup = (cx, cy, r, k) => {
+      const [m, w] = k === "neutral" ? ["var(--ink-2)", "var(--wash)"] : [C(k), Cw(k)];
+      return `<circle cx="${f1(cx)}" cy="${f1(cy)}" r="${r}" fill="${w}" stroke="${m}" stroke-width="1.5"/>` +
+        `<circle cx="${f1(cx + r * 0.1)}" cy="${f1(cy + r * 0.08)}" r="${f1(r * 0.5)}" fill="${m}"/>`;
+    };
     B.cellMarkup = cellMarkup;
     B.cell = (o) => {
       const it = ga.raw(cellMarkup(o.cx, o.cy, o.r, o.k), { at: o.at, anim: o.anim || "pop", t: o.t });
       return Object.assign(it, { kind: "icon", name: `cell ${o.k}`, lint: o.lint !== false });
+    };
+
+    // ---- model systems, drawn neutral: an organoid (cells around a lumen) and a
+    // cell-line monolayer (flattened cells on a dish line)
+    B.organoid = (o) => {
+      const n = o.n || 8, R = o.r, rc = R * Math.sin(Math.PI / n) * 0.88;
+      let m = "";
+      for (let i = 0; i < n; i++) {
+        const a = (i / n) * 2 * Math.PI - Math.PI / 2;
+        m += cellMarkup(o.cx + (R - rc) * Math.cos(a), o.cy + (R - rc) * Math.sin(a), f1(rc), o.k || "neutral");
+      }
+      const it = ga.raw(m, { at: o.at, anim: o.anim || "pop", t: o.t });
+      return Object.assign(it, { kind: "icon", name: "organoid", lint: o.lint !== false });
+    };
+    B.monolayer = (o) => {
+      const n = o.n || 4, rx = o.w / (2 * n), ry = rx * 0.5, y = o.cy;
+      let m = `<path d="M${f1(o.cx - o.w / 2 - 6)} ${f1(y + ry + 2)}H${f1(o.cx + o.w / 2 + 6)}" stroke="var(--ink-2)" stroke-width="1.5" stroke-linecap="round"/>`;
+      for (let i = 0; i < n; i++) {
+        const x = o.cx - o.w / 2 + rx * (2 * i + 1);
+        m += `<ellipse cx="${f1(x)}" cy="${f1(y)}" rx="${f1(rx - 0.8)}" ry="${f1(ry)}" fill="var(--wash)" stroke="var(--ink-2)" stroke-width="1.5"/><ellipse cx="${f1(x + rx * 0.08)}" cy="${f1(y + 0.5)}" rx="${f1(rx * 0.38)}" ry="${f1(ry * 0.5)}" fill="var(--ink-2)"/>`;
+      }
+      const it = ga.raw(m, { at: o.at, anim: o.anim || "pop", t: o.t });
+      return Object.assign(it, { kind: "icon", name: "monolayer", lint: o.lint !== false });
+    };
+
+    // ---- move: a group that travels into place from (--mx, --my) away
+    // It fades in at its start position at `appear`, then moves at `at`.
+    B.moving = (markup, o) => {
+      const outer = ga.wrap(o.appear ?? o.at, "fade", 0.4);
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("class", "a-move");
+      g.style.cssText = `--d:${o.at}s;--t:${o.t || 0.9}s;--mx:${f1(o.dx)}px;--my:${f1(o.dy)}px`;
+      g.innerHTML = markup;
+      outer.appendChild(g);
+      return outer;
     };
 
     // ---- tissue: two fused lobes (a coronal section), neutral fill, spot lattice
