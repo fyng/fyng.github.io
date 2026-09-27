@@ -43,7 +43,8 @@ GA.build({
   // every tested pair is a dose-response curve, blanks were never tested
   const cw = 32, ch = 28, gap = 10;
   const SYS = [["cells", "patient cells", "1,574", 4], ["organoid", "organoids", "368", 2], ["xenograft", "xenograft cells", "37", 1]];
-  const MOD = [["chemo", 2], ["kinase", 2], ["epigenetic", 2], ["hormone", 2]];
+  const MOD = [["chemo", 2], ["epigenetic", 2], ["hormone", 2], ["kinase", 2]];
+  const ZR = 5, ZC = 7; // the cell that zooms into panel 2: a skin sample x a MEK/ERK inhibitor
   const gx = c1.x0 + 152, gy = 330;
   const colX = []; MOD.forEach(([, n], g) => { for (let k = 0; k < n; k++) colX.push(gx + (colX.length) * cw + g * gap); });
   const rowY = [], rowSys = []; SYS.forEach(([, , , n], g) => { for (let k = 0; k < n; k++) { rowY.push(gy + rowY.length * ch + g * gap); rowSys.push(g); } });
@@ -70,8 +71,8 @@ GA.build({
   ga.raw(grid, { at: 2.0, anim: "fade", t: 0.4, kind: "rect", lint: false });
   colX.forEach((x, j) => {
     let m = "";
-    rowY.forEach((y) => {
-      if (rnd() > 0.66) return;
+    rowY.forEach((y, i) => {
+      if (rnd() > 0.66 && !(i === ZR && j === ZC)) return;
       const f = resp(0.25 + rnd() * 0.5, 10), x0 = x + 5, y0 = y + 6, w = cw - 10, h = ch - 12;
       let d = "";
       for (let t = 0; t <= 12; t++) d += `${t ? "L" : "M"}${(x0 + (t / 12) * w).toFixed(1)} ${(y0 + (1 - f(t / 12)) * h).toFixed(1)}`;
@@ -81,12 +82,12 @@ GA.build({
   });
   // cancer type of each sample: a strip in the registered organ colour
   const ORG = ["lungs", "colon", "liver", "kidney", "thyroid"];
-  ga.raw(rowY.map((y, i) => `<rect x="${gx - 14}" y="${y + 2}" width="8" height="${ch - 4}" rx="2" fill="var(--organ-${ORG[(i * 3 + 1) % 5]})"/>`).join(""), { at: 3.0, anim: "fade" });
+  ga.raw(rowY.map((y, i) => `<rect x="${gx - 14}" y="${y + 2}" width="8" height="${ch - 4}" rx="2" fill="var(--organ-${i === ZR ? "skin" : ORG[(i * 3 + 1) % 5]})"/>`).join(""), { at: 3.0, anim: "fade" });
   const ly = gB + 30;
   [["lungs", "lungs"], ["colon", "colon"], ["liver", "liver"], ["kidney", "kidneys"], ["thyroid", "thyroid"]].forEach(([k, icon], i) =>
     ga.icon(icon, { cx: gx - 10 + i * 34, cy: ly, size: 26, color: `var(--organ-${k})`, at: 3.2 + i * 0.06 }));
-  ga.text("134 cancer types, 24 sites", { x: gx + 160, y: ly - 9, role: "note", at: 3.5 });
-  ga.text("each cell: viability across doses", { x: gx - 14, y: ly + 30, role: "note", at: 3.7 });
+  ga.text("134 cancer types, 24 sites", { x: gx - 14, y: ly + 22, role: "note", at: 3.5 });
+  ga.text("each cell: viability across doses", { x: gx - 14, y: ly + 46, role: "note", at: 3.7 });
   conclusion(c1, "26 studies, pooled into 2.1M measurements of 1,982 samples and 3,100 drugs", 4.3);
 
   // ---------------- 02 · Harmonize ----------------
@@ -103,11 +104,29 @@ GA.build({
   const exMol = ga.icon("molecule", { cx: mb.cx, cy: 438, size: 34, color: "var(--ink-2)", at: 6.2 });
   ga.connect(mb, exMol, { from: "b", to: "t", at: 6.0 });
   ga.text("MEK/ERK inhibitors", { x: exMol.r + 12, y: 427, role: "label", at: 6.2 });
-  const ex = GA.chart(ga, { x: c2.x0 + 40, y: 510, w: 340, h: 150, xd: [0, 1], yd: [0, 1.05], yTitle: "Viability", xTitle: "Dose (schematic)", at: 6.4 });
-  ex.fn(resp(0.68, 11), { color: "var(--context)", at: 6.8 });
-  ex.fn(resp(0.34, 11), { color: "var(--organ-skin)", at: 7.3 });
-  ex.label("other sites", 0.74, 0.92, { color: "var(--muted)", role: "label", at: 7.9 });
-  ex.label("skin tumors", 0.02, 0.28, { color: "var(--rose-600)", role: "label", at: 7.9 });
+  // the chart is the atlas cell, enlarged: it grows out of that cell
+  const stage = ga.svg.querySelector(".ga-stage"), before = stage.childNodes.length;
+  const ex = GA.chart(ga, { x: c2.x0 + 40, y: 510, w: 340, h: 150, xd: [0, 1], yd: [0, 1.05], yTitle: "Viability", xTitle: "Dose (schematic)", at: 6.6 });
+  // measured: a few doses, replicates scattered by noise; the model's smooth curve follows
+  const DOSES = [0.1, 0.3, 0.5, 0.7, 0.9];
+  const reps = (f, color) => DOSES.flatMap((x) => [0, 1, 2].map(() => [x + (rnd() - 0.5) * 0.02, Math.min(1.03, Math.max(0.01, f(x) + (rnd() - 0.5) * 0.16)), color]));
+  const fOther = resp(0.68, 11), fSkin = resp(0.34, 11);
+  ex.dots(reps(fOther, "var(--context)"), { r: 3.5, at: 7.0 });
+  ex.dots(reps(fSkin, "var(--organ-skin)"), { r: 3.5, at: 7.2 });
+  ex.fn(fOther, { color: "var(--context)", at: 7.6 });
+  ex.fn(fSkin, { color: "var(--organ-skin)", at: 7.9 });
+  ex.label("other sites", 0.74, 0.97, { color: "var(--muted)", role: "label", at: 8.4 });
+  ex.label("skin tumors", 0.02, 0.28, { color: "var(--rose-600)", role: "label", at: 8.4 });
+  {
+    const cx0 = colX[ZC], cy0 = rowY[ZR], zc = [cx0 + cw / 2, cy0 + ch / 2], cc = [ex.x0 + ex.w / 2, ex.y0 + ex.h / 2];
+    const g = ga.wrap(6.3, "zoom", 1.0);
+    g.style.setProperty("--zx", `${(zc[0] - cc[0]).toFixed(1)}px`);
+    g.style.setProperty("--zy", `${(zc[1] - cc[1]).toFixed(1)}px`);
+    [...stage.childNodes].slice(before, -1).forEach((n) => g.appendChild(n));
+    // the source cell, inked, and dotted leaders from its corners to the plot's
+    ga.raw(`<rect x="${cx0}" y="${cy0}" width="${cw}" height="${ch}" fill="none" stroke="var(--ink)" stroke-width="2"/>`, { at: 6.0, anim: "pop", t: 0.4 });
+    ga.raw(`<path d="M${cx0 + cw} ${cy0}L${ex.x0} ${ex.y0}M${cx0 + cw} ${cy0 + ch}L${ex.x0} ${ex.y1}" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="1 4" stroke-linecap="round"/>`, { at: 6.3, anim: "fade", t: 0.5 });
+  }
   conclusion(c2, "A Bayesian model harmonizes the studies and reveals 303 tissue-specific drug sensitivities", 8.5);
 
   // ---------------- 03 · Cell lines ----------------

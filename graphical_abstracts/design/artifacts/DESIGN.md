@@ -132,7 +132,14 @@ explanation. The kit's `GA.bio` layer (`kit/ga-bio.js`) draws each of these.
 - **Zoom.** To look inside one thing, ink its outline, run two dotted tangent leaders
   (muted, 1.5 px, `1 4` dash) to a circular inset (wash fill, ink-2 outline), and draw
   the contents inside. In motion the inset grows out of its source (`zoom`), so the
-  eye travels with it. Zoom stays within a panel.
+  eye travels with it. The inset may also be a whole chart: ink the source cell
+  (for example one cell of an atlas), run the leaders from its corners to the plot's,
+  and grow the chart out of it. Such a zoom may cross into the next panel when it
+  follows one object from overview to detail.
+- **Measurements and fits.** Show measured data as they are collected: a few doses,
+  a small dot for each replicate, scattered by noise. The model's fit is a smooth
+  line drawn after the dots land, in the same colour. No words are needed for the
+  difference.
 - **Proportion dials.** A wedge inside each spot shows one cell type's share of
   that spot, filled clockwise from 12 o'clock. Show one type per map and repeat the
   map as small multiples, labelled with the cell glyph and `k = 1`. A spot never
