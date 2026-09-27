@@ -23,16 +23,15 @@ GA.build({
   // ---------------- header ----------------
   const hd = ga.stack(ga.M, 44, { w: 1400 });
   hd.text("PRECISION SAFETY · MEDRXIV 2026", { role: "kicker", at: 0.1, gap: 14 });
-  hd.text("Can we predict individual adverse event risk from cancer therapy\nusing information at the point of treatment decision?", { role: "title", at: 0.1 });
-  ga.hrule(187);
+  hd.text("Predicting individual adverse event risk from cancer therapy\nat the point of treatment decision", { role: "title", at: 0.1 });
 
-  const [c1, c2, c3] = ga.columns(3, { top: 204, bottom: 766 });
-  const header = (c, step, head, cap, at) => {
-    const s = ga.stack(c.x0, c.top, { w: c.w });
-    s.text(step, { role: "step", at, gap: 10 });
-    s.text(head, { role: "head", at, gap: 8 });
-    s.text(cap, { role: "cap", at });
-    return s.y;
+  // no dividers: the gutters separate the panels
+  const [c1, c2, c3] = ga.columns(3, { top: 204, bottom: 766, dividers: false });
+  // panel header: number and title, nothing else
+  const header = (c, num, head, at) => {
+    const n = ga.text(num, { x: c.x0, y: c.top, role: "head", color: "var(--prussian)", at });
+    ga.text(head, { x: n.r + 14, y: c.top, role: "head", at });
+    return c.top + 74;
   };
   const conclusion = (c, str, at) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at });
   // Method box: wash fill, prussian icon over a short label (the same for every method)
@@ -47,7 +46,7 @@ GA.build({
     ga.raw(`<path d="M${x} ${y}h${w - 4}a4 4 0 0 1 4 4v${h - 8}a4 4 0 0 1 -4 4h${-(w - 4)}Z" fill="${fill}"/>`, { at, anim: "grow", t: 0.7 });
 
   // ---------------- 01 · MSK-Tox ----------------
-  let y = header(c1, "01 · Resource", "MSK-Tox", "LLM-extracted from clinical notes, >50,000 patients", 0.8);
+  let y = header(c1, "01", "MSK-Tox", 0.8);
   const rowY = y + 56;
   ga.icon("note", { cx: c1.x0 + 58, cy: rowY - 12, size: 80, color: "var(--ink)", at: 1.1, anim: "in", lint: false });
   ga.icon("note", { cx: c1.x0 + 50, cy: rowY - 4, size: 80, color: "var(--ink)", at: 1.25, anim: "in", lint: false });
@@ -80,10 +79,10 @@ GA.build({
   const events = [[0, "lungs", 0.42, 32], [1, "colon", 0.26, 22], [1, "liver", 0.78, 32], [2, "thyroid", 0.6, 22], [3, "adrenal", 0.9, 28], [4, "colon", 0.2, 30], [4, "thyroid", 0.5, 20]];
   events.forEach(([row, k, f, size], i) =>
     ga.icon(k, { cx: startX + 20 + f * (tl.x1 - startX - 40), cy: tl.y0 + row * tl.dy, size, color: ORGAN[k], at: 3.6 + i * 0.08 }));
-  conclusion(c1, "LLM extraction yields adverse event incidence, timing and grade at scale", 4.4);
+  conclusion(c1, "LLM extraction yields adverse event incidence, timing and grade in over 50,000 patients", 4.4);
 
   // ---------------- 02 · Clinical risk ----------------
-  y = header(c2, "02 · Clinical risk", "Adverse event–specific risk", "pretreatment clinical and demographic features", 5.0);
+  y = header(c2, "02", "Clinical risk", 5.0);
   const pA = ga.icon("person", { cx: c2.x0 + 30, cy: y + 124, size: 58, at: 5.4, anim: "in" });
   const pB = ga.icon("person", { cx: c2.x0 + 30, cy: y + 320, size: 58, at: 5.4, anim: "in" });
   ga.text("PT A", { x: pA.cx, y: pA.b + 6, anchor: "middle", role: "tag", at: 5.4 });
@@ -109,10 +108,10 @@ GA.build({
   const rB = profile(pB.cy - 50, [0.14, 0.88, 0.38, 0.55], 7.3);
   ga.connect(rf, rA, { fromAt: 0.3, at: 6.7 });
   ga.connect(rf, rB, { fromAt: 0.7, at: 6.7 });
-  conclusion(c2, "Machine learning integrates clinical and demographic risk factors specific to each adverse event", 8.2);
+  conclusion(c2, "Machine learning integrates pretreatment clinical and demographic risk factors specific to each adverse event", 8.2);
 
   // ---------------- 03 · Germline risk ----------------
-  y = header(c3, "03 · Germline risk", "Germline susceptibility", "matched tumor–normal sequencing, 35,669 patients", 9.0);
+  y = header(c3, "03", "Germline risk", 9.0);
   const gy = y + 58;
   const dna = ga.icon("dna", { cx: c3.x0 + 22, cy: gy, size: 58, color: "var(--prussian)", at: 9.4, anim: "in" });
   const hla = ga.pill("HLA-DRB1*15", { x: dna.r + 14, cy: gy, role: "tag", size: 16, padX: 18, h: 44, fill: "var(--accent-wash)", color: "var(--accent-text)", at: 9.8 });
@@ -129,11 +128,10 @@ GA.build({
   ch.line(car, { curve: "step", color: "var(--harm)", at: 11.2 });
   ch.label("carriers", 7.5, 0.8, { dx: 10, color: "var(--harm-text)", at: 12.3 });
   ch.label("non-carriers", 7.5, 0.13, { dx: 10, color: "var(--muted)", at: 12.3 });
-  conclusion(c3, "Germline variants predict propensity for immune-related adrenal insufficiency", 12.8);
+  conclusion(c3, "In 35,669 patients, germline variants predict propensity for immune-related adrenal insufficiency", 12.8);
 
   // ---------------- take-home ----------------
-  ga.hrule(794);
-  ga.text("A {*precision safety*} paradigm is needed to complement response prediction in personalized medicine.", { x: ga.M, y: 816, w: 1472, role: "take", at: 13.4 });
+  ga.text("A precision safety paradigm is needed to complement response prediction in personalized medicine.", { x: ga.M, y: 816, w: 1472, role: "take", at: 13.4 });
 });
 </script>
 </body>
