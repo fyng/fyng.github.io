@@ -101,7 +101,7 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
 ## Iconography
 
 - Use Health Icons (MIT) from `@iconify-json/healthicons`, on a 48-unit grid, as
-  solid silhouettes in a single colour. Draw custom icons (`adrenal`, `note`, `tree`)
+  solid silhouettes in a single colour. Draw custom icons (`adrenal`, `note`, `tree`, `molecule`: a drug as a skeletal structure)
   in the same style and add them to `kit/icons.js`.
 - Colour an icon only when it is an entity with a registered colour (organs). Otherwise
   use ink or prussian.

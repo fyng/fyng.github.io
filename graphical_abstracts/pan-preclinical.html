@@ -53,9 +53,12 @@ GA.build({
     return { x0: mx.l + k0 * cs, x1: mx.l + (k1 + 1) * cs, y0: mx.t + r0 * cs };
   });
   B.brace({ side: "left", x: mx.l - 10, y0: mx.t, y1: mx.b, at: 3.2 });
+  // the portal's motifs: samples as organoids, drugs as skeletal molecules
+  B.organoid({ cx: mx.l - 62, cy: mx.cy - 48, r: 16, n: 7, at: 3.2 });
   ga.text("1,982\nsamples", { x: mx.l - 34, y: mx.cy - 22, anchor: "end", role: "label", at: 3.2 });
   B.brace({ side: "bottom", x0: mx.l, x1: mx.r, y: mx.b + 6, at: 3.2 });
-  ga.text("3,100 drugs", { x: mx.cx, y: mx.b + 26, anchor: "middle", role: "label", at: 3.2 });
+  const dl = ga.text("3,100 drugs", { x: mx.cx + 16, y: mx.b + 26, anchor: "middle", role: "label", at: 3.2 });
+  ga.icon("molecule", { cx: dl.l - 22, cy: dl.cy - 1, size: 30, color: "var(--ink-2)", at: 3.2 });
   ga.text("26 studies, one block each", { x: mx.l, y: mx.t - 30, role: "note", at: 3.5 });
   conclusion(c1, "2.1M ex vivo drug screen experiments across 134 cancer indications", 4.0);
 
