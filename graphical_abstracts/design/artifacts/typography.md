@@ -42,7 +42,7 @@ never from a second face.
 |---|---|---|---|---|
 | `kicker` | 500, caps, +12 % tracking | 13/17 | muted | `PROJECT · VENUE YEAR` above the title |
 | `title` | 500, −1.5 % tracking | 38/44 | ink | What the work is, as a statement or question. ≤ 2 lines, break by hand at a phrase boundary |
-| `head` | 500, −1 % tracking | 28/34 | ink | Panel header: number in prussian, then a noun phrase (`01  Multi-cellular pixels`) |
+| `head` | 500, −1 % tracking | 28/34 | ink | Panel header: number in prussian, then the panel title (`01  Pan-cancer drug screen atlas`); ≤ 2 lines. See `DESIGN.md`, *Writing* |
 | `body` | 400 | 17/24 | ink | Panel conclusions (the findings) |
 | `label` | 400 | 17/24 | ink-2 | Names on the diagram |
 | `cap` | 400 | 15/20 | muted | Scale, n, "schematic", secondary notes |

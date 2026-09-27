@@ -68,14 +68,48 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
 | Numbers with units and denominators | Bare percentages without an n |
 | The paper's own terms, defined once (ICI, AUROC) | New jargon invented for the figure |
 
+## Writing
+
+Every word on a figure is one of six kinds of text, each with one job.
+
+| Text | Job | Form | Examples |
+|---|---|---|---|
+| **Title** | Say what the work is about | The question it answers, or a statement of the work, naming its scope. ≤ 2 lines | "How can we integrate ex vivo drug screens across model systems, cancer types, and drug modalities for treatment insights?" |
+| **Panel title** | Say what the panel shows, in the field's terms | A resource, a method, or a finding as a short active claim. ≤ 6 words where possible | Resource: "Pan-cancer drug screen atlas". Method: "Bayesian drug response modeling", "Machine learning risk model". Finding: "Immortalization biases cell line vulnerability", "Topic model infers cell type mixture" |
+| **Conclusion** | State the panel's result | One sentence: the paper's claim, with its hedge and its key number | "In 35,669 patients, germline variants predict propensity for immune-related adrenal insufficiency" |
+| **Take-home** | Say why it matters | One plain sentence, no styling | "A precision safety paradigm is needed to complement response prediction in personalized medicine." |
+| **Label** | Name a mark | 1–3 words, next to the mark | "organoids", "skin tumors" |
+| **Note** | Decode what the drawing cannot | 1–3 words, muted, with a leader | "observed gene" |
+
+Rules:
+
+- **Name the science, not the brand.** A panel title a reader could search for
+  ("LLM diagnosis extraction") beats a project name ("MSK-Tox") or a one-word stage
+  ("Harmonize", "Atlas"). Brand names belong in the kicker.
+- **Be specific about the method.** Say which kind of model ("Bayesian", "topic
+  model", "machine learning"), and what it acts on ("drug response", "cell type
+  mixture").
+- **A finding title is a claim** with a subject and an active verb ("Immortalization
+  biases…"). Keep the paper's hedge in the conclusion underneath.
+- **One term per thing.** Once a figure calls it a "spot", it is a spot in every
+  panel, label and conclusion.
+- **Abbreviations** only where the field uses them unexpanded (ST, LLM, ICI, irAE);
+  spell out the rest.
+- **Hyphenate compound modifiers** before a noun ("cell-type proportions",
+  "dose-response curve"), not after it ("proportions of each cell type").
+- **Numbers** come from the paper, with denominators ("35,669 patients").
+- **Don't repeat.** No label restates the panel title or the conclusion.
+
 ## Canvas
 
 - **1600 × 900 (16:9)**, white paper, 64 px margins, 8 px spacing grid.
 - **Header, y 44–187:** a kicker (`PROJECT · VENUE YEAR`) and a title of at most two
   lines. No rule underneath.
 - **Panels, y 204–766:** three columns of 437 px with 80 px gutters, no dividers.
-  Each panel has a one-line header, the number in prussian and a title in `head`
-  (`01  Multi-cellular pixels`), then the visual, and the conclusion at the foot.
+  Each panel has a header, the number in prussian and a title in `head`
+  (`01  Pan-cancer drug screen atlas`), wrapping to two lines at most, then the
+  visual, and the conclusion at the foot. When any panel title wraps, every panel's
+  visual starts below a two-line header, so the panels stay aligned.
   No step word, no caption line.
 - **Take-home, y 812–860:** one plain sentence in `take` type.
 - Figures are always light. On a dark page, they sit on their own paper card; there is

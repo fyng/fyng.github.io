@@ -29,8 +29,8 @@ GA.build({
   // panel header: number and title, nothing else
   const header = (c, num, head, at) => {
     const n = ga.text(num, { x: c.x0, y: c.top, role: "head", color: "var(--prussian)", at });
-    ga.text(head, { x: n.r + 14, y: c.top, role: "head", at });
-    return c.top + 74;
+    ga.text(head, { x: n.r + 14, y: c.top, w: c.x1 - n.r - 14, role: "head", at }); // wraps to two lines at most
+    return c.top + 104; // content starts below a two-line header in every panel
   };
   const conclusion = (c, str, at) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at });
 
@@ -44,7 +44,7 @@ GA.build({
   };
 
   // ---------------- 01 · Data ----------------
-  let y = header(c1, "01", "Multi-cellular pixels", 0.8);
+  let y = header(c1, "01", "Spot-based ST technologies", 0.8);
   const tis = B.tissue({ cx: c1.x0 + 108, cy: y + 104, w: 216, h: 172, pitch: 17, at: 1.1 });
   B.spots(tis, { at: 1.3 });
   // the pixel we zoom into: a mixed spot on the right lobe
@@ -69,7 +69,7 @@ GA.build({
   conclusion(c1, "Pixels pool several cells, hiding cell-type-specific spatial patterns", 5.0);
 
   // ---------------- 02 · Model ----------------
-  y = header(c2, "02", "Cell types as topics", 5.6);
+  y = header(c2, "02", "Topic model infers cell type mixture", 5.6);
   const ny = y + 244, X = [c2.x0 + 30, c2.x0 + 146, c2.x0 + 262, c2.x0 + 378];
   B.plate({ x0: X[1] - 44, y0: ny - 80, x1: c2.x1 - 4, y1: ny + 64, label: "d = 1…D", at: 6.3 });
   B.plate({ x0: X[2] - 40, y0: ny - 56, x1: c2.x1 - 16, y1: ny + 48, label: "m = 1…M", at: 6.5 });
@@ -92,7 +92,7 @@ GA.build({
   conclusion(c2, "Latent Dirichlet allocation learns cell types from the pixels alone", 9.4);
 
   // ---------------- 03 · Output ----------------
-  y = header(c3, "03", "Profiles and proportions", 10.0);
+  y = header(c3, "03", "Deconvolve cell type proportions", 10.0);
   // β: genes per cell type (each row in its type's colour; darker = higher)
   const by = y + 34;
   B.math("β", { x: c3.x0, y: by - 30, at: 10.4 });
@@ -105,12 +105,12 @@ GA.build({
   });
 
   // θ: proportion of each cell type in every pixel, one map per type
-  const ty = bm.b + 30;
+  const ty = bm.b + 24;
   B.math("θ", { x: c3.x0, y: ty, at: 11.3 });
   ga.text("proportion per pixel", { x: c3.x0 + 18, y: ty, role: "label", at: 11.3 });
-  const mw = 150, mh = 112, gx = 218;
+  const mw = 134, mh = 100, gx = 218;
   [0, 1, 2, 3].forEach((k) => {
-    const ox = c3.x0 + 44 + (k % 2) * gx, oy = ty + 36 + Math.floor(k / 2) * (mh + 16);
+    const ox = c3.x0 + 44 + (k % 2) * gx, oy = ty + 34 + Math.floor(k / 2) * (mh + 12);
     const t = B.tissue({ cx: ox + mw / 2, cy: oy + mh / 2, w: mw, h: mh, pitch: 11.5, spotR: 4.3, core: false, at: 11.6 });
     B.spots(t, { at: 11.6, stagger: 0.02 });
     B.dials(t, (s) => share(s)[k], { k: k + 1, at: 12.2 + k * 0.35 });

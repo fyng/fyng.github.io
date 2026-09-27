@@ -30,7 +30,7 @@ GA.build({
   // panel header: number and title, nothing else
   const header = (c, num, head, at) => {
     const n = ga.text(num, { x: c.x0, y: c.top, role: "head", color: "var(--prussian)", at });
-    ga.text(head, { x: n.r + 14, y: c.top, role: "head", at });
+    ga.text(head, { x: n.r + 14, y: c.top, w: c.x1 - n.r - 14, role: "head", at }); // wraps to two lines at most
     return c.top + 74;
   };
   const conclusion = (c, str, at) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at });
@@ -46,7 +46,7 @@ GA.build({
     ga.raw(`<path d="M${x} ${y}h${w - 4}a4 4 0 0 1 4 4v${h - 8}a4 4 0 0 1 -4 4h${-(w - 4)}Z" fill="${fill}"/>`, { at, anim: "grow", t: 0.7 });
 
   // ---------------- 01 · MSK-Tox ----------------
-  let y = header(c1, "01", "MSK-Tox", 0.8);
+  let y = header(c1, "01", "LLM diagnosis extraction", 0.8);
   const rowY = y + 56;
   ga.icon("note", { cx: c1.x0 + 58, cy: rowY - 12, size: 80, color: "var(--ink)", at: 1.1, anim: "in", lint: false });
   ga.icon("note", { cx: c1.x0 + 50, cy: rowY - 4, size: 80, color: "var(--ink)", at: 1.25, anim: "in", lint: false });
@@ -82,7 +82,7 @@ GA.build({
   conclusion(c1, "LLM extraction yields adverse event incidence, timing and grade in over 50,000 patients", 4.4);
 
   // ---------------- 02 · Clinical risk ----------------
-  y = header(c2, "02", "Clinical risk", 5.0);
+  y = header(c2, "02", "Machine learning risk model", 5.0);
   const pA = ga.icon("person", { cx: c2.x0 + 30, cy: y + 124, size: 58, at: 5.4, anim: "in" });
   const pB = ga.icon("person", { cx: c2.x0 + 30, cy: y + 320, size: 58, at: 5.4, anim: "in" });
   ga.text("PT A", { x: pA.cx, y: pA.b + 6, anchor: "middle", role: "tag", at: 5.4 });
@@ -111,7 +111,7 @@ GA.build({
   conclusion(c2, "Machine learning integrates pretreatment clinical and demographic risk factors specific to each adverse event", 8.2);
 
   // ---------------- 03 · Germline risk ----------------
-  y = header(c3, "03", "Germline risk", 9.0);
+  y = header(c3, "03", "Germline risk factor for irAE", 9.0);
   const gy = y + 58;
   const dna = ga.icon("dna", { cx: c3.x0 + 22, cy: gy, size: 58, color: "var(--prussian)", at: 9.4, anim: "in" });
   const hla = ga.pill("HLA-DRB1*15", { x: dna.r + 14, cy: gy, role: "tag", size: 16, padX: 18, h: 44, fill: "var(--accent-wash)", color: "var(--accent-text)", at: 9.8 });
