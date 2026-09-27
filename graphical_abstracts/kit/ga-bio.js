@@ -99,6 +99,20 @@
       return Object.assign(it, { kind: "icon", name: "monolayer", lint: o.lint !== false });
     };
 
+    // dissociated patient-derived cells: three loose cells
+    B.cells = (o) => {
+      const r = o.r || 7, m = [[-r * 1.15, r * 0.55], [r * 1.15, r * 0.55], [0, -r * 1.05]].map(([dx, dy]) => cellMarkup(o.cx + dx, o.cy + dy, r, "neutral")).join("");
+      const it = ga.raw(m, { at: o.at, anim: o.anim || "pop", t: o.t });
+      return Object.assign(it, { kind: "icon", name: "cells", lint: o.lint !== false });
+    };
+    // xenograft-derived cells: a cell beside a small mouse silhouette
+    B.xenograft = (o) => {
+      const k = (o.size || 30) / 30, x = o.cx - 15 * k, y = o.cy - 8 * k;
+      const mouse = `<g transform="translate(${f1(x)} ${f1(y)}) scale(${f1(k)})"><ellipse cx="14" cy="10" rx="9" ry="6" fill="var(--ink-2)"/><circle cx="24" cy="7" r="4.2" fill="var(--ink-2)"/><circle cx="23" cy="2.6" r="2.4" fill="var(--ink-2)"/><path d="M5 11C1 12 0 15 3 16" fill="none" stroke="var(--ink-2)" stroke-width="1.5" stroke-linecap="round"/></g>`;
+      const it = ga.raw(mouse + cellMarkup(o.cx + 13 * k, o.cy + 7 * k, 6 * k, "neutral"), { at: o.at, anim: o.anim || "pop", t: o.t });
+      return Object.assign(it, { kind: "icon", name: "xenograft", lint: o.lint !== false });
+    };
+
     // ---- move: a group that travels into place from (--mx, --my) away
     // It fades in at its start position at `appear`, then moves at `at`.
     B.moving = (markup, o) => {

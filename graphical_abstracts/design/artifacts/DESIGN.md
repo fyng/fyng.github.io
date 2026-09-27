@@ -120,7 +120,13 @@ explanation. The kit's `GA.bio` layer (`kit/ga-bio.js`) draws each of these.
   cell types measured in it.
 - **Model systems.** Drawn neutral (wash fill, ink-2 outline and nucleus), because the
   comparison, not the system, carries colour. An **organoid** is a ring of cells around
-  a lumen; a **cell line** is a monolayer of flattened cells on a dish line.
+  a lumen; a **cell line** is a monolayer of flattened cells on a dish line;
+  **patient-derived cells** are three loose cells; **xenograft-derived cells** are a
+  cell beside a small mouse.
+- **Screen atlases.** Samples as rows, drugs as columns. Group rows by model system
+  and columns by drug modality, with small gaps between groups and a label on each;
+  mark each row's cancer type with a strip in its registered organ colour. A tested
+  pair is a small dose-response curve; an untested pair stays blank.
 - **Spots (pixels).** Paper-filled rings with a `context` outline on a regular
   lattice inside the tissue.
 - **Zoom.** To look inside one thing, ink its outline, run two dotted tangent leaders
