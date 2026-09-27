@@ -61,8 +61,8 @@ text { font-family: var(--sans); fill: var(--ink); }
 </head>
 <body>
 <svg class="ga" viewBox="0 0 1600 900" role="img" aria-labelledby="ga-title ga-desc" style="--dur:16s">
-<title id="ga-title">Population-scale precision safety in oncology</title>
-<desc id="ga-desc">Clinical notes from over 50,000 patients are converted by a large language model into MSK-Tox, a record of the incidence, timing and grade of therapy toxicities. Pretreatment clinical features predict each patient's individual toxicity risk, and germline variants confer risk through organ-intrinsic and immune-mediated modes, such as HLA-DRB1*15 and adrenal insufficiency.</desc>
+<title id="ga-title">Precision safety in oncology</title>
+<desc id="ga-desc">An LLM extracts the incidence, timing and grade of adverse events from clinical notes of over 50,000 patients (MSK-Tox). A random forest integrates pretreatment clinical and demographic risk factors specific to each adverse event. In 35,669 patients with germline sequencing, HLA-DRB1*15 predicts immune-related adrenal insufficiency on immune checkpoint inhibitors. Precision safety should complement response prediction in personalized medicine.</desc>
 <defs>
   <marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#1f4e79" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
   <marker id="ahv" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#d0503a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -90,10 +90,11 @@ text { font-family: var(--sans); fill: var(--ink); }
 <g class="stage">
   <!-- ======================= Header ======================= -->
   <g class="in" style="--d:.1s">
-    <text x="64" y="74" class="kicker">PRECISION SAFETY · MEDRXIV 2026</text>
-    <text x="64" y="128" class="serif" font-size="48">Who will be harmed by cancer therapy, <tspan font-style="italic" fill="#d0503a">and can we tell before it starts?</tspan></text>
+    <text x="64" y="62" class="kicker">PRECISION SAFETY · MEDRXIV 2026</text>
+    <text x="64" y="108" class="serif" font-size="40">Can we predict individual adverse event risk from cancer therapy</text>
+    <text x="64" y="152" class="serif" font-size="40">using information at the point of treatment decision?</text>
   </g>
-  <line x1="64" y1="168" x2="1536" y2="168" class="hair"/>
+  <line x1="64" y1="180" x2="1536" y2="180" class="hair"/>
   <line x1="548" y1="200" x2="548" y2="760" class="hair"/>
   <line x1="1060" y1="200" x2="1060" y2="760" class="hair"/>
 
@@ -101,7 +102,7 @@ text { font-family: var(--sans); fill: var(--ink); }
   <g class="in" style="--d:.7s">
     <text x="64" y="214" class="step">01 · RESOURCE</text>
     <text x="64" y="256" class="h">MSK-Tox</text>
-    <text x="64" y="284" class="cap">LLM-read clinical notes, &gt;50,000 patients</text>
+    <text x="64" y="284" class="cap">LLM-extracted from clinical notes, adverse events extracted from clinical notes by an LLM, &gt;50,000 patientsgt;50,000 patients</text>
   </g>
   <g class="in" style="--d:1.1s"><use href="#note" x="84" y="310"/></g>
   <g class="in" style="--d:1.25s"><use href="#note" x="72" y="322"/></g>
@@ -149,8 +150,8 @@ text { font-family: var(--sans); fill: var(--ink); }
   <!-- ======================= 02 · Clinical risk ======================= -->
   <g class="in" style="--d:5.0s">
     <text x="588" y="214" class="step">02 · CLINICAL RISK</text>
-    <text x="588" y="256" class="h">Risk is predictable</text>
-    <text x="588" y="284" class="cap">from features known before the first dose</text>
+    <text x="588" y="256" class="h">Adverse event–specific risk</text>
+    <text x="588" y="284" class="cap">clinical and demographic features before treatment</text>
   </g>
   <g class="in" style="--d:5.4s">
     <use href="#person" x="616" y="448" style="color:#16181d"/>
@@ -195,46 +196,47 @@ text { font-family: var(--sans); fill: var(--ink); }
   <rect x="962" y="616" width="36" height="14" rx="3" fill="#c98f1f" class="grow" style="--d:7.7s"/>
   <rect x="962" y="642" width="52" height="14" rx="3" fill="#8a5cb8" class="grow" style="--d:7.8s"/>
   <g class="in" style="--d:8.1s">
-    <text x="588" y="740" class="lbl"><tspan font-weight="500" style="fill:#d0503a">Individual</tspan> risk profiles, not one-size-fits-all</text>
+    <text x="588" y="728" class="lbl" style="fill:#16181d">Machine learning integrates clinical and demographic</text>
+    <text x="588" y="752" class="lbl" style="fill:#16181d">risk factors specific to each adverse event</text>
   </g>
 
   <!-- ======================= 03 · Germline risk ======================= -->
   <g class="in" style="--d:9.0s">
     <text x="1100" y="214" class="step">03 · GERMLINE RISK</text>
-    <text x="1100" y="256" class="h">Inherited susceptibility</text>
-    <text x="1100" y="284" class="cap">matched germline sequencing, ~36,000 patients</text>
+    <text x="1100" y="256" class="h">Germline susceptibility</text>
+    <text x="1100" y="284" class="cap">matched tumor–normal sequencing, 35,669 patients</text>
   </g>
-  <g class="in" style="--d:9.5s">
-    <text x="1100" y="344" font-family="IBM Plex Mono" font-size="14" font-weight="500" letter-spacing="2" style="fill:#4a4e58">ORGAN-INTRINSIC</text>
-    <use href="#dna" x="1126" y="430"/>
+  <g class="in" style="--d:9.5s"><use href="#dna" x="1122" y="370"/></g>
+  <g class="pop" style="--d:9.9s">
+    <rect x="1164" y="348" width="160" height="44" rx="22" fill="#fbe9e5"/>
+    <text x="1244" y="376" text-anchor="middle" font-family="IBM Plex Mono" font-size="16" font-weight="500" style="fill:#d0503a">HLA-DRB1*15</text>
   </g>
-  <g class="in" style="--d:9.9s">
-    <rect x="1172" y="372" width="132" height="30" rx="15" fill="#f4f5f7"/><text x="1238" y="392" text-anchor="middle" class="cap" style="fill:#4a4e58">chemotherapy</text>
-    <rect x="1172" y="414" width="132" height="30" rx="15" fill="#f4f5f7"/><text x="1238" y="434" text-anchor="middle" class="cap" style="fill:#4a4e58">targeted</text>
-    <rect x="1172" y="456" width="132" height="30" rx="15" fill="#f4f5f7"/><text x="1238" y="476" text-anchor="middle" class="cap" style="fill:#4a4e58">immunotherapy</text>
-  </g>
-  <path d="M1310 387 C1340 390 1346 422 1374 428" class="arrow draw" pathLength="1" style="--d:10.3s"/>
-  <path d="M1310 429 H1374" class="arrow draw" pathLength="1" marker-end="url(#ah)" style="--d:10.3s"/>
-  <path d="M1310 471 C1340 468 1346 436 1374 430" class="arrow draw" pathLength="1" style="--d:10.3s"/>
-  <g class="pop" style="--d:10.7s"><use href="#o-liver" transform="translate(1416 430) scale(1.25)" style="color:var(--c4)"/></g>
-  <g class="in" style="--d:10.9s"><text x="1446" y="420" class="cap">same organ,</text><text x="1446" y="440" class="cap">any therapy</text></g>
+  <path d="M1334 370 H1386" class="arrow draw" pathLength="1" marker-end="url(#ahv)" style="--d:10.2s;stroke:#d0503a"/>
+  <g class="in" style="--d:10.3s"><text x="1360" y="354" text-anchor="middle" class="cap" font-size="13">ICI</text></g>
+  <g class="pop" style="--d:10.5s"><use href="#o-adrenal" transform="translate(1420 370) scale(1.2)" style="color:var(--c2)"/></g>
+  <g class="in" style="--d:10.6s"><text x="1448" y="364" class="cap">adrenal</text><text x="1448" y="384" class="cap">insufficiency</text></g>
 
-  <g class="in" style="--d:11.4s">
-    <text x="1100" y="552" font-family="IBM Plex Mono" font-size="14" font-weight="500" letter-spacing="2" style="fill:#4a4e58">IMMUNE-MEDIATED</text>
-    <use href="#dna" x="1126" y="636"/>
+  <!-- schematic cumulative incidence: carriers vs non-carriers (no values implied) -->
+  <g class="in" style="--d:10.9s">
+    <text x="1130" y="450" class="cap">cumulative incidence (schematic)</text>
+    <path d="M1130 470 V680 H1500" fill="none" stroke="#16181d" stroke-width="1.5"/>
+    <text x="1500" y="704" text-anchor="end" class="cap">time on ICI →</text>
   </g>
-  <g class="pop" style="--d:11.8s">
-    <rect x="1172" y="614" width="160" height="44" rx="22" fill="#fbe9e5"/>
-    <text x="1252" y="642" text-anchor="middle" font-family="IBM Plex Mono" font-size="16" font-weight="500" style="fill:#d0503a">HLA-DRB1*15</text>
+  <path d="M1132 678 H1190 V668 H1250 V652 H1300 V630 H1350 V606 H1400 V588 H1450 V574 H1496" fill="none" stroke="#d0503a" stroke-width="2.5" stroke-linejoin="round" class="draw" pathLength="1" style="--d:11.2s;--t:1.2s"/>
+  <path d="M1132 679 H1220 V675 H1300 V670 H1380 V664 H1440 V660 H1496" fill="none" stroke="#8a8e98" stroke-width="2.5" stroke-linejoin="round" class="draw" pathLength="1" style="--d:11.2s;--t:1.2s"/>
+  <g class="in" style="--d:12.3s">
+    <text x="1496" y="562" text-anchor="end" class="cap" style="fill:#d0503a">HLA-DRB1*15 carriers</text>
+    <text x="1496" y="650" text-anchor="end" class="cap">non-carriers</text>
   </g>
-  <path d="M1340 636 H1380" class="arrow draw" pathLength="1" marker-end="url(#ahv)" style="--d:12.2s;stroke:#d0503a"/>
-  <g class="pop" style="--d:12.5s"><use href="#o-adrenal" transform="translate(1416 636) scale(1.25)" style="color:var(--c2)"/></g>
-  <g class="in" style="--d:12.7s"><text x="1446" y="628" class="cap">adrenal</text><text x="1446" y="648" class="cap">insufficiency</text></g>
+  <g class="in" style="--d:12.8s">
+    <text x="1100" y="728" class="lbl" style="fill:#16181d">Germline variants predict propensity for</text>
+    <text x="1100" y="752" class="lbl" style="fill:#16181d">immune-related adrenal insufficiency</text>
+  </g>
 
   <!-- ======================= Takeaway ======================= -->
   <line x1="64" y1="790" x2="1536" y2="790" class="hair"/>
   <g class="in" style="--d:13.4s">
-    <text x="64" y="840" class="serif" font-size="32">Toxicity can be anticipated, like response: the basis for <tspan font-style="italic" style="fill:#d0503a">precision safety.</tspan></text>
+    <text x="64" y="840" class="serif" font-size="32">A <tspan font-style="italic" style="fill:#d0503a">precision safety</tspan> paradigm is needed to complement response prediction in personalized medicine.</text>
   </g>
 </g>
 </svg>
