@@ -69,9 +69,15 @@
   height: 100%;
   display: block;
 }
+.ga-expanded.is-pending img {
+  visibility: hidden;
+}
+/* No crossfade: the video's last frame and the poster are the same image, so the
+   swap is invisible. The idle video never takes clicks, so the poster can be
+   right-clicked, long-pressed, copied or saved. */
 .ga-expanded video {
   opacity: 0;
-  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 .ga-expanded.is-playing video {
   opacity: 1;
