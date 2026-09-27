@@ -5,7 +5,11 @@ What makes that figure work is that it **draws the actual objects**: the tissue,
 pixel, the cells inside it, the matrix and the model, and it lets muted notes explain
 the notation. These additions give Lamina the same vocabulary. They are implemented
 in `kit/ga-bio.js` and used by `stdeconvolve.html`. The one thing not carried over is
-the panel lettering (a, b, c, d); Lamina keeps its `01 · STEP` labels.
+the panel lettering (a, b, c, d); Lamina panels are numbered `01  Title`.
+
+The paper figure also says the point with **fewer words and fewer lines**, which is now a
+core principle (`DESIGN.md` §7). These components exist so the drawing can carry the
+explanation; label only what the drawing cannot say.
 
 | # | Proposal | Rule | Kit |
 |---|---|---|---|
@@ -16,8 +20,8 @@ the panel lettering (a, b, c, d); Lamina keeps its `01 · STEP` labels.
 | 5 | **Zoom inset** | The source ring is inked, dotted tangent leaders (muted, `1 4`) run to a circular inset, and the inset grows out of its source | `B.zoom` + `zoom` motion |
 | 6 | **Matrix glyph** | Hairline grid in `rule`, row-marker glyphs, braces with a dimension symbol. Cells stay empty unless their values carry the point | `B.matrix`, `B.brace` |
 | 7 | **Math role** | Plex Sans (no serif, one family): italic Latin variables; Greek, digits and operators upright (Plex's italic θ reads as ϑ); subscripts at 70 % | `math` role, `B.math` |
-| 8 | **Model notation** | Nodes r 26, ink-2 ring; observed nodes filled `rule`; plates are 1.5 px ink-2 rectangles with a 4 px radius, labelled top-left in words plus the index ("pixel d = 1…D"). Edges use the standard prussian arrow | `B.node`, `B.plate` |
-| 9 | **Notes** | The `note` role (14/18, muted) with a thin muted leader (1.5 px, small head) from the mark to the words. They explain notation for readers outside the field. Notes are not findings, and process arrows stay prussian | `note` role, `B.note` |
+| 8 | **Model notation** | Nodes r 26, ink-2 ring; observed nodes filled `rule`; plates are 1.5 px ink-2 rectangles with a 4 px radius, labelled top-left with the index only ("d = 1…D"). Edges use the standard prussian arrow | `B.node`, `B.plate` |
+| 9 | **Notes** | The `note` role (14/18, muted) with a thin muted leader (1.5 px, small head) from the mark to the words, one to three words each. Only for notation a reader outside the field can't decode; never for what the drawing already shows. Process arrows stay prussian | `note` role, `B.note` |
 
 **Motion additions:** `zoom` (an inset grows out of its source) and `sweep` (a wedge
 fills clockwise to its share). Both come from the "motion follows the argument"

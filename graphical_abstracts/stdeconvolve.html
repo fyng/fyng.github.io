@@ -22,16 +22,15 @@ GA.build({
   // ---------------- header ----------------
   const hd = ga.stack(ga.M, 44, { w: 1400 });
   hd.text("STDECONVOLVE · NATURE COMMUNICATIONS 2022", { role: "kicker", at: 0.1, gap: 14 });
-  hd.text("Can we recover the cell types within each spatial transcriptomics pixel\nwithout a single-cell reference?", { role: "title", at: 0.1 });
-  ga.hrule(187);
+  hd.text("Spot-based spatial transcriptomics cell-type deconvolution\nwithout a single-cell reference", { role: "title", at: 0.1 });
 
-  const [c1, c2, c3] = ga.columns(3, { top: 204, bottom: 766 });
-  const header = (c, step, head, cap, at) => {
-    const s = ga.stack(c.x0, c.top, { w: c.w });
-    s.text(step, { role: "step", at, gap: 10 });
-    s.text(head, { role: "head", at, gap: 8 });
-    s.text(cap, { role: "cap", at });
-    return s.y;
+  // no dividers: the gutters separate the panels
+  const [c1, c2, c3] = ga.columns(3, { top: 204, bottom: 766, dividers: false });
+  // panel header: number and title, nothing else
+  const header = (c, num, head, at) => {
+    const n = ga.text(num, { x: c.x0, y: c.top, role: "head", color: "var(--prussian)", at });
+    ga.text(head, { x: n.r + 14, y: c.top, role: "head", at });
+    return c.top + 74;
   };
   const conclusion = (c, str, at) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at });
 
@@ -45,21 +44,18 @@ GA.build({
   };
 
   // ---------------- 01 · Data ----------------
-  let y = header(c1, "01 · Data", "Multi-cellular pixels", "Spatial Transcriptomics, Visium, DBiT-seq, Slide-seq", 0.8);
+  let y = header(c1, "01", "Multi-cellular pixels", 0.8);
   const tis = B.tissue({ cx: c1.x0 + 108, cy: y + 104, w: 216, h: 172, pitch: 17, at: 1.1 });
   B.spots(tis, { at: 1.3 });
-  ga.text("tissue section", { x: tis.cx, y: tis.b + 8, anchor: "middle", role: "note", at: 1.5 });
   // the pixel we zoom into: a mixed spot on the right lobe
   const px = tis.spots.filter((s) => s.x > tis.cx + 40 && s.rho > 0.5 && s.rho < 0.62).sort((a, b) => a.y - b.y)[0];
-  const inset = B.zoom({
+  B.zoom({
     src: px, cx: c1.x1 - 84, cy: y + 96, R: 80, at: 2.1,
     cells: [[-34, -30, 21, 3], [16, -40, 18, 2], [38, 4, 22, 4], [-4, 8, 20, 2], [-42, 22, 17, 1], [8, 50, 18, 3]],
   });
-  B.note("one pixel, several cells", { x: inset.cx, y: inset.b + 8, at: 3.2 });
 
   // measured expression: pixels (rows) x genes (columns); the zoomed pixel is one row
   const my = y + 262;
-  ga.text("Measured expression", { x: c1.x0 + 58, y: my - 32, role: "label", at: 3.6 });
   const ring = (i, cx, cy) => `<circle cx="${cx}" cy="${cy}" r="5.5" fill="var(--paper)" stroke="${i === 1 ? "var(--ink)" : "var(--context)"}" stroke-width="${i === 1 ? 2 : 1.2}"/>`;
   const vals = [0.35, 0.8, 0.15, 0.55, 0.95, 0.25, 0.6, 0.1, 0.7, 0.4];
   const mx = B.matrix({
@@ -70,14 +66,13 @@ GA.build({
   B.brace({ side: "bottom", x0: mx.l, x1: mx.r, y: mx.b + 6, label: "N", at: 3.8 });
   ga.text("pixels", { x: c1.x0, y: mx.cy + 22, role: "note", at: 3.8 });
   ga.text("genes", { x: mx.r + 14, y: mx.b + 16, role: "note", at: 3.8 });
-  B.note("the pixel above:\nits cells' genes\nare pooled", { x: mx.r + 20, y: mx.rowY(1) - 9, anchor: "start", at: 4.6 });
   conclusion(c1, "Pixels pool several cells, hiding cell-type-specific spatial patterns", 5.0);
 
   // ---------------- 02 · Model ----------------
-  y = header(c2, "02 · Model", "Cell types as topics", "latent Dirichlet allocation: pixels as documents, genes as words", 5.6);
+  y = header(c2, "02", "Cell types as topics", 5.6);
   const ny = y + 244, X = [c2.x0 + 30, c2.x0 + 146, c2.x0 + 262, c2.x0 + 378];
-  B.plate({ x0: X[1] - 44, y0: ny - 80, x1: c2.x1 - 4, y1: ny + 64, label: "pixel d = 1…D", at: 6.3 });
-  B.plate({ x0: X[2] - 40, y0: ny - 56, x1: c2.x1 - 16, y1: ny + 48, label: "molecule m", at: 6.5 });
+  B.plate({ x0: X[1] - 44, y0: ny - 80, x1: c2.x1 - 4, y1: ny + 64, label: "d = 1…D", at: 6.3 });
+  B.plate({ x0: X[2] - 40, y0: ny - 56, x1: c2.x1 - 16, y1: ny + 48, label: "m = 1…M", at: 6.5 });
   const alpha = B.node({ cx: X[0], cy: ny, label: "α", at: 6.1 });
   const theta = B.node({ cx: X[1], cy: ny, label: "θ_d", at: 6.5 });
   const z = B.node({ cx: X[2], cy: ny, label: "z_{d,m}", size: 17, at: 6.9 });
@@ -85,35 +80,34 @@ GA.build({
   ga.connect(alpha, theta, { at: 6.4, gap: 6 });
   ga.connect(theta, z, { at: 6.8, gap: 6 });
   ga.connect(z, w, { at: 7.2, gap: 6 });
-  B.plate({ x0: X[3] - 128, y0: ny - 212, x1: c2.x1 - 4, y1: ny - 118, label: "cell type k = 1…K", at: 7.6 });
+  B.plate({ x0: X[3] - 96, y0: ny - 212, x1: c2.x1 - 4, y1: ny - 118, label: "k = 1…K", at: 7.6 });
   const beta = B.node({ cx: X[3], cy: ny - 160, label: "β_k", at: 7.7 });
   ga.connect(beta, w, { from: "b", to: "t", at: 8.0, gap: 6 });
   // what each symbol means, for readers who don't speak plate notation
-  B.note("Dirichlet\nprior", { from: alpha, x: X[0], y: ny + 92, at: 8.4 });
-  B.note("cell-type\nproportions\nin pixel d", { from: theta, x: X[1], y: ny + 92, at: 8.55 });
-  B.note("cell type\nof each\nmolecule", { from: z, x: X[2], y: ny + 92, at: 8.7 });
+  B.note("prior", { from: alpha, x: X[0], y: ny + 92, at: 8.4 });
+  B.note("cell-type\nproportions", { from: theta, x: X[1], y: ny + 92, at: 8.55 });
+  B.note("cell type\nper molecule", { from: z, x: X[2], y: ny + 92, at: 8.7 });
   B.note("observed\ngene", { from: w, x: X[3], y: ny + 92, at: 8.85 });
-  B.note("gene\nprofile of\ncell type k", { from: beta, fromSide: "l", toSide: "r", x: X[3] - 148, y: ny - 186, anchor: "end", at: 9.0 });
-  conclusion(c2, "Cell types are learned from the pixels alone, without a single-cell reference", 9.4);
+  B.note("cell-type\ngene profile", { from: beta, fromSide: "l", toSide: "r", x: X[3] - 116, y: ny - 186, anchor: "end", at: 9.0 });
+  conclusion(c2, "Latent Dirichlet allocation learns cell types from the pixels alone", 9.4);
 
   // ---------------- 03 · Output ----------------
-  y = header(c3, "03 · Output", "Profiles and proportions", "schematic, after the mouse olfactory bulb", 10.0);
+  y = header(c3, "03", "Profiles and proportions", 10.0);
   // β: genes per cell type (each row in its type's colour; darker = higher)
   const by = y + 34;
   B.math("β", { x: c3.x0, y: by - 30, at: 10.4 });
-  ga.text("gene expression per cell type", { x: c3.x0 + 18, y: by - 30, role: "label", at: 10.4 });
+  ga.text("expression per cell type", { x: c3.x0 + 18, y: by - 30, role: "label", at: 10.4 });
   const marker = (i, j) => [[0, 1, 2], [4, 5], [8, 9, 10], [12, 13]][i].includes(j) ? 0.95 : (i * 3 + j * 7) % 5 === 0 ? 0.3 : 0;
   const bm = B.matrix({
     x: c3.x0 + 40, y: by, rows: 4, cols: 16, cell: 16, at: 10.4,
     rowGlyph: (i, cx, cy) => B.cellMarkup(cx - 2, cy, 7, i + 1),
     fill: (i, j) => (marker(i, j) ? { color: B.color(i + 1), opacity: marker(i, j) } : null), fillAt: 10.8, stagger: 0.03,
   });
-  ga.text("genes", { x: bm.r + 12, y: bm.cy - 9, role: "note", at: 10.6 });
 
   // θ: proportion of each cell type in every pixel, one map per type
   const ty = bm.b + 30;
   B.math("θ", { x: c3.x0, y: ty, at: 11.3 });
-  ga.text("proportion in each pixel", { x: c3.x0 + 18, y: ty, role: "label", at: 11.3 });
+  ga.text("proportion per pixel", { x: c3.x0 + 18, y: ty, role: "label", at: 11.3 });
   const mw = 150, mh = 112, gx = 218;
   [0, 1, 2, 3].forEach((k) => {
     const ox = c3.x0 + 44 + (k % 2) * gx, oy = ty + 36 + Math.floor(k / 2) * (mh + 16);
@@ -126,8 +120,7 @@ GA.build({
   conclusion(c3, "Recovers each cell type's transcriptional profile and its proportion in every pixel", 14.0);
 
   // ---------------- take-home ----------------
-  ga.hrule(794);
-  ga.text("STdeconvolve performs comparably to reference-based methods, {*without a single-cell reference*}.", { x: ga.M, y: 816, w: 1472, role: "take", at: 14.8 });
+  ga.text("STdeconvolve performs comparably to reference-based methods without a single-cell reference.", { x: ga.M, y: 816, w: 1472, role: "take", at: 14.8 });
 });
 </script>
 </body>

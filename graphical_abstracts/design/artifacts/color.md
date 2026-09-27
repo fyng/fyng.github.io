@@ -20,7 +20,7 @@ CSS variables (`var(--harm)`) or `tokens.json`, never raw hex in a figure.
 | `context` | `#a3a8b1` | 2.4:1 | De-emphasised *data* (comparator series, non-hits). Never text |
 | `rule` | `#d9dbe0` | – | Hairlines, dividers, gridlines |
 | `wash` | `#f4f5f7` | – | Grouping fills; the diverging midpoint |
-| `prussian` | `#1f4e79` | 8.7:1 | Structural ink: step labels, arrows, method boxes, models |
+| `prussian` | `#1f4e79` | 8.7:1 | Structural ink: panel numbers, arrows, method boxes, models |
 
 ### Hue ramps
 

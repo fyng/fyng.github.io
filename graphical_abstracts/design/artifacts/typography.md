@@ -41,28 +41,29 @@ never from a second face.
 | Role | Setting | Size | Colour | Use |
 |---|---|---|---|---|
 | `kicker` | 500, caps, +12 % tracking | 13/17 | muted | `PROJECT · VENUE YEAR` above the title |
-| `title` | 500, −1.5 % tracking | 38/44 | ink | The question. ≤ 2 lines, break by hand at a phrase boundary |
-| `step` | 500, caps, +12 % tracking | 13/17 | prussian | `01 · RESOURCE`, one per panel |
-| `head` | 500, −1 % tracking | 28/34 | ink | Panel head, a noun phrase |
+| `title` | 500, −1.5 % tracking | 38/44 | ink | What the work is, as a statement or question. ≤ 2 lines, break by hand at a phrase boundary |
+| `head` | 500, −1 % tracking | 28/34 | ink | Panel header: number in prussian, then a noun phrase (`01  Multi-cellular pixels`) |
 | `body` | 400 | 17/24 | ink | Panel conclusions (the findings) |
 | `label` | 400 | 17/24 | ink-2 | Names on the diagram |
 | `cap` | 400 | 15/20 | muted | Scale, n, "schematic", secondary notes |
 | `tag` | **Mono** 500, +4 % tracking | 13/17 | ink-2 | Literal codes only: HLA-DRB1\*15, PT A |
 | `axis` | 500 | 14/18 | ink-2 | Chart axis titles |
 | `tick` | 400, tabular figures | 13/16 | muted | Tick labels, keys, legends |
-| `take` | 400; accent phrase 500 italic | 28/36 | ink | The single take-home sentence |
+| `take` | 400, plain | 28/36 | ink | The single take-home sentence |
+| `note` | 400 | 14/18 | muted | Callouts that explain a mark (proposed, `explain.md`) |
+| `math` | 400; Latin italic, Greek upright | 17/22 | ink | Variables: θ, *z*<sub>*d,m*</sub> (proposed, `explain.md`) |
 
 Rules:
 
 - **13 px is the floor.** Nothing smaller.
-- **Weights:** 400 for reading, 500 for structure (title, head, step, kicker, axis)
+- **Weights:** 400 for reading, 500 for structure (title, head, kicker, axis)
   and for the accent phrase. There is no 600 or 700; a heavy weight shouts.
 - **Tracking:** tighten large text (title, head, take) slightly. Track caps out
   (+12 %). Leave body text at 0.
 - **Emphasis** is italic (`*…*` in kit markup). The accent colour (`{…}`) marks the
-  one phrase that carries the finding, at most once per panel. `{*…*}` gives accent
-  500 italic for the take-home keyword.
-- **Case:** sentence case. Caps only in `kicker` and `step`, which are tracked.
+  one phrase that carries the finding, at most once per panel, and only when that
+  phrase *is* the key point. The take-home is plain.
+- **Case:** sentence case. Caps only in `kicker`, which is tracked.
 - **Line length:** body ≤ 437 px (one column). The title may span the full 1472 px.
 - **Text colour is always a text token** (`ink`, `ink-2`, `muted`, or a `*-text` step
   from `color.md`), never a 500-step mark colour.

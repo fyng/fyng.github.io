@@ -19,11 +19,14 @@ This document says *why*, so you can decide the cases the kit doesn't cover.
 
 A **scientific statement**, drawn. It reads like the paper's abstract, not an advertisement:
 
-- **The title is the question** the work answers, in plain words ("Can we predict…?"),
-  not a slogan.
+- **The title says what the work is**, in plain words: a statement ("Spot-based spatial
+  transcriptomics cell-type deconvolution without a single-cell reference") or, when the
+  work answers one, a question ("Can we predict…?"). Never a slogan.
 - **Each panel ends with a finding**, stated as the paper states it, with the
   paper's hedges intact ("predicts propensity", not "reveals").
-- **The take-home is one sentence** that says why it matters to the field.
+- **The take-home is one plain sentence** that says why it matters to the field.
+  No accent colour or italics by default: emphasis that lands on anything but the key
+  point backfires, and a single sentence rarely needs it.
 - **Schematic is labelled schematic.** Any chart that is illustrative rather than
   real data says so in its caption, and has no numeric ticks.
   Real numbers come from the paper and nowhere else.
@@ -41,14 +44,17 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
    when direct labels would collide.
 5. **One voice.** Every word is IBM Plex Sans. Hierarchy comes from size, weight
    (400/500), case and colour, not from mixing typefaces. Mono is kept for literal codes.
-6. **Quiet structure.** Use hairlines (1.5 px, `--rule`) for dividers and axes, and
-   generous white space. The grid shows through alignment, not boxes.
-7. **Motion follows the argument.** Things appear in the order you would explain them
+6. **Quiet structure.** No dividers between panels or around the header and take-home:
+   the gutters and white space separate them. Hairlines (1.5 px, `--rule`) are for axes
+   and grids. The grid shows through alignment, not boxes or lines.
+7. **Fewer words, fewer lines.** Draw the object instead of naming it; label only what
+   the drawing cannot say. If a label repeats the panel title or conclusion, cut it.
+8. **Motion follows the argument.** Things appear in the order you would explain them
    aloud. Nothing moves once it has arrived. There are no loops within the loop.
-8. **Accessible by construction.** Palettes are validated for colour-vision deficiency,
+9. **Accessible by construction.** Palettes are validated for colour-vision deficiency,
    text meets contrast minimums, and there is no meaning by colour alone.
    Every figure carries a `<title>` and `<desc>` that state its content in full.
-9. **Checked, not eyeballed.** The kit's lint blocks a render on overlaps, margin
+10. **Checked, not eyeballed.** The kit's lint blocks a render on overlaps, margin
    overflow, divider crossings, and arrows or curves running through labels.
    Never use `--force` to ship.
 
@@ -58,19 +64,20 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
 |---|---|
 | "Can we predict individual adverse event risk…?" | "Revolutionising cancer safety" |
 | "predicts", "is associated with", "in 35,669 patients" | "unlocks", "powerful", "first-ever" |
-| Sentence case everywhere except kickers and step labels | Title Case Headlines |
+| Sentence case everywhere except the kicker | Title Case Headlines |
 | Numbers with units and denominators | Bare percentages without an n |
 | The paper's own terms, defined once (ICI, AUROC) | New jargon invented for the figure |
 
 ## Canvas
 
 - **1600 × 900 (16:9)**, white paper, 64 px margins, 8 px spacing grid.
-- **Header, y 44–187:** a kicker (`PROJECT · VENUE YEAR`), a title question of at most
-  two lines, and a hairline.
-- **Panels, y 204–766:** three columns of 437 px with 80 px gutters and hairline dividers.
-  Each panel stacks: step label (`01 · RESOURCE`), head (a noun phrase), caption (scale
-  or n), the visual, and the conclusion at the foot.
-- **Take-home, y 812–860:** one sentence in `take` type, under a hairline at 794.
+- **Header, y 44–187:** a kicker (`PROJECT · VENUE YEAR`) and a title of at most two
+  lines. No rule underneath.
+- **Panels, y 204–766:** three columns of 437 px with 80 px gutters, no dividers.
+  Each panel has a one-line header, the number in prussian and a title in `head`
+  (`01  Multi-cellular pixels`), then the visual, and the conclusion at the foot.
+  No step word, no caption line.
+- **Take-home, y 812–860:** one plain sentence in `take` type.
 - Figures are always light. On a dark page, they sit on their own paper card; there is
   no dark variant (see `../website/DESIGN.md`, *Embedding Lamina figures*).
 
