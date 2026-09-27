@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="kit/ga-kit.css">
 <script src="kit/icons.js"></script>
 <script src="kit/ga-kit.js"></script>
+<script src="kit/ga-charts.js"></script>
 </head>
 <body>
 <script>
@@ -20,111 +21,111 @@ GA.build({
   const NAME = { lungs: "lung", colon: "colon", liver: "liver", thyroid: "thyroid", adrenal: "adrenal" };
 
   // ---------------- header ----------------
-  const hd = ga.stack(ga.M, 44, { w: 1300 });
+  const hd = ga.stack(ga.M, 44, { w: 1400 });
   hd.text("PRECISION SAFETY · MEDRXIV 2026", { role: "kicker", at: 0.1, gap: 14 });
   hd.text("Can we predict individual adverse event risk from cancer therapy\nusing information at the point of treatment decision?", { role: "title", at: 0.1 });
-  ga.hrule(hd.y + 16);
+  ga.hrule(187);
 
   const [c1, c2, c3] = ga.columns(3, { top: 204, bottom: 766 });
   const header = (c, step, head, cap, at) => {
     const s = ga.stack(c.x0, c.top, { w: c.w });
-    s.text(step, { role: "step", at, gap: 12 });
+    s.text(step, { role: "step", at, gap: 10 });
     s.text(head, { role: "head", at, gap: 8 });
     s.text(cap, { role: "cap", at });
     return s.y;
   };
+  const conclusion = (c, str, at) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at });
+  // Lamina bar: rounded 4px at the data end only, square at the baseline
+  const bar = (x, y, w, h, fill, at) =>
+    ga.raw(`<path d="M${x} ${y}h${w - 4}a4 4 0 0 1 4 4v${h - 8}a4 4 0 0 1 -4 4h${-(w - 4)}Z" fill="${fill}"/>`, { at, anim: "grow", t: 0.7 });
 
   // ---------------- 01 · MSK-Tox ----------------
-  let y = header(c1, "01 · RESOURCE", "MSK-Tox", "LLM-extracted from clinical notes, >50,000 patients", 0.7);
-  const rowY = y + 70;
-  ga.icon("note", { cx: c1.x0 + 58, cy: rowY - 12, size: 84, color: "var(--ink)", at: 1.1, anim: "in", lint: false });
-  ga.icon("note", { cx: c1.x0 + 50, cy: rowY - 4, size: 84, color: "var(--ink)", at: 1.25, anim: "in", lint: false });
-  const notes = ga.icon("note", { cx: c1.x0 + 42, cy: rowY + 4, size: 84, color: "var(--ink)", at: 1.4, anim: "in" });
-  const llm = ga.rect({ x: c1.x0 + 170, y: rowY - 40, w: 96, h: 80, fill: "var(--prussian)", at: 2.1 });
-  ga.text("LLM", { x: llm.cx, y: llm.cy - 11, anchor: "middle", role: "tag", size: 20, color: "#fff", at: 2.1, anim: "pop" });
+  let y = header(c1, "01 · Resource", "MSK-Tox", "LLM-extracted from clinical notes, >50,000 patients", 0.8);
+  const rowY = y + 56;
+  ga.icon("note", { cx: c1.x0 + 58, cy: rowY - 12, size: 80, color: "var(--ink)", at: 1.1, anim: "in", lint: false });
+  ga.icon("note", { cx: c1.x0 + 50, cy: rowY - 4, size: 80, color: "var(--ink)", at: 1.25, anim: "in", lint: false });
+  const notes = ga.icon("note", { cx: c1.x0 + 42, cy: rowY + 4, size: 80, color: "var(--ink)", at: 1.4, anim: "in" });
+  const llm = ga.rect({ x: c1.x0 + 170, y: rowY - 38, w: 96, h: 76, fill: "var(--prussian)", at: 2.1 });
+  ga.text("LLM", { x: llm.cx, y: llm.cy - 12, anchor: "middle", role: "label", size: 20, weight: 500, color: "var(--paper)", at: 2.1, anim: "pop" });
   const outs = ga.text("incidence\ntiming\ngrade", { x: llm.r + 76, y: rowY - 36, role: "label", at: 2.5 });
   ga.connect(notes, llm, { at: 1.8 });
   ga.connect(llm, outs, { at: 2.4 });
 
-  // legend: colour + icon + name, laid out left to right
-  const legY = rowY + 86;
+  // legend: registered organ colours, icon + name
+  const legY = rowY + 74;
   let lx = c1.x0;
   for (const k of Object.keys(ORGAN)) {
-    const ic = ga.icon(k, { cx: lx + 13, cy: legY, size: 28, color: ORGAN[k], at: 2.7, anim: "in" });
-    const tx = ga.text(NAME[k], { x: ic.r + 6, y: legY - 10, role: "cap", color: "var(--ink-2)", at: 2.7 });
+    const ic = ga.icon(k, { cx: lx + 13, cy: legY, size: 28, color: ORGAN[k], at: 2.9, anim: "in" });
+    const tx = ga.text(NAME[k], { x: ic.r + 6, y: legY - 10, role: "cap", color: "var(--ink-2)", at: 2.9 });
     lx = tx.r + 20;
   }
 
-  // patient timelines; icon size = grade
-  const tl = { x0: c1.x0 + 8, x1: c1.x1, y0: legY + 44, dy: 40, n: 5 };
-  const startX = tl.x0 + 44;
-  let lines = "";
-  for (let i = 0; i < tl.n; i++) lines += `<path d="M${tl.x0} ${tl.y0 + i * tl.dy}H${tl.x1}" class="hair"/>`;
-  lines += `<path d="M${startX} ${tl.y0 - 16}V${tl.y0 + (tl.n - 1) * tl.dy + 8}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 5"/>`;
-  ga.raw(lines, { at: 2.9 });
-  const axisY = tl.y0 + (tl.n - 1) * tl.dy + 16;
-  ga.text("therapy start", { x: startX, y: axisY, anchor: "middle", role: "cap", at: 2.9 });
-  ga.text("time →", { x: tl.x1, y: axisY, anchor: "end", role: "cap", at: 2.9 });
-  const events = [[0, "lungs", 0.42, 40], [1, "colon", 0.26, 28], [1, "liver", 0.78, 40], [2, "thyroid", 0.6, 28], [3, "adrenal", 0.9, 38], [4, "colon", 0.2, 40], [4, "thyroid", 0.5, 26]];
+  // patient timelines: one hairline per patient; icon size = grade
+  const tl = { x0: c1.x0, x1: c1.x1, y0: legY + 76, dy: 30, n: 5 };
+  const startX = tl.x0 + 40;
+  ga.text("Patients · icon size = grade", { x: tl.x0, y: tl.y0 - 40, role: "axis", at: 3.2, anim: "fade" });
+  let rows = "";
+  for (let i = 0; i < tl.n; i++) rows += `<path d="M${tl.x0} ${tl.y0 + i * tl.dy}H${tl.x1}" stroke="var(--rule)" stroke-width="1.5"/>`;
+  rows += `<path d="M${startX} ${tl.y0 - 14}V${tl.y0 + (tl.n - 1) * tl.dy + 10}" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2 4" stroke-linecap="round"/>`;
+  ga.raw(rows, { at: 3.2, t: 0.4 });
+  const axisY = tl.y0 + (tl.n - 1) * tl.dy + 14;
+  ga.text("therapy start", { x: startX, y: axisY, anchor: "middle", role: "tick", at: 3.2, anim: "fade" });
+  ga.text("Time", { x: tl.x1, y: axisY, anchor: "end", role: "axis", at: 3.2, anim: "fade" });
+  const events = [[0, "lungs", 0.42, 32], [1, "colon", 0.26, 22], [1, "liver", 0.78, 32], [2, "thyroid", 0.6, 22], [3, "adrenal", 0.9, 28], [4, "colon", 0.2, 30], [4, "thyroid", 0.5, 20]];
   events.forEach(([row, k, f, size], i) =>
-    ga.icon(k, { cx: startX + f * (tl.x1 - startX - 20), cy: tl.y0 + row * tl.dy, size, color: ORGAN[k], at: 3.6 + i * 0.1 }));
+    ga.icon(k, { cx: startX + 20 + f * (tl.x1 - startX - 40), cy: tl.y0 + row * tl.dy, size, color: ORGAN[k], at: 3.6 + i * 0.08 }));
+  conclusion(c1, "LLM extraction yields adverse event incidence, timing and grade at scale", 4.4);
 
   // ---------------- 02 · Clinical risk ----------------
-  y = header(c2, "02 · CLINICAL RISK", "Adverse event–specific risk", "clinical and demographic features before treatment", 5.0);
-  const pA = ga.icon("person", { cx: c2.x0 + 30, cy: y + 130, size: 60, at: 5.4, anim: "in" });
-  const pB = ga.icon("person", { cx: c2.x0 + 30, cy: y + 330, size: 60, at: 5.4, anim: "in" });
+  y = header(c2, "02 · Clinical risk", "Adverse event–specific risk", "pretreatment clinical and demographic features", 5.0);
+  const pA = ga.icon("person", { cx: c2.x0 + 30, cy: y + 124, size: 58, at: 5.4, anim: "in" });
+  const pB = ga.icon("person", { cx: c2.x0 + 30, cy: y + 320, size: 58, at: 5.4, anim: "in" });
   ga.text("PT A", { x: pA.cx, y: pA.b + 6, anchor: "middle", role: "tag", at: 5.4 });
   ga.text("PT B", { x: pB.cx, y: pB.b + 6, anchor: "middle", role: "tag", at: 5.4 });
-  ga.text("lung cancer · immunotherapy\nage 71 · COPD", { x: pA.r + 16, y: pA.t - 56, role: "cap", color: "var(--ink-2)", at: 5.7 });
-  ga.text("melanoma · combination ICI\nage 48 · history of IBD", { x: pB.r + 16, y: pB.b + 4, role: "cap", color: "var(--ink-2)", at: 5.7 });
+  ga.text("lung cancer · immunotherapy\nage 71 · COPD", { x: pA.r + 16, y: pA.t - 56, role: "label", size: 15, at: 5.7 });
+  ga.text("melanoma · combination ICI\nage 48 · history of IBD", { x: pB.r + 16, y: pB.b + 4, role: "label", size: 15, at: 5.7 });
 
-  const rf = ga.rect({ x: c2.x0 + 146, y: (pA.cy + pB.cy) / 2 - 48, w: 116, h: 96, fill: "var(--blue-wash)", at: 6.3 });
+  const rf = ga.rect({ x: c2.x0 + 146, y: (pA.cy + pB.cy) / 2 - 48, w: 116, h: 96, fill: "var(--benefit-wash)", at: 6.3 });
   [-28, 0, 28].forEach((dx, i) => ga.icon("tree", { cx: rf.cx + dx, cy: rf.t + 34 - (i === 1 ? 4 : 0), size: 30, color: "var(--prussian)", at: 6.3 }));
-  ga.text("random forest", { x: rf.cx, y: rf.b - 30, anchor: "middle", role: "cap", size: 13, color: "var(--prussian)", at: 6.3, anim: "pop" });
+  ga.text("random forest", { x: rf.cx, y: rf.b - 30, anchor: "middle", role: "tick", weight: 500, color: "var(--prussian)", at: 6.3, anim: "pop" });
   ga.connect(pA, rf, { toAt: 0.3, at: 6.0 });
   ga.connect(pB, rf, { toAt: 0.7, at: 6.0 });
 
-  // risk profiles: a bar per organ, colour follows the organ
-  const profile = (top, vals, at, label) => {
-    const bx = c2.x1 - 82, its = [];
-    if (label) ga.text("predicted risk", { x: bx - 24, y: top - 30, role: "cap", at });
+  // predicted risk per adverse event: bars in the organ's registered colour
+  const profile = (top, vals, at, title) => {
+    const bx = c2.x1 - 84, its = [];
+    if (title) its.push(ga.text("Predicted risk", { x: bx - 26, y: top - 32, role: "axis", at, anim: "fade" }));
     ["lungs", "colon", "liver", "thyroid"].forEach((k, i) => {
       its.push(ga.icon(k, { cx: bx - 12, cy: top + 8 + i * 26, size: 22, color: ORGAN[k], at, anim: "in" }));
-      its.push(ga.bar({ x: bx + 4, y: top + 1 + i * 26, w: vals[i] * 78, fill: ORGAN[k], at: at + 0.2 + i * 0.1 }));
+      bar(bx + 4, top + 1 + i * 26, Math.max(8, vals[i] * 80), 14, ORGAN[k], at + 0.2 + i * 0.08);
     });
-    return ga.union(...its);
+    return ga.union(...its.slice(title ? 1 : 0));
   };
   const rA = profile(pA.cy - 70, [0.85, 0.12, 0.25, 0.18], 6.9, true);
   const rB = profile(pB.cy - 50, [0.14, 0.88, 0.38, 0.55], 7.3);
   ga.connect(rf, rA, { fromAt: 0.3, at: 6.7 });
   ga.connect(rf, rB, { fromAt: 0.7, at: 6.7 });
-  ga.text("Machine learning integrates clinical and demographic risk factors specific to each adverse event", { x: c2.x0, y: c2.bottom - 50, w: c2.w, role: "body", at: 8.1 });
+  conclusion(c2, "Machine learning integrates clinical and demographic risk factors specific to each adverse event", 8.2);
 
   // ---------------- 03 · Germline risk ----------------
-  y = header(c3, "03 · GERMLINE RISK", "Germline susceptibility", "matched tumor–normal sequencing, 35,669 patients", 9.0);
+  y = header(c3, "03 · Germline risk", "Germline susceptibility", "matched tumor–normal sequencing, 35,669 patients", 9.0);
   const gy = y + 58;
-  const dna = ga.icon("dna", { cx: c3.x0 + 22, cy: gy, size: 60, color: "var(--prussian)", at: 9.5, anim: "in" });
-  const hla = ga.pill("HLA-DRB1*15", { x: dna.r + 14, cy: gy, role: "tag", size: 16, padX: 18, h: 44, fill: "var(--accent-wash)", color: "var(--accent)", at: 9.9 });
-  const adr = ga.icon("adrenal", { cx: hla.r + 104, cy: gy, size: 54, color: ORGAN.adrenal, at: 10.5 });
-  const ai = ga.connect(hla, adr, { color: "var(--accent)", straight: true, at: 10.2 });
-  ga.text("ICI", { x: ai.cx, y: ai.t - 30, anchor: "middle", role: "cap", size: 13, at: 10.3 });
-  ga.text("adrenal\ninsufficiency", { x: adr.r + 10, y: gy - 21, role: "cap", at: 10.6 });
+  const dna = ga.icon("dna", { cx: c3.x0 + 22, cy: gy, size: 58, color: "var(--prussian)", at: 9.4, anim: "in" });
+  const hla = ga.pill("HLA-DRB1*15", { x: dna.r + 14, cy: gy, role: "tag", size: 16, padX: 18, h: 44, fill: "var(--accent-wash)", color: "var(--accent-text)", at: 9.8 });
+  const adr = ga.icon("adrenal", { cx: hla.r + 100, cy: gy, size: 52, color: ORGAN.adrenal, at: 10.4 });
+  const ai = ga.connect(hla, adr, { color: "var(--harm)", straight: true, at: 10.1 });
+  ga.text("ICI", { x: ai.cx, y: ai.t - 30, anchor: "middle", role: "tick", at: 10.2 });
+  ga.text("adrenal\ninsufficiency", { x: adr.r + 10, y: gy - 21, role: "label", size: 15, at: 10.5 });
 
-  // schematic cumulative incidence (no values implied)
-  const P = { x0: c3.x0 + 30, x1: c3.x1 - 4, y0: gy + 110, y1: gy + 300 };
-  ga.text("cumulative incidence (schematic)", { x: P.x0, y: P.y0 - 34, role: "cap", at: 10.9 });
-  ga.raw(`<path d="M${P.x0} ${P.y0} V${P.y1} H${P.x1}" fill="none" stroke="var(--ink)" stroke-width="1.5"/>`, { at: 10.9 });
-  const step = (ys) => {
-    const dx = (P.x1 - P.x0 - 4) / (ys.length - 1);
-    return `M${P.x0 + 2} ${P.y1 - 2}` + ys.map((v, i) => ` H${P.x0 + 2 + i * dx} V${P.y1 - 2 - v * (P.y1 - P.y0 - 20)}`).join("") + ` H${P.x1 - 2}`;
-  };
-  const car = [0, 0.06, 0.16, 0.32, 0.5, 0.64, 0.74, 0.8], non = [0, 0.01, 0.03, 0.05, 0.07, 0.1, 0.12, 0.13];
-  ga.raw(`<path d="${step(car)}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round" pathLength="1" class="a-draw" style="--d:11.2s;--t:1.2s"/>
-          <path d="${step(non)}" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linejoin="round" pathLength="1" class="a-draw" style="--d:11.2s;--t:1.2s"/>`);
-  ga.text("HLA-DRB1*15 carriers", { x: P.x1, y: P.y1 - 0.8 * (P.y1 - P.y0 - 20) - 34, anchor: "end", role: "cap", color: "var(--accent)", at: 12.3 });
-  ga.text("non-carriers", { x: P.x1, y: P.y1 - 0.13 * (P.y1 - P.y0 - 20) - 32, anchor: "end", role: "cap", at: 12.3 });
-  ga.text("time on ICI →", { x: P.x1, y: P.y1 + 8, anchor: "end", role: "cap", at: 10.9 });
-  ga.text("Germline variants predict propensity for immune-related adrenal insufficiency", { x: c3.x0, y: c3.bottom - 50, w: c3.w, role: "body", at: 12.8 });
+  // schematic cumulative incidence: shape only, no values implied
+  const ch = GA.chart(ga, { x: c3.x0, y: gy + 92, w: c3.w - 104, h: 196, xd: [0, 7.5], yd: [0, 1], yTitle: "Cumulative incidence (schematic)", xTitle: "Time on ICI", at: 10.8 });
+  const steps = (ys) => [...ys.map((v, i) => [i, v]), [7.5, ys.at(-1)]];
+  const car = steps([0, 0.06, 0.16, 0.32, 0.5, 0.64, 0.74, 0.8]), non = steps([0, 0.01, 0.03, 0.05, 0.07, 0.1, 0.12, 0.13]);
+  ch.line(non, { curve: "step", color: "var(--context)", at: 11.2 });
+  ch.line(car, { curve: "step", color: "var(--harm)", at: 11.2 });
+  ch.label("carriers", 7.5, 0.8, { dx: 10, color: "var(--harm-text)", at: 12.3 });
+  ch.label("non-carriers", 7.5, 0.13, { dx: 10, color: "var(--muted)", at: 12.3 });
+  conclusion(c3, "Germline variants predict propensity for immune-related adrenal insufficiency", 12.8);
 
   // ---------------- take-home ----------------
   ga.hrule(794);
