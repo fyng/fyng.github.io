@@ -36,7 +36,10 @@ function ffmpegBin() {
 }
 
 (async () => {
-  const browser = await chromium.launch();
+  // Prefer Playwright's own browser; fall back to a preinstalled Chromium when the
+  // installed Playwright expects a browser build that isn't on disk.
+  const fallback = process.env.CHROME_PATH || "/opt/pw-browsers/chromium";
+  const browser = await chromium.launch().catch(() => chromium.launch({ executablePath: fallback }));
   const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 1 });
   const load = async (pg) => {
     await pg.goto("file://" + file + "?render");

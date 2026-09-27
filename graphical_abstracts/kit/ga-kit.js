@@ -29,6 +29,8 @@
     take: { size: 28, lh: 1.3 },
     axis: { size: 14, lh: 1.3 }, // chart axis titles
     tick: { size: 13, lh: 1.2 }, //  chart tick labels
+    note: { size: 14, lh: 1.3 }, //  callouts that explain a mark (GA.bio note)
+    math: { size: 17, lh: 1.3 }, //  variables: italic letters, upright digits (GA.bio math)
   };
   const ASCENT = 0.78; // first baseline sits this fraction of the size below the top
 
@@ -131,7 +133,8 @@
       for (const w of parse(str)) {
         if (w.br) { cur = newLine(); continue; }
         const span = el("tspan", { class: [w.em && "em", w.acc && "acc"].filter(Boolean).join(" ") || null }, cur);
-        span.textContent = (cur.childNodes.length > 1 ? " " : "") + w.text;
+        // no space before closing punctuation that follows a styled run ("{*…*}.")
+        span.textContent = (cur.childNodes.length > 1 && !/^[.,;:!?)]/.test(w.text) ? " " : "") + w.text;
         if (o.w && cur.childNodes.length > 1 && cur.getComputedTextLength() > o.w) {
           span.remove();
           cur = newLine();

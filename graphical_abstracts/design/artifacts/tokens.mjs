@@ -92,6 +92,15 @@ const entity = {
   organ: { lungs: "blue.600", liver: "ochre.500", colon: "teal.500", adrenal: "vermilion.500", thyroid: "violet.500", kidney: "moss.500", skin: "rose.500" },
 };
 
+// ---- family palettes: members of one kind drawn from one hue band ------------------
+// [L, C, h] in OKLCH. Chosen by search over the blue-violet-magenta band (265-335)
+// for the widest CVD separation at >= 3:1 on paper (see color.md, "Family palettes").
+// Each member also gets a tint (62 % toward paper, 40 % chroma) for fills such as
+// cytoplasm, so tints keep the members apart too.
+const family = {
+  cell: [[0.44, 0.148, 275], [0.64, 0.159, 265], [0.6, 0.16, 335], [0.4, 0.142, 335]],
+};
+
 // ---- type ------------------------------------------------------------------------------
 // One family: IBM Plex. Sans for every role; Mono only for literal codes (tag role).
 const font = {
@@ -118,6 +127,12 @@ css.push("");
 for (const [k, ref] of Object.entries(semantic)) line(k, r(ref), ref);
 css.push("");
 for (const [group, map] of Object.entries(entity)) for (const [k, ref] of Object.entries(map)) line(`${group}-${k}`, r(ref), ref);
+css.push("");
+for (const [group, list] of Object.entries(family))
+  list.forEach(([L, C, h], i) => {
+    line(`${group}-${i + 1}`, hex(L, C, h), `oklch ${L} ${C} ${h}`);
+    line(`${group}-${i + 1}-wash`, hex(L + (0.97 - L) * 0.62, C * 0.4, h));
+  });
 css.push("}");
 const cssText = css.filter((l, i, a) => !(l === "" && a[i - 1] === "")).join("\n") + "\n";
 writeFileSync(join(here, "tokens.css"), cssText);
@@ -132,6 +147,7 @@ const json = {
   sequential: Object.fromEntries(Object.entries(sequential).map(([k, n]) => [k, ramps[n]])),
   diverging: Object.fromEntries(Object.entries(diverging).map(([k, [lo, hi]]) => [k, [...[800, 700, 600, 500, 400, 300, 200].map((s) => ramps[lo][s]), neutral.wash, ...[200, 300, 400, 500, 600, 700, 800].map((s) => ramps[hi][s])]])),
   entity: Object.fromEntries(Object.entries(entity).map(([g, m]) => [g, resolve(m)])),
+  family: Object.fromEntries(Object.entries(family).map(([g, list]) => [g, list.map(([L, C, h]) => ({ mark: hex(L, C, h), wash: hex(L + (0.97 - L) * 0.62, C * 0.4, h) }))])),
 };
 writeFileSync(join(here, "tokens.json"), JSON.stringify(json, null, 2) + "\n");
 console.log("wrote tokens.css, tokens.json");

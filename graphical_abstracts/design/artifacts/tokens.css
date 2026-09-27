@@ -119,4 +119,13 @@
   --organ-thyroid: #9b6bce; /* violet.500 */
   --organ-kidney: #629742; /* moss.500 */
   --organ-skin: #c95a8b; /* rose.500 */
+
+  --cell-1: #3e45a2; /* oklch 0.44 0.148 275 */
+  --cell-1-wash: #a8b1da;
+  --cell-2: #5c87ec; /* oklch 0.64 0.159 265 */
+  --cell-2-wash: #b8ccf7;
+  --cell-3: #b855a6; /* oklch 0.6 0.16 335 */
+  --cell-3-wash: #e2b8d8;
+  --cell-4: #721f65; /* oklch 0.4 0.142 335 */
+  --cell-4-wash: #c7a2bd;
 }
