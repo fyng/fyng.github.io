@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lamina type and canvas</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../kit/ga-kit.css">
-<script src="../kit/icons.js"></script>
-<script src="../kit/ga-kit.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../kit/ga-kit.css">
+<script src="../../kit/icons.js"></script>
+<script src="../../kit/ga-kit.js"></script>
 </head>
 <body>
 <script>
@@ -15,24 +15,24 @@
 GA.build({ duration: 6, poster: 5.5, title: "Lamina type and canvas", desc: "Type roles at actual size, the 1600 by 900 canvas grid, and the default motion timeline." }, (ga) => {
   const at = 0.2;
   ga.text("LAMINA · TYPE & CANVAS", { x: ga.M, y: 40, role: "kicker", at: 0 });
-  ga.text("Three faces, eleven roles", { x: ga.M, y: 64, role: "title", size: 34, at: 0 });
+  ga.text("One family, eleven roles", { x: ga.M, y: 64, role: "title", size: 34, at: 0 });
   ga.hrule(118);
 
   // ---- type roles at actual size --------------------------------------------
   ga.text("01 · TYPE ROLES, ACTUAL SIZE ON THE 1600 × 900 CANVAS", { x: ga.M, y: 140, role: "step", at });
   const R = GA.ROLE;
   const rows = [
-    ["kicker", "Plex Mono 500 · caps · +16% track", "PRECISION SAFETY · MEDRXIV 2026"],
-    ["title", "Instrument Serif · a question", "Can we predict adverse event risk?"],
-    ["step", "Plex Mono 500 · prussian", "02 · CLINICAL RISK"],
-    ["head", "Instrument Serif · panel noun", "Adverse event–specific risk"],
-    ["body", "Plex Sans 400 · conclusions", "Germline variants predict *propensity* for adrenal insufficiency"],
-    ["label", "Plex Sans 400 · ink-2", "lung cancer · immunotherapy"],
-    ["cap", "Plex Sans 400 · muted", "cumulative incidence (schematic)"],
-    ["tag", "Plex Mono 500 · short codes", "PT A · HLA-DRB1*15"],
-    ["axis", "Plex Sans 500 · axis titles", "Months on ICI"],
-    ["tick", "Plex Sans · tabular figures", "0 · 6 · 12 · 18 · 24 · 1,284 · −0.42"],
-    ["take", "Instrument Serif · take-home", "A {*precision safety*} paradigm"],
+    ["kicker", "Sans 500 · caps · +12% · muted", "PRECISION SAFETY · MEDRXIV 2026"],
+    ["title", "Sans 500 · −1.5% · a question", "Can we predict adverse event risk?"],
+    ["step", "Sans 500 · caps · +12% · prussian", "02 · CLINICAL RISK"],
+    ["head", "Sans 500 · −1% · panel noun", "Adverse event–specific risk"],
+    ["body", "Sans 400 · ink · findings", "Germline variants predict *propensity* for adrenal insufficiency"],
+    ["label", "Sans 400 · ink-2 · names", "lung cancer · immunotherapy"],
+    ["cap", "Sans 400 · muted · scale, n", "cumulative incidence (schematic)"],
+    ["tag", "Mono 500 · literal codes only", "PT A · HLA-DRB1*15"],
+    ["axis", "Sans 500 · ink-2 · axis titles", "Months on ICI"],
+    ["tick", "Sans 400 · tabular figures", "0 · 6 · 12 · 18 · 24 · 1,284 · −0.42"],
+    ["take", "Sans 400 · accent 500 italic", "A {*precision safety*} paradigm"],
   ];
   let y = 176;
   for (const [role, spec, sample] of rows) {

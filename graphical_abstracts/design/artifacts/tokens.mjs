@@ -1,6 +1,6 @@
 // Lamina design tokens: the one source for every colour and type value.
 //
-//   node design/tokens.mjs      -> writes design/tokens.css and design/tokens.json
+//   node design/artifacts/tokens.mjs      -> writes tokens.css and tokens.json beside it
 //
 // Ramps are generated in OKLCH so every hue shares the same lightness steps:
 // step 500 of any hue is as light as step 500 of any other. Edit the tables
@@ -93,8 +93,8 @@ const entity = {
 };
 
 // ---- type ------------------------------------------------------------------------------
+// One family: IBM Plex. Sans for every role; Mono only for literal codes (tag role).
 const font = {
-  display: '"Instrument Serif", Georgia, serif',
   text: '"IBM Plex Sans", system-ui, sans-serif',
   mono: '"IBM Plex Mono", ui-monospace, monospace',
 };

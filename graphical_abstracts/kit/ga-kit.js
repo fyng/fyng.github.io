@@ -18,15 +18,15 @@
 
   // Type roles: size (px in the 1600x900 canvas) and line height.
   const ROLE = {
-    kicker: { size: 15, lh: 1.3 },
-    title: { size: 40, lh: 1.12 },
-    step: { size: 14, lh: 1.3 },
-    head: { size: 34, lh: 1.1 },
+    kicker: { size: 13, lh: 1.3 },
+    title: { size: 38, lh: 1.16 },
+    step: { size: 13, lh: 1.3 },
+    head: { size: 28, lh: 1.2 },
     label: { size: 17, lh: 1.4 },
-    body: { size: 17, lh: 1.4 },
+    body: { size: 17, lh: 1.42 },
     cap: { size: 15, lh: 1.35 },
     tag: { size: 13, lh: 1.3 },
-    take: { size: 32, lh: 1.2 },
+    take: { size: 28, lh: 1.3 },
     axis: { size: 14, lh: 1.3 }, // chart axis titles
     tick: { size: 13, lh: 1.2 }, //  chart tick labels
   };
@@ -317,7 +317,7 @@
     async build(opts, fn) {
       window.GA_KIT = true;
       await Promise.all(
-        ['15px "IBM Plex Sans"', '300 15px "IBM Plex Sans"', '500 15px "IBM Plex Sans"', 'italic 15px "IBM Plex Sans"', '15px "IBM Plex Mono"', '500 15px "IBM Plex Mono"', '40px "Instrument Serif"', 'italic 40px "Instrument Serif"'].map((f) => document.fonts.load(f).catch(() => null)),
+        ['15px "IBM Plex Sans"', '300 15px "IBM Plex Sans"', '500 15px "IBM Plex Sans"', 'italic 15px "IBM Plex Sans"', 'italic 500 15px "IBM Plex Sans"', '500 15px "IBM Plex Mono"'].map((f) => document.fonts.load(f).catch(() => null)),
       );
       const ga = new Kit(opts);
       fn(ga);

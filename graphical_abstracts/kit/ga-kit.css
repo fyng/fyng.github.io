@@ -1,5 +1,5 @@
 /* Graphical abstract kit: tokens, type roles and motion primitives. */
-@import url("../design/tokens.css");
+@import url("../design/artifacts/tokens.css");
 /* Kit aliases over the design tokens (design/tokens.css is generated) */
 :root {
   --blue-wash: var(--benefit-wash);
@@ -25,16 +25,18 @@ svg.ga text {
   fill: var(--ink);
 }
 
-/* Type roles (size set in JS so wrapping can measure it) */
-.t-kicker { font-family: var(--font-mono) !important; font-weight: 500; letter-spacing: .16em; fill: var(--muted) !important; }
-.t-title { font-family: var(--font-display) !important; }
-.t-step { font-family: var(--font-mono) !important; font-weight: 500; letter-spacing: .16em; fill: var(--prussian) !important; }
-.t-head { font-family: var(--font-display) !important; }
+/* Type roles (size set in JS so wrapping can measure it). One family: IBM Plex Sans;
+   hierarchy comes from size, weight (400/500), case and colour. Mono only for codes. */
+.t-kicker { font-weight: 500; letter-spacing: .12em; text-transform: uppercase; fill: var(--muted) !important; }
+.t-title { font-weight: 500; letter-spacing: -.015em; }
+.t-step { font-weight: 500; letter-spacing: .12em; text-transform: uppercase; fill: var(--prussian) !important; }
+.t-head { font-weight: 500; letter-spacing: -.01em; }
 .t-cap { fill: var(--muted) !important; }
 .t-label { fill: var(--ink-2) !important; }
 .t-body { fill: var(--ink) !important; }
-.t-tag { font-family: var(--font-mono) !important; font-weight: 500; letter-spacing: .1em; fill: var(--ink-2) !important; }
-.t-take { font-family: var(--font-display) !important; }
+.t-tag { font-family: var(--font-mono) !important; font-weight: 500; letter-spacing: .04em; fill: var(--ink-2) !important; }
+.t-take { font-weight: 400; letter-spacing: -.01em; }
+.t-take tspan.acc { font-weight: 500; }
 .t-axis { font-weight: 500; fill: var(--ink-2) !important; }
 .t-tick { font-variant-numeric: tabular-nums; fill: var(--muted) !important; }
 svg.ga tspan.acc { fill: var(--accent) !important; }

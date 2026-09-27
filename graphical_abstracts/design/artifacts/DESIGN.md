@@ -1,17 +1,18 @@
 # Lamina: design preferences for lab figures
 
-Lamina is the visual system for the lab's graphical abstracts and schematic figures.
+Lamina is the visual system for the lab's graphical abstracts, charts and schematic figures.
+The website has its own system (`../website/DESIGN.md`); `../README.md` explains the split.
 This file holds the high-level preferences. The details are in:
 
 | File | Covers |
 |---|---|
-| [`typography.md`](typography.md) | Typefaces, type roles, numbers and units |
+| [`typography.md`](typography.md) | One family (IBM Plex Sans), type roles, numbers and units |
 | [`color.md`](color.md) | Palettes grouped by what they mean, and how they were validated |
 | [`charts.md`](charts.md) | Chart grammar and rules for eight common forms |
-| `tokens.mjs` → `tokens.css`, `tokens.json` | The values. Edit `tokens.mjs`, run `node design/tokens.mjs` |
+| `tokens.mjs` → `tokens.css`, `tokens.json` | The values. Edit `tokens.mjs`, run `node design/artifacts/tokens.mjs` |
 | `specimen-*.html` → `out/specimen-*.png` | Visual reference sheets, built with the kit |
 
-The kit (`../kit/`) implements the system, so following it is mostly automatic.
+The kit (`../../kit/`) implements the system, so following it is mostly automatic.
 This document says *why*, so you can decide the cases the kit doesn't cover.
 
 ## What a Lamina figure is
@@ -38,14 +39,16 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
    ink or context grey. One accent per figure.
 4. **Label things directly.** Put words next to the marks they name. Use a legend only
    when direct labels would collide.
-5. **Quiet structure.** Use hairlines (1.5 px, `--rule`) for dividers and axes, and
+5. **One voice.** Every word is IBM Plex Sans. Hierarchy comes from size, weight
+   (400/500), case and colour, not from mixing typefaces. Mono is kept for literal codes.
+6. **Quiet structure.** Use hairlines (1.5 px, `--rule`) for dividers and axes, and
    generous white space. The grid shows through alignment, not boxes.
-6. **Motion follows the argument.** Things appear in the order you would explain them
+7. **Motion follows the argument.** Things appear in the order you would explain them
    aloud. Nothing moves once it has arrived. There are no loops within the loop.
-7. **Accessible by construction.** Palettes are validated for colour-vision deficiency,
+8. **Accessible by construction.** Palettes are validated for colour-vision deficiency,
    text meets contrast minimums, and there is no meaning by colour alone.
    Every figure carries a `<title>` and `<desc>` that state its content in full.
-8. **Checked, not eyeballed.** The kit's lint blocks a render on overlaps, margin
+9. **Checked, not eyeballed.** The kit's lint blocks a render on overlaps, margin
    overflow, divider crossings, and arrows or curves running through labels.
    Never use `--force` to ship.
 
@@ -69,7 +72,7 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
   or n), the visual, and the conclusion at the foot.
 - **Take-home, y 812–860:** one sentence in `take` type, under a hairline at 794.
 - Figures are always light. On a dark page, they sit on their own paper card; there is
-  no dark variant.
+  no dark variant (see `../website/DESIGN.md`, *Embedding Lamina figures*).
 
 ## Motion
 
@@ -96,4 +99,4 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
 ## Deliverables per figure
 
 `out/<slug>.png` (poster, 2×), `out/<slug>.mp4` (H.264), `out/<slug>.webp` (preview,
-not committed). Render with `node render.cjs <slug>.html`; the render fails if lint fails.
+not committed). Render with `node render.cjs <slug>.html` from `graphical_abstracts/`; the render fails if lint fails.
