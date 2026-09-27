@@ -89,6 +89,10 @@ function ffmpegBin() {
   const mp4 = path.join(outDir, `${slug}.mp4`);
   execFileSync(ff, [...inp, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", "-movflags", "+faststart", mp4]);
   console.log("video  ->", mp4);
+  // VP9 WebM: fallback for browsers without H.264 (some Linux builds, test Chromium)
+  const webm = path.join(outDir, `${slug}.webm`);
+  execFileSync(ff, [...inp, "-c:v", "libvpx-vp9", "-pix_fmt", "yuv420p", "-b:v", "0", "-crf", "34", "-row-mt", "1", "-deadline", "good", "-cpu-used", "2", webm]);
+  console.log("webm   ->", webm);
   const webp = path.join(outDir, `${slug}.webp`);
   execFileSync(ff, [...inp, "-vf", "fps=15,scale=800:-1:flags=lanczos", "-c:v", "libwebp", "-lossless", "0", "-q:v", "70", "-loop", "0", webp]);
   console.log("webp   ->", webp);

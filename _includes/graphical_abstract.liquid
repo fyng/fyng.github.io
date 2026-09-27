@@ -1,0 +1,25 @@
+{%- comment -%}
+  Graphical abstract (Lamina figure): the poster PNG by default; the MP4 plays on
+  hover or keyboard focus on pointer devices, and when mostly on screen on touch
+  devices. Behaviour lives in assets/js/graphical-abstract.js.
+  Assets: assets/img/graphical_abstracts/<slug>.png, .mp4 and .webm, copied from
+  graphical_abstracts/out/ by graphical_abstracts/publish.sh.
+  Params: slug (required), title (for alt text).
+{%- endcomment -%}
+{% assign ga_base = '/assets/img/graphical_abstracts/' | append: include.slug | relative_url %}
+<figure class="ga-figure" data-ga tabindex="0" aria-label="Graphical abstract: {{ include.title | escape }}">
+  <img src="{{ ga_base }}.png" alt="Graphical abstract: {{ include.title | escape }}" loading="lazy" decoding="async" width="1600" height="900">
+  <video
+    data-sources="{{ ga_base }}.mp4 video/mp4, {{ ga_base }}.webm video/webm"
+    muted
+    playsinline
+    loop
+    preload="none"
+    aria-hidden="true"
+    tabindex="-1"
+  ></video>
+</figure>
+{% unless ga_script_included %}
+  {% assign ga_script_included = true %}
+  <script defer src="{{ '/assets/js/graphical-abstract.js' | relative_url }}"></script>
+{% endunless %}

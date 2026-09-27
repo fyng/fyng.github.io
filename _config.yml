@@ -382,6 +382,7 @@ filtered_bibtex_keywords:
   [
     abbr,
     abstract,
+    graphical_abstract,
     additional_info,
     altmetric,
     annotation,

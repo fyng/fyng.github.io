@@ -110,5 +110,17 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
 
 ## Deliverables per figure
 
-`out/<slug>.png` (poster, 2×), `out/<slug>.mp4` (H.264), `out/<slug>.webp` (preview,
-not committed). Render with `node render.cjs <slug>.html` from `graphical_abstracts/`; the render fails if lint fails.
+`out/<slug>.png` (poster, 2×), `out/<slug>.mp4` (H.264), `out/<slug>.webm` (VP9 fallback),
+and `out/<slug>.webp` (preview, not committed). Render with `node render.cjs <slug>.html`
+from `graphical_abstracts/`; the render fails if lint fails.
+
+## On the website
+
+1. `./publish.sh <slug>` copies the PNG, MP4 and WebM to `assets/img/graphical_abstracts/`.
+2. Add `graphical_abstract={<slug>}` to the paper's entry in `_bibliography/papers.bib`.
+   The local `_layouts/bib.liquid` (an override of the al-folio theme template) then
+   renders `_includes/graphical_abstract.liquid` at the end of the entry.
+3. The poster shows by default. On laptops, the animation plays on hover or keyboard
+   focus and resets on leave. On phones, it plays when at least 60 % of the figure is
+   on screen and resets when it scrolls away. Reduced-motion users see only the poster.
+   The video loads on first play (`assets/js/graphical-abstract.js`).
