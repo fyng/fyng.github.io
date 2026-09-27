@@ -104,8 +104,9 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
   offset (fan-in, fan-out), and then they leave and enter perpendicular to the box edge.
 - **Method boxes** all look the same: wash fill, an icon, and a short label ("LLM",
   "ML model"). Name the method by what readers know, not the algorithm, unless the
-  algorithm is the point. Icons: `sparkles` for LLMs and generative AI, `network` for
-  trained models.
+  algorithm is the point. Icons: `llm` (a speech bubble with text) for language models,
+  `network` for trained models. Avoid vendor-associated glyphs such as sparkles or
+  swirls; icons stay brand-agnostic.
 
 ## Deliverables per figure
 

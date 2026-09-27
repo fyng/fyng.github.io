@@ -52,7 +52,7 @@ GA.build({
   ga.icon("note", { cx: c1.x0 + 58, cy: rowY - 12, size: 80, color: "var(--ink)", at: 1.1, anim: "in", lint: false });
   ga.icon("note", { cx: c1.x0 + 50, cy: rowY - 4, size: 80, color: "var(--ink)", at: 1.25, anim: "in", lint: false });
   const notes = ga.icon("note", { cx: c1.x0 + 42, cy: rowY + 4, size: 80, color: "var(--ink)", at: 1.4, anim: "in" });
-  const llm = method(c1.x0 + 166, rowY - 46, "sparkles", "LLM", 2.1);
+  const llm = method(c1.x0 + 166, rowY - 46, "llm", "LLM", 2.1);
   const outs = ga.text("incidence\ntiming\ngrade", { x: llm.r + 76, y: rowY - 36, role: "label", at: 2.5 });
   ga.connect(notes, llm, { at: 1.8 });
   ga.connect(llm, outs, { at: 2.4 });
