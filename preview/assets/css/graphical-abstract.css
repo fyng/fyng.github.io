@@ -1,0 +1,99 @@
+/* Graphical abstracts (Lamina figures) in publication preview slots.
+   Kept out of main.css on purpose: this file is linked with a per-build version
+   (see _includes/graphical_abstract.liquid), so browsers never pair new markup
+   with stale styles. main.css's cache-bust hash does not change when a _sass
+   partial changes. */
+
+/* Thumbnail: fills the publication preview slot like other preview images. */
+.ga-thumb {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.ga-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+}
+.ga-thumb:focus-visible {
+  outline: 2px solid var(--global-theme-color);
+  outline-offset: 2px;
+}
+
+/* Expanded view: centred and sized to fit the viewport (portrait and landscape).
+   Hover mode floats without capturing the mouse; modal mode dims the page. */
+.ga-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1080;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.18s ease,
+    visibility 0s linear 0.18s;
+}
+.ga-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.18s ease;
+}
+.ga-overlay.is-modal {
+  pointer-events: auto;
+  background: rgba(17, 19, 23, 0.72);
+  cursor: zoom-out;
+}
+.ga-expanded {
+  position: relative;
+  width: min(94vw, calc(94vh * 16 / 9), 1280px);
+  width: min(94vw, calc(94dvh * 16 / 9), 1280px);
+  aspect-ratio: 16 / 9;
+  background: #ffffff; /* figures always keep their paper */
+  border: 1px solid var(--global-divider-color);
+  border-radius: 2px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+}
+.ga-expanded img,
+.ga-expanded video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.ga-expanded video {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.ga-expanded.is-playing video {
+  opacity: 1;
+}
+.ga-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d9dbe0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #4a4e58;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: none;
+}
+.is-modal .ga-close {
+  display: block;
+}
+html.ga-lock {
+  overflow: hidden;
+}
