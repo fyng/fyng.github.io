@@ -30,6 +30,7 @@ sitting on a line fails the render.
 | Many tests, effect against significance | Volcano (06) |
 | Matrix of values (tissue × drug) | Heatmap (07) |
 | Parts of a whole per unit | 100 % stacked bars (08) |
+| One share per location in space (cell type per spot) | Proportion dials in small multiples, one type per map (see `DESIGN.md`, *Drawing biology*) |
 | One number is the story | Not a chart. Set the number large, in `head` or `take`, with its n |
 
 Never use 3D, dual y-axes, pies over 3 slices, radar charts, or smoothed

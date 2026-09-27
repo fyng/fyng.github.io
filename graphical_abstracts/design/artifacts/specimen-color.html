@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../../kit/ga-kit.css">
 <script src="../../kit/icons.js"></script>
 <script src="../../kit/ga-kit.js"></script>
+<script src="../../kit/ga-bio.js"></script>
 </head>
 <body>
 <script>
@@ -76,7 +77,14 @@ GA.build({ duration: 6, poster: 5.5, title: "Lamina colour specimens", desc: "Ne
     ga.icon(icon, { cx, cy: 676, size: 48, color: tok(`organ-${k}`), at: 0.3 });
     ga.text(name, { x: cx, y: 708, role: "tick", anchor: "middle", at });
   });
-  ga.text("Registry in tokens.mjs (entity.organ). Add model systems, lesion classes and cell types there before first use.", { x: c2.x0, y: 744, w: c2.w, role: "cap", size: 14, at });
+  // cell types: one hue family, drawn as the cell glyph (nucleus + cytoplasm)
+  const B = GA.bio(ga);
+  for (let k = 1; k <= 4; k++) {
+    const cx = c2.x0 + 30 + (k - 1) * 72;
+    B.cell({ cx, cy: 758, r: 20, k, at: 0.3 });
+    ga.text(`cell ${k}`, { x: cx, y: 788, role: "tick", anchor: "middle", at });
+  }
+  ga.text("Organs: registry in tokens.mjs (entity.organ). Cell types: the family palette (family.cell), four at most.", { x: c2.x0, y: 820, w: c2.w, role: "cap", size: 14, at });
 
   // ---- column 3: scales ------------------------------------------------------------
   step(c3, "03 · SCALES");
@@ -101,7 +109,7 @@ GA.build({ duration: 6, poster: 5.5, title: "Lamina colour specimens", desc: "Ne
   ga.text("Valence when one side is better (sensitivity, survival). Direction when neither is (fold change, bias).", { x: c3.x0, y: 588, w: c3.w, role: "cap", size: 14, at });
 
   sub(c3, 666, "Validation");
-  ga.text("Categorical, adjacent pairs: CVD ΔE ≥ 8.7, normal ΔE ≥ 19.4\nSlots 1–3, all pairs: CVD ΔE ≥ 14.4\nEvery mark ≥ 3:1 on paper · every text step ≥ 5:1", { x: c3.x0, y: 694, w: c3.w, role: "tick", size: 13, color: "var(--ink-2)", at });
+  ga.text("Categorical, adjacent pairs: CVD ΔE ≥ 8.7, normal ΔE ≥ 19.4\nSlots 1–3, all pairs: CVD ΔE ≥ 14.4\nCell family, all pairs: CVD ΔE ≥ 10.7, normal ΔE ≥ 15\nEvery mark ≥ 3:1 on paper · every text step ≥ 5:1", { x: c3.x0, y: 694, w: c3.w, role: "tick", size: 13, color: "var(--ink-2)", at });
 });
 </script>
 </body>

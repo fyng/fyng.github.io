@@ -85,10 +85,12 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
 
 - **Loop 16 s** (always under 20 s, no sound). Header 0–1 s, panels about 4 s each,
   take-home at about 13.4 s, hold, fade out 15.5–16 s. The poster frame (the static
-  image) is t = 15 s, so the static version is the complete figure.
+  image) is t = 15 s, so the static version is the complete figure. A figure that
+  explains a mechanism may run 18 s, with the poster at 17 s.
 - **Vocabulary:** `in` (rise 12 px and fade) for text; `pop` for icons and boxes;
-  `draw` for arrows and curves; `grow` for bars; `fade` for chart frames and fields.
-  Nothing else.
+  `draw` for arrows and curves; `grow` for bars; `fade` for chart frames and fields;
+  `zoom` for an inset growing out of its source; `sweep` for a proportion wedge
+  filling clockwise from 12 o'clock. Nothing else.
 - **Timing:** enter 0.6–0.8 s, draws 0.8–1.2 s, stagger 80 ms. Arrowheads appear
   as their line finishes. Chart frames come before the data, and labels come after
   the marks land.
@@ -102,6 +104,39 @@ A **scientific statement**, drawn. It reads like the paper's abstract, not an ad
 - Colour an icon only when it is an entity with a registered colour (organs). Otherwise
   use ink or prussian.
 - Icon size can encode a quantity (grade, for example) only if a caption says so.
+
+## Drawing biology
+
+Draw the objects the work is about, simply, and let the drawing carry the
+explanation. The kit's `GA.bio` layer (`kit/ga-bio.js`) draws each of these.
+
+- **Cells.** A round cytoplasm in the cell type's tint with a 1.5 px outline in its
+  mark colour, and an offset nucleus in the mark colour. The same glyph is the cell
+  type's legend swatch wherever the type appears. Colours come from the cell-type
+  family (`color.md`).
+- **Tissue.** A silhouette in neutral wash with a slightly darker core for inner
+  anatomy, outlined in `context`. Tissue is never coloured: colour is kept for the
+  cell types measured in it.
+- **Spots (pixels).** Paper-filled rings with a `context` outline on a regular
+  lattice inside the tissue.
+- **Zoom.** To look inside one thing, ink its outline, run two dotted tangent leaders
+  (muted, 1.5 px, `1 4` dash) to a circular inset (wash fill, ink-2 outline), and draw
+  the contents inside. In motion the inset grows out of its source (`zoom`), so the
+  eye travels with it. Zoom stays within a panel.
+- **Proportion dials.** A wedge inside each spot shows one cell type's share of
+  that spot, filled clockwise from 12 o'clock. Show one type per map and repeat the
+  map as small multiples, labelled with the cell glyph and `k = 1`. A spot never
+  holds a many-slice pie.
+- **Matrices.** A hairline grid in `rule` with a glyph at each row (a spot ring, a
+  cell) and braces labelled with the dimension (*D*, *N*). Cells stay empty unless
+  their values are the point; then they take the quantity ramp or the entity's colour.
+- **Model notation.** Variables are circles (r 26, ink-2 ring, paper fill; observed
+  ones filled `rule`), labelled with `math` type. Plates are 1.5 px ink-2 rectangles
+  with a 4 px radius and the index top-left (`d = 1…D`). Edges are the standard
+  prussian arrow.
+- **Notes.** A muted `note` label, one to three words, with a thin muted leader from
+  the mark. Use them only for notation a reader outside the field cannot decode,
+  never for what the drawing already shows.
 
 ## Arrows and method boxes
 

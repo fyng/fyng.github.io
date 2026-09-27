@@ -50,8 +50,8 @@ never from a second face.
 | `axis` | 500 | 14/18 | ink-2 | Chart axis titles |
 | `tick` | 400, tabular figures | 13/16 | muted | Tick labels, keys, legends |
 | `take` | 400, plain | 28/36 | ink | The single take-home sentence |
-| `note` | 400 | 14/18 | muted | Callouts that explain a mark (proposed, `explain.md`) |
-| `math` | 400; Latin italic, Greek upright | 17/22 | ink | Variables: θ, *z*<sub>*d,m*</sub> (proposed, `explain.md`) |
+| `note` | 400 | 14/18 | muted | Callouts that explain a mark |
+| `math` | 400; Latin italic, Greek upright | 17/22 | ink | Variables and indices: θ, *z*<sub>*d,m*</sub>, *k* = 1. Latin letters italic; Greek upright, because Plex's italic θ reads as ϑ; subscripts at 70 % |
 
 Rules:
 

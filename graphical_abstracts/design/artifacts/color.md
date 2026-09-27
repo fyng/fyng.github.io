@@ -111,6 +111,30 @@ their first use, and draw them from the categorical hues. A registered colour be
 slot order. If two registered entities that are close in hue sit side by side,
 label them directly.
 
+#### Cell types: a family palette
+
+Cell types in one figure are members of one kind, so they share one hue band,
+blue through violet to magenta, instead of taking categorical slots. They read as
+related and distinct at once.
+
+| Token | Mark | Tint (`-wash`) | OKLCH |
+|---|---|---|---|
+| `--cell-1` | `#3e45a2` indigo | `#a8b1da` | 0.44 0.148 275 |
+| `--cell-2` | `#5c87ec` cornflower | `#b8ccf7` | 0.64 0.159 265 |
+| `--cell-3` | `#b855a6` orchid | `#e2b8d8` | 0.60 0.160 335 |
+| `--cell-4` | `#721f65` plum | `#c7a2bd` | 0.40 0.142 335 |
+
+- The four were chosen by search over the 265–335° band, for the widest separation
+  under colour-vision deficiency with every mark at least 3:1 on paper. Every pair
+  is at least 10.7 apart under protanopia and deuteranopia, and at least 15 apart
+  for normal vision.
+- The mark colour is for nuclei, outlines, dial wedges and matrix fills. The tint
+  (62 % toward paper, 40 % chroma) is for cytoplasm and other large fills.
+- **Four is the limit.** With more cell types, fold the rest into "other" (context
+  grey) or split into small multiples. A panel never uses the family palette and the
+  categorical slots together.
+- Defined in `tokens.mjs` (`family.cell`).
+
 ### 5. Magnitude: how much
 
 One hue, light to dark.
