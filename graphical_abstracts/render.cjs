@@ -5,7 +5,7 @@
 // Every animation on the page is paused and seeked to an exact time, so each
 // frame is deterministic; the poster is simply the frame at --poster seconds.
 //
-//   node render.cjs precision-safety.html [--fps 30] [--poster 14.5] [--still]
+//   node render.cjs precision-safety.html [--fps 30] [--poster 14.5] [--still] [--force]
 //
 // Needs Playwright (global install is fine: NODE_PATH=$(npm root -g)) and an
 // ffmpeg binary (FFMPEG env var, `ffmpeg` on PATH, or python's imageio-ffmpeg).
@@ -38,8 +38,18 @@ function ffmpegBin() {
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 1 });
-  await page.goto("file://" + file + "?render");
-  await page.evaluate(() => document.fonts.ready);
+  const load = async (pg) => {
+    await pg.goto("file://" + file + "?render");
+    await pg.evaluate(() => document.fonts.ready);
+    // Kit-built figures lay themselves out after fonts load; wait for that.
+    await pg.waitForFunction(() => !window.GA_KIT || window.GA_READY, null, { timeout: 15000 });
+  };
+  await load(page);
+  const lint = await page.evaluate(() => window.GA_LINT || []);
+  if (lint.length) {
+    console.error(`layout check failed (${lint.length}):\n  ` + lint.join("\n  ") + "\nOpen with ?debug to see the boxes; pass --force to render anyway.");
+    if (!args.includes("--force")) { await browser.close(); process.exit(1); }
+  }
   const duration = opt("duration", await page.evaluate(() => window.GA_DURATION || 16));
   const poster = opt("poster", await page.evaluate(() => window.GA_POSTER || 14.5));
   const fps = opt("fps", 30);
@@ -54,8 +64,7 @@ function ffmpegBin() {
 
   // Poster at 2x for print / retina.
   const hi = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 2 });
-  await hi.goto("file://" + file + "?render");
-  await hi.evaluate(() => document.fonts.ready);
+  await load(hi);
   await hi.evaluate((ms) => {
     for (const a of document.getAnimations()) {
       a.pause();

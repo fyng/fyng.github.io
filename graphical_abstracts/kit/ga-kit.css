@@ -1,0 +1,78 @@
+/* Graphical abstract kit: tokens, type roles and motion primitives. */
+:root {
+  --paper: #ffffff;
+  --ink: #16181d;
+  --ink-2: #4a4e58;
+  --muted: #8a8e98;
+  --rule: #d9dbe0;
+  --wash: #f4f5f7;
+  --prussian: #1f4e79;
+  --blue-wash: #e8eff7;
+  --accent: #d0503a;
+  --accent-wash: #fbe9e5;
+  /* categorical, validated for CVD separation; ochre (c4) always direct-labelled */
+  --c1: #2f6fb0;
+  --c2: #d0503a;
+  --c3: #1f9a8a;
+  --c4: #c98f1f;
+  --c5: #8a5cb8;
+}
+html,
+body {
+  margin: 0;
+  background: var(--paper);
+}
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+svg.ga {
+  width: 100vw;
+  max-width: 1600px;
+  height: auto;
+  display: block;
+}
+svg.ga text {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  fill: var(--ink);
+}
+
+/* Type roles (size set in JS so wrapping can measure it) */
+.t-kicker { font-family: "IBM Plex Mono", monospace !important; font-weight: 500; letter-spacing: .16em; fill: var(--muted) !important; }
+.t-title { font-family: "Instrument Serif", Georgia, serif !important; }
+.t-step { font-family: "IBM Plex Mono", monospace !important; font-weight: 500; letter-spacing: .16em; fill: var(--prussian) !important; }
+.t-head { font-family: "Instrument Serif", Georgia, serif !important; }
+.t-cap { fill: var(--muted) !important; }
+.t-label { fill: var(--ink-2) !important; }
+.t-body { fill: var(--ink) !important; }
+.t-tag { font-family: "IBM Plex Mono", monospace !important; font-weight: 500; letter-spacing: .1em; fill: var(--ink-2) !important; }
+.t-take { font-family: "Instrument Serif", Georgia, serif !important; }
+svg.ga tspan.acc { fill: var(--accent) !important; }
+svg.ga tspan.em { font-style: italic; }
+
+.hair { fill: none; stroke: var(--rule); stroke-width: 1.5; }
+
+/* Motion: every animated wrapper carries --d (delay) and optional --t (duration).
+   The renderer pauses and seeks all animations, so keep motion in CSS keyframes. */
+.a-in, .a-pop, .a-draw, .a-grow, .a-fade { animation-fill-mode: both; animation-delay: var(--d, 0s); animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+.a-in   { animation-name: ga-in;   animation-duration: var(--t, .7s); }
+.a-fade { animation-name: ga-fade; animation-duration: var(--t, .6s); }
+.a-pop  { animation-name: ga-pop;  animation-duration: var(--t, .45s); transform-box: fill-box; transform-origin: center; }
+.a-draw { animation-name: ga-draw; animation-duration: var(--t, .8s); stroke-dasharray: 1; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+.a-grow { animation-name: ga-grow; animation-duration: var(--t, .8s); transform-box: fill-box; transform-origin: left center; }
+.ga-stage { animation: ga-out .5s ease-in both; animation-delay: calc(var(--dur) - .5s); }
+@keyframes ga-in   { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes ga-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ga-pop  { 0% { opacity: 0; transform: scale(.3); } 70% { transform: scale(1.1); } 100% { opacity: 1; transform: none; } }
+@keyframes ga-draw { 0% { stroke-dashoffset: 1; opacity: 0; } 1% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes ga-grow { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes ga-out  { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  svg.ga * { animation-delay: -100s !important; animation-play-state: paused !important; }
+  .ga-stage { animation: none !important; }
+}
+
+/* ?debug: show every measured box */
+.ga-debug-box { fill: none; stroke: #ff00aa; stroke-width: 1; stroke-dasharray: 3 3; }
+.ga-debug-bad { fill: rgba(255, 0, 80, .12); stroke: #ff0050; stroke-width: 2; }
