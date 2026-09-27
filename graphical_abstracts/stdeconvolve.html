@@ -15,7 +15,7 @@
 GA.build({
   duration: 18, poster: 17,
   title: "STdeconvolve: reference-free cell-type deconvolution",
-  desc: "Spatial transcriptomics technologies such as Spatial Transcriptomics, 10X Visium, DBiT-seq and Slide-seq measure gene expression in pixels that each contain several cells, which hinders identifying cell-type-specific spatial patterns. STdeconvolve models pixels as documents and cell types as topics with latent Dirichlet allocation, and recovers each cell type's transcriptional profile (beta) and its proportion in every pixel (theta), without a single-cell reference. Schematic maps show four deconvolved cell types in layers of a two-lobed tissue section. STdeconvolve performs comparably to reference-based methods when suitable references exist, and potentially better when they do not.",
+  desc: "Spatial transcriptomics technologies such as Spatial Transcriptomics, 10X Visium, DBiT-seq and Slide-seq measure gene expression in spots that each contain several cells, which hinders identifying cell-type-specific spatial patterns. STdeconvolve models spots as documents and cell types as topics with latent Dirichlet allocation, and recovers each cell type's transcriptional profile (beta) and its proportion in every spot (theta), without a single-cell reference. Schematic maps show four deconvolved cell types in layers of a two-lobed tissue section. STdeconvolve performs comparably to reference-based methods when suitable references exist, and potentially better when they do not.",
 }, (ga) => {
   const B = GA.bio(ga);
 
@@ -47,14 +47,14 @@ GA.build({
   let y = header(c1, "01", "Spot-based ST technologies", 0.8);
   const tis = B.tissue({ cx: c1.x0 + 108, cy: y + 104, w: 216, h: 172, pitch: 17, at: 1.1 });
   B.spots(tis, { at: 1.3 });
-  // the pixel we zoom into: a mixed spot on the right lobe
+  // the spot we zoom into: a mixed spot on the right lobe
   const px = tis.spots.filter((s) => s.x > tis.cx + 40 && s.rho > 0.5 && s.rho < 0.62).sort((a, b) => a.y - b.y)[0];
   B.zoom({
     src: px, cx: c1.x1 - 84, cy: y + 96, R: 80, at: 2.1,
     cells: [[-34, -30, 21, 3], [16, -40, 18, 2], [38, 4, 22, 4], [-4, 8, 20, 2], [-42, 22, 17, 1], [8, 50, 18, 3]],
   });
 
-  // measured expression: pixels (rows) x genes (columns); the zoomed pixel is one row
+  // measured expression: spots (rows) x genes (columns); the zoomed spot is one row
   const my = y + 262;
   const ring = (i, cx, cy) => `<circle cx="${cx}" cy="${cy}" r="5.5" fill="var(--paper)" stroke="${i === 1 ? "var(--ink)" : "var(--context)"}" stroke-width="${i === 1 ? 2 : 1.2}"/>`;
   const vals = [0.35, 0.8, 0.15, 0.55, 0.95, 0.25, 0.6, 0.1, 0.7, 0.4];
@@ -64,12 +64,12 @@ GA.build({
   });
   B.brace({ side: "left", x: c1.x0 + 64, y0: mx.t, y1: mx.b, label: "D", at: 3.8 });
   B.brace({ side: "bottom", x0: mx.l, x1: mx.r, y: mx.b + 6, label: "N", at: 3.8 });
-  ga.text("pixels", { x: c1.x0, y: mx.cy + 22, role: "note", at: 3.8 });
+  ga.text("spots", { x: c1.x0, y: mx.cy + 22, role: "note", at: 3.8 });
   ga.text("genes", { x: mx.r + 14, y: mx.b + 16, role: "note", at: 3.8 });
-  conclusion(c1, "Pixels pool several cells, hiding cell-type-specific spatial patterns", 5.0);
+  conclusion(c1, "Spots pool several cells, hiding cell-type-specific spatial patterns", 5.0);
 
   // ---------------- 02 · Model ----------------
-  y = header(c2, "02", "Topic model infers cell type mixture", 5.6);
+  y = header(c2, "02", "Topic model infers cell-type mixture", 5.6);
   const ny = y + 244, X = [c2.x0 + 30, c2.x0 + 146, c2.x0 + 262, c2.x0 + 378];
   B.plate({ x0: X[1] - 44, y0: ny - 80, x1: c2.x1 - 4, y1: ny + 64, label: "d = 1…D", at: 6.3 });
   B.plate({ x0: X[2] - 40, y0: ny - 56, x1: c2.x1 - 16, y1: ny + 48, label: "m = 1…M", at: 6.5 });
@@ -89,10 +89,10 @@ GA.build({
   B.note("cell type\nper molecule", { from: z, x: X[2], y: ny + 92, at: 8.7 });
   B.note("observed\ngene", { from: w, x: X[3], y: ny + 92, at: 8.85 });
   B.note("cell-type\ngene profile", { from: beta, fromSide: "l", toSide: "r", x: X[3] - 116, y: ny - 186, anchor: "end", at: 9.0 });
-  conclusion(c2, "Latent Dirichlet allocation learns cell types from the pixels alone", 9.4);
+  conclusion(c2, "Latent Dirichlet allocation learns cell types from the spots alone", 9.4);
 
   // ---------------- 03 · Output ----------------
-  y = header(c3, "03", "Deconvolve cell type proportions", 10.0);
+  y = header(c3, "03", "Deconvolution recovers cell-type proportions", 10.0);
   // β: genes per cell type (each row in its type's colour; darker = higher)
   const by = y + 34;
   B.math("β", { x: c3.x0, y: by - 30, at: 10.4 });
@@ -104,10 +104,10 @@ GA.build({
     fill: (i, j) => (marker(i, j) ? { color: B.color(i + 1), opacity: marker(i, j) } : null), fillAt: 10.8, stagger: 0.03,
   });
 
-  // θ: proportion of each cell type in every pixel, one map per type
+  // θ: proportion of each cell type in every spot, one map per type
   const ty = bm.b + 24;
   B.math("θ", { x: c3.x0, y: ty, at: 11.3 });
-  ga.text("proportion per pixel", { x: c3.x0 + 18, y: ty, role: "label", at: 11.3 });
+  ga.text("proportion per spot", { x: c3.x0 + 18, y: ty, role: "label", at: 11.3 });
   const mw = 134, mh = 100, gx = 218;
   [0, 1, 2, 3].forEach((k) => {
     const ox = c3.x0 + 44 + (k % 2) * gx, oy = ty + 34 + Math.floor(k / 2) * (mh + 12);
@@ -117,7 +117,7 @@ GA.build({
     B.cell({ cx: ox - 26, cy: oy + 14, r: 9, k: k + 1, at: 12.2 + k * 0.35 });
     B.math(`k = ${k + 1}`, { x: ox - 26, y: oy + 30, size: 14, anchor: "middle", at: 12.3 + k * 0.35 });
   });
-  conclusion(c3, "Recovers each cell type's transcriptional profile and its proportion in every pixel", 14.0);
+  conclusion(c3, "Recovers each cell type's transcriptional profile and its proportion in every spot", 14.0);
 
   // ---------------- take-home ----------------
   ga.text("STdeconvolve performs comparably to reference-based methods without a single-cell reference.", { x: ga.M, y: 816, w: 1472, role: "take", at: 14.8 });
