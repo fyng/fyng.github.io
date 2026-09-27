@@ -5,7 +5,9 @@
 //   - touch devices (phones): on tap, as a dismissable overlay
 //   The expanded figure is sized to fit the viewport in portrait and landscape.
 //   Reduced-motion users get the enlarged poster, never the animation.
-//   The video (MP4, WebM fallback) loads on first open.
+//   The video (MP4, WebM fallback) loads on first open, plays once, and then
+//   snaps to the poster (its final frame, pixel-aligned) so the figure can be
+//   zoomed or copied. Closing and reopening the view replays it.
 (function () {
   if (window.__gaInit) return;
   window.__gaInit = true;
@@ -16,7 +18,8 @@
   let current = null,
     mode = null,
     lastFocus = null,
-    hoverTimer = null;
+    hoverTimer = null,
+    pendingTimer = null;
 
   function build() {
     overlay = document.createElement("div");
@@ -24,7 +27,7 @@
     overlay.setAttribute("aria-hidden", "true");
     overlay.innerHTML =
       '<div class="ga-expanded" role="dialog" aria-modal="true">' +
-      '<img alt=""><video muted playsinline loop preload="none" aria-hidden="true"></video>' +
+      '<img alt=""><video muted playsinline preload="none" aria-hidden="true"></video>' +
       '<button type="button" class="ga-close" aria-label="Close">&times;</button></div>';
     document.body.appendChild(overlay);
     box = overlay.firstElementChild;
@@ -32,7 +35,14 @@
     video = box.querySelector("video");
     closeBtn = box.querySelector(".ga-close");
     // Reveal the video only once frames are playing, so the poster never flashes blank.
-    video.addEventListener("playing", () => current && box.classList.add("is-playing"));
+    video.addEventListener("playing", () => {
+      clearTimeout(pendingTimer);
+      if (current) box.classList.remove("is-pending"), box.classList.add("is-playing");
+    });
+    // Done: swap to the poster, which is the same frame as a real image.
+    video.addEventListener("ended", () => box.classList.remove("is-playing", "is-pending"));
+    // If the video cannot play, show the poster rather than an empty frame.
+    video.addEventListener("error", () => box.classList.remove("is-pending"), true);
     overlay.addEventListener("click", () => mode === "modal" && close());
     document.addEventListener("keydown", (e) => e.key === "Escape" && current && close());
   }
@@ -63,7 +73,12 @@
     overlay.classList.toggle("is-modal", how === "modal");
     overlay.setAttribute("aria-hidden", how === "modal" ? "false" : "true");
     if (!same && !reduce.matches) {
+      // Until the first frame plays, show blank paper: the poster is the finished
+      // figure, and flashing it before the animation would give the ending away.
       box.classList.remove("is-playing");
+      box.classList.add("is-pending");
+      clearTimeout(pendingTimer);
+      pendingTimer = setTimeout(() => box.classList.remove("is-pending"), 4000);
       load(thumb);
       try {
         video.currentTime = 0;
@@ -84,7 +99,8 @@
     current = mode = null;
     overlay.classList.remove("is-open", "is-modal");
     overlay.setAttribute("aria-hidden", "true");
-    box.classList.remove("is-playing");
+    box.classList.remove("is-playing", "is-pending");
+    clearTimeout(pendingTimer);
     video.pause();
     document.documentElement.classList.remove("ga-lock");
     if (wasModal && lastFocus) lastFocus.focus({ preventScroll: true });

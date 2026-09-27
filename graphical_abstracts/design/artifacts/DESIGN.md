@@ -118,8 +118,8 @@ Rules:
 ## Motion
 
 - **Loop 16 s** (always under 20 s, no sound). Header 0–1 s, panels about 4 s each,
-  take-home at about 13.4 s, hold, fade out 15.5–16 s. The poster frame (the static
-  image) is t = 15 s, so the static version is the complete figure. A figure that
+  take-home at about 13.4 s, then hold. There is no closing fade: the last frame is
+  the complete figure, identical to the poster (the static image, t = 15 s). A figure that
   explains a mechanism may run 18 s, with the poster at 17 s.
 - **Vocabulary:** `in` (rise 12 px and fade) for text; `pop` for icons and boxes;
   `draw` for arrows and curves; `grow` for bars; `fade` for chart frames and fields;
@@ -221,5 +221,8 @@ from `graphical_abstracts/`; the render fails if lint fails.
    expanded view sized to fit the viewport (portrait and landscape):
    - on laptops, while hovering the thumbnail; a click opens it as an overlay;
    - on phones, a tap opens the overlay; tap anywhere, the × or Esc closes it.
+   The animation plays once, then snaps to the poster (its last frame, aligned
+   pixel for pixel), so viewers can zoom into or copy the figure. Closing and
+   reopening the view replays it.
    Reduced-motion users get the enlarged poster only. The video loads on first open
    (`assets/js/graphical-abstract.js`).
