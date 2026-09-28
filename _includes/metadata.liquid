@@ -1,7 +1,7 @@
 {% comment %}
   Local override of al_folio_core 1.0.15 _includes/metadata.liquid. Changes: site.home_title for the
   homepage <title>/og/twitter titles, ProfilePage + Person JSON-LD built from site.person, and
-  non-URL socials (cv_pdf) kept out of sameAs.
+  non-URL socials (cv_pdf) kept out of sameAs, and a noindex robots tag when site.noindex is set (preview builds).
 {% endcomment %}
 {% if site.enable_google_verification or site.enable_bing_verification %}
   <!-- Website verification -->
@@ -45,6 +45,9 @@
     {{ title }}
   {% endif %}
 </title>
+{% if site.noindex %}
+  <meta name="robots" content="noindex, nofollow">
+{% endif %}
 <meta name="author" content="{{ author_name }}">
 <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
 {% if page.keywords or site.keywords %}
