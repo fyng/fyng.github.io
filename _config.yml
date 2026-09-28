@@ -12,8 +12,15 @@ description: > # the ">" symbol means to ignore newlines until "footer_text:"
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-keywords: computational biology, generative models, protein design, machine learning, Memorial Sloan Kettering, Tansey lab
+keywords: Feiyang Huang, computational biology, generative models, protein design, machine learning, Memorial Sloan Kettering, Tansey lab
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
+home_title: Feiyang Huang | Computational Biology PhD, Memorial Sloan Kettering # <title> of the homepage (search result headline)
+# Structured data about you, emitted as Schema.org Person JSON-LD so search engines can build a profile for your name
+person:
+  job_title: PhD Candidate, Computational Biology & Medicine
+  works_for: [Memorial Sloan Kettering Cancer Center, Weill Cornell Medicine]
+  alumni_of: [Johns Hopkins University]
+  knows_about: [Computational biology, Generative models, Protein design, Machine learning, Spatial transcriptomics]
 icon: ⚛️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 apple_touch_icon: # image name in /assets/img/ (or a rooted path / absolute URL) used for iOS home-screen bookmarks; needs a real 180x180 PNG, since Safari ignores the emoji favicon above. Left empty, iOS falls back to a screenshot of the page.
 
@@ -108,9 +115,9 @@ max_width: 930px
 # -----------------------------------------------------------------------------
 # Display links to the page with a preview object on social media.
 # see https://schema.org/docs/faq.html for more information
-serve_og_meta: false # Include Open Graph meta tags in the HTML head
-serve_schema_org: false # Include Schema.org in the HTML head
-og_image: # The site-wide (default for all links) Open Graph preview image
+serve_og_meta: true # Include Open Graph meta tags in the HTML head
+serve_schema_org: true # Include Schema.org in the HTML head
+og_image: /assets/img/headshot_square.jpg # The site-wide (default for all links) Open Graph preview image
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
