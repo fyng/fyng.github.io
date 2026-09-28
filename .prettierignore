@@ -8,3 +8,5 @@ _posts/2015-10-20-math.md
 _data/citations.yml
 # Hand-authored SVG animations; layout is positional, not reflowable
 graphical_abstracts/
+# Shared design system (git submodule); formatted in its own repo
+design-system/

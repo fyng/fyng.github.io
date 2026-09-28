@@ -23,6 +23,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # design-system/ is the academic-design-system submodule; the Sass
+          # build needs it. It is a private repo, so reading it needs a token
+          # with access to it (DESIGN_SYSTEM_TOKEN secret); if the repo is
+          # made public, the default token is enough. Credentials are not
+          # persisted: the deploy action authenticates with its own token.
+          submodules: true
+          token: ${{ secrets.DESIGN_SYSTEM_TOKEN || github.token }}
+          persist-credentials: false
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
