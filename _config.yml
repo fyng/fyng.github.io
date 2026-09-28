@@ -229,6 +229,7 @@ exclude:
   - al-folio-upgrade-report.md
   - bin/
   - CLAUDE.md
+  - design-system/
   - Dockerfile
   - docker-compose.yml
   - docker-compose-slim.yml
@@ -311,6 +312,11 @@ defaults:
 
 sass:
   style: compressed
+  # The shared design system (academic-design-system submodule) provides
+  # instrument-prussian/*, used by _sass/_fyng.scss.
+  load_paths:
+    - _sass
+    - design-system/website/scss
 
 # -----------------------------------------------------------------------------
 # Jekyll Minifier
