@@ -35,5 +35,5 @@
 // Site-specific design layer (local addition to the al_folio_core main.scss);
 // it pulls in the shared design system from the design-system/ submodule.
 // Bump when _sass/_fyng.scss or the design-system submodule changes so the
-// ?v= cache-bust hash changes too: rev 4
+// ?v= cache-bust hash changes too: rev 5
 @use "fyng";
