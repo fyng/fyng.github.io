@@ -316,7 +316,7 @@ sass:
   # instrument-prussian/*, used by _sass/_fyng.scss.
   load_paths:
     - _sass
-    - design-system/website/scss
+    - design-system/formats/web/scss
 
 # -----------------------------------------------------------------------------
 # Jekyll Minifier
