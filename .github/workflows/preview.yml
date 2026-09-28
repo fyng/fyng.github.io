@@ -47,7 +47,9 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y imagemagick
           export JEKYLL_ENV=production
-          bundle exec jekyll build --baseurl /preview
+          # noindex keeps search engines from treating /preview/ as a duplicate of the live site
+          printf 'noindex: true\n' > _config_preview.yml
+          bundle exec jekyll build --baseurl /preview --config _config.yml,_config_preview.yml
       - name: Purge unused CSS
         run: |
           npm install -g purgecss
