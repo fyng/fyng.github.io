@@ -64,7 +64,7 @@
   sections-allow-page-break: true,
   sections-space-between-text-based-entries: 0.3em,
   sections-space-between-regular-entries: 0.7em,
-  entries-date-and-location-width: 3.6cm,
+  entries-date-and-location-width: 2.1cm,
   entries-side-space: 0.2cm,
   entries-space-between-columns: 0.1cm,
   entries-allow-page-break: false,
@@ -85,22 +85,31 @@
   ),
 )
 
-
+#grid(
+  columns: (1fr, auto),
+  align: (left + bottom, right + bottom),
+  [
 = Feiyang Huang
+    #headline([PhD Candidate, Computational Biology & Medicine])
+  ],
+  [
+    #set par(spacing: 0.3cm)
+    #set text(fill: rgb(112, 116, 128), font: "IBM Plex Sans", size: 9pt)
+    #text(size: 12pt)[
+      #link("mailto:feh4005@med.cornell.edu", icon: false, if-underline: false, if-color: false)[#fa-icon("envelope")]#h(0.3cm)
+      #link("https://scholar.google.com/citations?user=MFllmkIAAAAJ", icon: false, if-underline: false, if-color: false)[#fa-icon("graduation-cap")]#h(0.3cm)
+      #link("https://orcid.org/0000-0002-7241-1509", icon: false, if-underline: false, if-color: false)[#fa-icon("orcid")]#h(0.3cm)
+      #link("https://github.com/fyng", icon: false, if-underline: false, if-color: false)[#fa-icon("github")]#h(0.3cm)
+      #link("https://linkedin.com/in/feiyang-huang", icon: false, if-underline: false, if-color: false)[#fa-icon("linkedin")]
+    ]
 
-  #headline([PhD Candidate, Computational Biology & Medicine])
+    #connection-with-icon("location-dot")[New York, NY]
 
-#connections(
-  [#connection-with-icon("location-dot")[New York, NY]],
-  [#link("mailto:feh4005@med.cornell.edu", icon: false, if-underline: false, if-color: false)[#connection-with-icon("envelope")[feh4005\@med.cornell.edu]]],
-  [#link("https://fyng.github.io/", icon: false, if-underline: false, if-color: false)[#connection-with-icon("link")[fyng.github.io]]],
-  [#link("https://scholar.google.com/citations?user=MFllmkIAAAAJ", icon: false, if-underline: false, if-color: false)[#connection-with-icon("graduation-cap")[Google Scholar]]],
-  [#link("https://orcid.org/0000-0002-7241-1509", icon: false, if-underline: false, if-color: false)[#connection-with-icon("orcid")[0000-0002-7241-1509]]],
-  [#link("https://github.com/fyng", icon: false, if-underline: false, if-color: false)[#connection-with-icon("github")[fyng]]],
-  [#link("https://linkedin.com/in/feiyang-huang", icon: false, if-underline: false, if-color: false)[#connection-with-icon("linkedin")[feiyang-huang]]],
-  [#connection-with-icon("language")[English, Mandarin]],
+    #connection-with-icon("language")[English, Mandarin]
+
+  ],
 )
-
+#v(0.35cm)
 
 == Education
 
@@ -114,7 +123,9 @@
   [
     New York, NY
 
-    Aug 2023 – present
+    Aug 2023 –
+
+    present
 
   ],
   degree-column: [
@@ -128,13 +139,13 @@
 
     - GPA 3.96
 
-    - Activities: President, Singapore Students' Association (2021–2023); Theta Tau Professional Engineering Fraternity (2020–2022)
-
   ],
   [
     Baltimore, MD
 
-    Sept 2020 – May 2023
+    Sept 2020 –
+
+    May 2023
 
   ],
   degree-column: [
@@ -142,44 +153,25 @@
   ],
 )
 
-== Experience
-
-#regular-entry(
-  [
-    #strong[Memorial Sloan Kettering Cancer Center, Tansey Lab], PhD Researcher
-
-    - Developing OncoState, a self-supervised transformer learning patient states from multimodal clinical trajectories of 99,000+ MSK-IMPACT patients; outperforms the IMDC risk model in advanced clear cell RCC.
-
-    - Co-led a population-scale study of clinical and genetic determinants of systemic-therapy toxicity (co-first author, medRxiv 2026): developed the random forest toxicity model and the analysis and narrative for Figure 3.
-
-    - Contributed to #link("https://panpreclinical.org")[PPC], a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
-
-  ],
-  [
-    New York, NY
-
-    June 2024 – present
-
-  ],
-)
+== Research Experience
 
 #regular-entry(
   [
     #strong[Memorial Sloan Kettering Cancer Center], PhD Rotations
 
-    - #strong[Tansey Lab]: Bayesian active learning for nominating combination therapies from ex vivo drug screens
+    - #strong[Tansey Lab]: Bayesian active learning for nominating combination therapies from ex vivo drug screens.
 
-    - #strong[Chodera Lab]: Equivariant graph neural networks for small-molecule property prediction (#link("https://github.com/choderalab/mtenn")[mtenn])
+    - #strong[Chodera Lab]: Equivariant graph neural networks for small-molecule property prediction (#link("https://github.com/choderalab/mtenn")[mtenn]).
 
-    - #strong[CMO Innovation Lab]: Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumors
+    - #strong[CMO Innovation Lab]: Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumors.
 
-    - #strong[Morris Lab]: BERT representation learning from tumor mutation profiles
+    - #strong[Morris Lab]: BERT representation learning from tumor mutation profiles.
 
   ],
   [
-    New York, NY
+    Aug 2023 –
 
-    Aug 2023 – May 2024
+    May 2024
 
   ],
 )
@@ -188,43 +180,15 @@
   [
     #strong[Johns Hopkins University, Fan Lab], Undergraduate Researcher
 
-    - Built and benchmarked a reference-free LDA pipeline to deconvolve spatial transcriptomics data (STdeconvolve, #emph[Nature Communications] 2022).
+    - Reference-free deconvolution of spot-based spatial transcriptomics using LDA topic modeling.
 
-    - Developed a torque-based method and simulation framework to quantify subcellular mRNA polarization.
-
-  ],
-  [
-    Baltimore, MD
-
-    Jan 2021 – May 2023
-
-  ],
-)
-
-#regular-entry(
-  [
-    #strong[Hologic], Software Engineering Intern
-
-    - Built an internal work-history search tool and automated release-note generation (3 h to 20 min).
+    - Quantification of subcellular mRNA polarization using a torque framework.
 
   ],
   [
-    May 2022 – Aug 2022
+    Jan 2021 –
 
-  ],
-)
-
-#regular-entry(
-  [
-    #strong[Johns Hopkins University, Biomedical Design], Team Lead, iMEDS
-
-    - Led a team of 7 building an algorithm to continuously monitor pediatric ICU sedation; interviewed 20+ clinicians.
-
-  ],
-  [
-    Baltimore, MD
-
-    Aug 2022 – May 2023
+    May 2023
 
   ],
 )
@@ -233,28 +197,13 @@
   [
     #strong[Johns Hopkins University, Institute for NanoBioTechnology], Research Intern
 
-    - Optimized a point-of-care PCR assay (15\% lower detection limit) and its embedded image-analysis and motor-control code.
+    #summary[Microfluidic chip platform for rapid (\<10 min) point-of-care PCR diagnostics.]
 
   ],
   [
-    Baltimore, MD
+    May 2021 –
 
-    May 2021 – Aug 2021
-
-  ],
-)
-
-#regular-entry(
-  [
-    #strong[DioTeX Diagnostics], Co-Founder
-
-    - Led assay development for a lateral-flow test for internal hemorrhage; raised over \$60,000 in non-dilutive funding.
-
-  ],
-  [
-    Baltimore, MD
-
-    Nov 2020 – Aug 2023
+    Aug 2021
 
   ],
 )
@@ -263,33 +212,42 @@
   [
     #strong[National University of Singapore, Yu Lab], Research Intern
 
-    - Trained a CNN for endoscopic image classification (91\% accuracy); co-author in #emph[Gastrointestinal Endoscopy].
+    #summary[Lesion invasion depth prediction from endoscopic images using a CNN.]
 
   ],
   [
-    Singapore
+    Nov 2019 –
 
-    Nov 2019 – Dec 2020
+    Dec 2020
+
+  ],
+)
+
+== Honors and Awards
+
+#regular-entry(
+  [
+    #strong[NIH DEBUT Challenge, Healthcare Technologies for Low-Resource Settings Prize]
+
+  ],
+  [
+    2023
 
   ],
 )
 
 #regular-entry(
   [
-    #strong[Singapore Armed Forces], 3rd Sergeant
-
-    - Led a detachment of 3 soldiers and co-supervised daily training for 15.
+    #strong[VentureWell e-Fest Prize]
 
   ],
   [
-    Singapore
-
-    Jan 2018 – Oct 2019
+    2023
 
   ],
 )
 
-== Publications
+== Preprints
 
 #regular-entry(
   [
@@ -297,7 +255,7 @@
 
     Ziad Bakouny#sym.ast.basic#h(0pt, weak: true) , X Alex Guo#sym.ast.basic#h(0pt, weak: true) , #strong[Feiyang Huang#sym.ast.basic#h(0pt, weak: true) ], Saksham Mohan#sym.ast.basic#h(0pt, weak: true) , Rohan Walser#sym.ast.basic#h(0pt, weak: true) , et al., Wesley Tansey, Jian Carrot-Zhang, Ed Reznik
 
-    #link("https://www.medrxiv.org/content/10.64898/2026.09.16.26363259")[www.medrxiv.org\/content\/10.64898\/2026.09.16.26363259] (medRxiv preprint; #sym.ast.basic#h(0pt, weak: true) equal contribution)
+    #link("https://www.medrxiv.org/content/10.64898/2026.09.16.26363259")[www.medrxiv.org\/content\/10.64898\/2026.09.16.26363259] (medRxiv; #sym.ast.basic#h(0pt, weak: true) equal contribution)
 
   ],
   [
@@ -312,7 +270,7 @@
 
     Karl Pichotta, Jessica B White, Jeffrey F Quinn, Anneliese Markus, Christopher Tosh, Antoine De Mathelin, Erin Coyne, #strong[Feiyang Huang], Wesley Tansey
 
-    #link("https://pmc.ncbi.nlm.nih.gov/articles/PMC12934811/")[pmc.ncbi.nlm.nih.gov\/articles\/PMC12934811] (bioRxiv preprint)
+    #link("https://pmc.ncbi.nlm.nih.gov/articles/PMC12934811/")[pmc.ncbi.nlm.nih.gov\/articles\/PMC12934811] (bioRxiv)
 
   ],
   [
@@ -320,6 +278,8 @@
 
   ],
 )
+
+== Peer-Reviewed Publications
 
 #regular-entry(
   [
@@ -368,52 +328,177 @@
 
 == Conference Abstracts
 
-- Bakouny Z, Guo XA, Walser R, #strong[Huang F], et al. Pan-cancer discovery of clinical and genomic determinants of immune-related adverse events. #emph[Journal of Clinical Oncology] 44(16\_suppl):11132 (ASCO 2026).
+#regular-entry(
+  [
+    #strong[Pan-cancer discovery of clinical and genomic determinants of immune-related adverse events]
 
-- Wu S, Pejic B, Roy S, #strong[Huang F], et al. Development of a computational model of SBS scores in critically ill children. #emph[Pediatric Critical Care Medicine] 25(11S):e87 (2024).
+    Ziad Bakouny, X Alex Guo, Rohan Walser, #strong[Feiyang Huang], et al.
 
-== Patents
+    #link("https://doi.org/10.1200/JCO.2026.44.16_suppl.11132")[10.1200\/JCO.2026.44.16\_suppl.11132] (Journal of Clinical Oncology 44(16\_suppl), 11132; ASCO 2026)
 
-- Parent C, Simon E, #strong[Huang F], Ruci A, Zhang E. Methods and devices for quantitatively estimating thrombomodulin. US Patent App. 19\/240,058 (2025).
+  ],
+  [
+    2026
 
-- Eng R, Parent C, Hayat A, Ruci A, Krishnan A, #strong[Huang F], Simon E, Zhang E. Methods and devices for quantitatively estimating syndecan-1. US Patent App. 17\/715,294 (2022).
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[Development of a computational model of SBS scores in critically ill children]
+
+    S Wu, B Pejic, S Roy, #strong[Feiyang Huang], et al.
+
+    #link("https://doi.org/10.1097/01.pcc.0001085444.27374.df")[10.1097\/01.pcc.0001085444.27374.df] (Pediatric Critical Care Medicine 25(11S), e87)
+
+  ],
+  [
+    2024
+
+  ],
+)
 
 == Presentations
 
-- 45th Vincent du Vigneaud Research Symposium, Weill Cornell Medicine, New York, NY (2026). #strong[Huang F], Tansey W. OncoState: learning patient states from clinical trajectories in cancer. Poster \#66.
-
-- Military Health System Research Symposium, Kissimmee, FL (2022). Towards point-of-care internal hemorrhage detection through a syndecan-1 lateral flow assay. Oral presentation.
-
-- Johns Hopkins BME Design Day, Baltimore, MD (2022). DioTeX: Hemorrhage Diagnostics. Poster.
-
-== Honors and Awards
-
 #regular-entry(
   [
-    #strong[NIH DEBUT Challenge, Healthcare Technologies for Low-Resource Settings Prize]
-
-    #summary[With the DioTeX team; \$15,000.]
+    #strong[OncoState: Learning patient states from clinical trajectories in cancer] Poster. 45th Vincent du Vigneaud Research Symposium, Weill Cornell Medicine, New York, NY.
 
   ],
   [
-    2023
+    2026
 
   ],
 )
 
 #regular-entry(
   [
-    #strong[VentureWell e-Fest Prize]
-
-    #summary[With the DioTeX team; \$10,000.]
+    #strong[Towards point-of-care internal hemorrhage detection through a syndecan-1 lateral flow assay] Oral presentation. Military Health System Research Symposium, Kissimmee, FL.
 
   ],
   [
-    2023
+    2022
 
   ],
 )
+
+== Patents
+
+#strong[Granted:] US 12,105,099 B2; Methods and devices for quantitatively estimating syndecan-1
+
+#strong[Pending:] US 19\/240,058; Methods and devices for quantitatively estimating thrombomodulin
 
 == Teaching
 
-- Course Assistant, EN.601.230 Mathematical Foundations for Computer Science, Johns Hopkins University (Fall 2022).
+#regular-entry(
+  [
+    #strong[Course Assistant, Mathematical Foundations for Computer Science] Johns Hopkins University
+
+  ],
+  [
+    Fall 2022
+
+  ],
+)
+
+== Leadership and Service
+
+#regular-entry(
+  [
+    #strong[Singapore Students' Association, Johns Hopkins University], President
+
+  ],
+  [
+    2021 –
+
+    2023
+
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[Theta Tau Professional Engineering Fraternity, Johns Hopkins University], Member
+
+  ],
+  [
+    2020 –
+
+    2022
+
+  ],
+)
+
+== Work and Entrepreneurship Experience
+
+#regular-entry(
+  [
+    #strong[DioTeX Diagnostics], Co-Founder
+
+    - Developed a lateral flow test for internal hemorrhage.
+
+    - Raised over \$60,000 in nondilutive funding.
+
+  ],
+  [
+    Nov 2020 –
+
+    Aug 2023
+
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[BME Design Team], Team Leader
+
+    - Developed a continuous monitoring solution using accelerometry and vitals for sedative dosage adjustment in the pediatric ICU.
+
+    - Led a team of 7 undergraduates and managed the project.
+
+    - Launched an IRB study to generate a dataset of regular interval, nurse annotated clinical sedation score.
+
+    - Obtained \$100,000 in competitive internal grant funding.
+
+    - Interviewed 20 clinicians for needs discovery.
+
+  ],
+  [
+    Aug 2022 –
+
+    May 2023
+
+  ],
+)
+
+#regular-entry(
+  [
+    #strong[Hologic], Software Engineering Intern
+
+    - Built an internal work history search tool and automated release note generation.
+
+  ],
+  [
+    May 2022 –
+
+    Aug 2022
+
+  ],
+)
+
+== Other Experience
+
+#regular-entry(
+  [
+    #strong[Singapore Armed Forces], 3rd Sergeant
+
+    - Led a detachment of 3 soldiers and co-supervised daily training for 15 soldiers.
+
+  ],
+  [
+    Jan 2018 –
+
+    Oct 2019
+
+  ],
+)
