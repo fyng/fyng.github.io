@@ -14,7 +14,6 @@
 <body>
 <script>
 GA.build({
-  duration: 16, poster: 15,
   title: "A pan-cancer ex vivo drug screen atlas",
   desc: "The Pan-PreClinical (PPC) atlas pools 26 ex vivo studies into 2.1 million dose-response measurements of 1,982 samples and 3,100 drugs: patient-derived cells (1,574), organoids (368) and xenograft-derived cells (37), across 134 cancer types from 24 anatomical sites, and drug modalities including chemotherapy, kinase inhibitors, epigenetic and hormone therapies. A Bayesian model, guided by primary site and drug mechanism, harmonizes the studies and predicts complete dose-response curves; it reveals 303 tissue-specific drug sensitivities, for example MEK/ERK inhibitors are more effective on skin tumor samples (schematic curves). Compared with cell lines, ex vivo samples cluster by cancer type, and cell line screens favor drugs against highly proliferative cells while undervaluing cell-cell communication targets (schematic).",
 }, (ga) => {
@@ -23,22 +22,30 @@ GA.build({
   const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
   // dose-response: viability falls from 1 to 0 around x50 (dose on a log scale, 0..1)
   const resp = (x50, k = 12) => (x) => 1 / (1 + Math.exp(k * (x - x50)));
+  // Motion is paced by reading: each graphic enters as one scene, arrows draw the
+  // flow from input to output, and every title and conclusion holds for its reading time.
+  const T = ga.timeline();
+  const ARROW = 0.5, LAND = 0.35;
 
   // ---------------- header ----------------
-  const hd = ga.stack(ga.M, 44, { w: 1400 });
-  hd.text("PAN-PRECLINICAL ATLAS · BIORXIV 2026", { role: "kicker", at: 0.1, gap: 14 });
-  hd.text("How can we integrate ex vivo drug screens across model systems,\ncancer types, and drug modalities for treatment insights?", { role: "title", at: 0.1 });
+  const TITLE = "How can we integrate ex vivo drug screens across model systems,\ncancer types, and drug modalities for treatment insights?";
+  ga.scene(T.read(TITLE), () => {
+    const hd = ga.stack(ga.M, 44, { w: 1400 });
+    hd.text("PAN-PRECLINICAL ATLAS · BIORXIV 2026", { role: "kicker", gap: 14 });
+    hd.text(TITLE, { role: "title" });
+  }, { anim: "in" });
 
   const [c1, c2, c3] = ga.columns(3, { top: 204, bottom: 766, dividers: false });
-  const header = (c, num, head, at) => {
-    const n = ga.text(num, { x: c.x0, y: c.top, role: "head", color: "var(--prussian)", at });
-    ga.text(head, { x: n.r + 14, y: c.top, w: c.x1 - n.r - 14, role: "head", at }); // wraps to two lines at most
+  // panel header: number and title, entering with the panel's input
+  const header = (c, num, head) => ga.scene(T.now, () => {
+    const n = ga.text(num, { x: c.x0, y: c.top, role: "head", color: "var(--prussian)" });
+    ga.text(head, { x: n.r + 14, y: c.top, w: c.x1 - n.r - 14, role: "head" }); // wraps to two lines at most
     return c.top + 74;
-  };
-  const conclusion = (c, str, at) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at });
+  }, { anim: "in" });
+  const conclusion = (c, str) => ga.text(str, { x: c.x0, y: c.bottom - 50, w: c.w, role: "body", at: T.read(str) });
 
   // ---------------- 01 · Atlas ----------------
-  header(c1, "01", "Pan-cancer drug screen atlas", 0.8);
+  header(c1, "01", "Pan-cancer drug screen atlas");
   // samples (rows) grouped by model system, drugs (columns) grouped by modality;
   // every tested pair is a dose-response curve, blanks were never tested
   const cw = 32, ch = 28, gap = 10;
@@ -49,26 +56,40 @@ GA.build({
   const colX = []; MOD.forEach(([, n], g) => { for (let k = 0; k < n; k++) colX.push(gx + (colX.length) * cw + g * gap); });
   const rowY = [], rowSys = []; SYS.forEach(([, , , n], g) => { for (let k = 0; k < n; k++) { rowY.push(gy + rowY.length * ch + g * gap); rowSys.push(g); } });
   const gR = colX.at(-1) + cw, gB = rowY.at(-1) + ch;
+  // the atlas enters as one graphic: its frame (groups, glyphs, cells, cancer
+  // types), then every tested curve at once
+  const frameAt = T.next(0.4);
+  ga.scene(frameAt, () => {
   // modality labels over their column groups
   let ci = 0;
   MOD.forEach(([name, n], g) => {
-    ga.text(name, { x: colX[ci] + (n * cw) / 2, y: gy - 26, anchor: "middle", role: "note", at: 1.4 + g * 0.1 });
+    ga.text(name, { x: colX[ci] + (n * cw) / 2, y: gy - 26, anchor: "middle", role: "note", });
     ci += n;
   });
   // model-system glyph and label beside each row group
   let ri = 0;
   SYS.forEach(([glyph, name, count, n], g) => {
     const cy = rowY[ri] + (n * ch) / 2;
-    if (glyph === "cells") B.cells({ cx: c1.x0 + 14, cy, r: 6, at: 1.1 + g * 0.15 });
-    else if (glyph === "organoid") B.organoid({ cx: c1.x0 + 14, cy, r: 13, n: 7, at: 1.1 + g * 0.15 });
-    else B.xenograft({ cx: c1.x0 + 14, cy, size: 28, at: 1.1 + g * 0.15 });
-    ga.text(`${name}\n{${count}}`.replace(/[{}]/g, ""), { x: c1.x0 + 38, y: cy - 17, role: "note", size: 13, at: 1.1 + g * 0.15 });
+    if (glyph === "cells") B.cells({ cx: c1.x0 + 14, cy, r: 6 });
+    else if (glyph === "organoid") B.organoid({ cx: c1.x0 + 14, cy, r: 13, n: 7 });
+    else B.xenograft({ cx: c1.x0 + 14, cy, size: 28 });
+    ga.text(`${name}\n{${count}}`.replace(/[{}]/g, ""), { x: c1.x0 + 38, y: cy - 17, role: "note", size: 13 });
     ri += n;
   });
   // cells: hairline boxes, then curves column by column
   let grid = "";
   for (const y of rowY) for (const x of colX) grid += `<rect x="${x}" y="${y}" width="${cw}" height="${ch}" fill="var(--paper)" stroke="var(--rule)" stroke-width="1.5"/>`;
-  ga.raw(grid, { at: 2.0, anim: "fade", t: 0.4, kind: "rect", lint: false });
+  ga.raw(grid, { kind: "rect", lint: false });
+  // cancer type of each sample: a strip in the registered organ colour
+  const ORG = ["lungs", "colon", "liver", "kidney", "thyroid"];
+  ga.raw(rowY.map((y, i) => `<rect x="${gx - 14}" y="${y + 2}" width="8" height="${ch - 4}" rx="2" fill="var(--organ-${i === ZR ? "skin" : ORG[(i * 3 + 1) % 5]})"/>`).join(""));
+  const ly = gB + 30;
+  [["lungs", "lungs"], ["colon", "colon"], ["liver", "liver"], ["kidney", "kidneys"], ["thyroid", "thyroid"]].forEach(([k, icon], i) =>
+    ga.icon(icon, { cx: gx - 10 + i * 34, cy: ly, size: 26, color: `var(--organ-${k})` }));
+  ga.text("134 cancer types, 24 sites", { x: gx - 14, y: ly + 22, role: "note" });
+  ga.text("each cell: viability across doses", { x: gx - 14, y: ly + 46, role: "note" });
+  });
+  let curves = "";
   colX.forEach((x, j) => {
     let m = "";
     rowY.forEach((y, i) => {
@@ -78,64 +99,73 @@ GA.build({
       for (let t = 0; t <= 12; t++) d += `${t ? "L" : "M"}${(x0 + (t / 12) * w).toFixed(1)} ${(y0 + (1 - f(t / 12)) * h).toFixed(1)}`;
       m += `<path d="${d}" fill="none" stroke="var(--ink-2)" stroke-width="1.5" stroke-linecap="round"/>`;
     });
-    ga.raw(m, { at: 2.3 + j * 0.06, anim: "fade", t: 0.3 });
+    curves += m;
   });
-  // cancer type of each sample: a strip in the registered organ colour
-  const ORG = ["lungs", "colon", "liver", "kidney", "thyroid"];
-  ga.raw(rowY.map((y, i) => `<rect x="${gx - 14}" y="${y + 2}" width="8" height="${ch - 4}" rx="2" fill="var(--organ-${i === ZR ? "skin" : ORG[(i * 3 + 1) % 5]})"/>`).join(""), { at: 3.0, anim: "fade" });
-  const ly = gB + 30;
-  [["lungs", "lungs"], ["colon", "colon"], ["liver", "liver"], ["kidney", "kidneys"], ["thyroid", "thyroid"]].forEach(([k, icon], i) =>
-    ga.icon(icon, { cx: gx - 10 + i * 34, cy: ly, size: 26, color: `var(--organ-${k})`, at: 3.2 + i * 0.06 }));
-  ga.text("134 cancer types, 24 sites", { x: gx - 14, y: ly + 22, role: "note", at: 3.5 });
-  ga.text("each cell: viability across doses", { x: gx - 14, y: ly + 46, role: "note", at: 3.7 });
-  conclusion(c1, "26 studies, pooled into 2.1M measurements of 1,982 samples and 3,100 drugs", 4.3);
+  ga.raw(curves, { at: T.next(1.0), anim: "fade", t: 0.5 });
+  conclusion(c1, "26 studies, pooled into 2.1M measurements of 1,982 samples and 3,100 drugs");
 
   // ---------------- 02 · Harmonize ----------------
-  header(c2, "02", "Bayesian drug response modeling", 5.0);
-  const mb = ga.rect({ x: c2.x0, y: 318, w: 112, h: 92, fill: "var(--benefit-wash)", at: 5.6 });
-  ga.icon("network", { cx: mb.cx, cy: mb.t + 35, size: 44, color: "var(--prussian)", at: 5.6 });
-  ga.text("Bayesian model", { x: mb.cx, y: mb.b - 28, anchor: "middle", role: "tick", weight: 500, color: "var(--prussian)", at: 5.6, anim: "pop" });
-  const p1 = ga.pill("primary site", { x: mb.r + 110, cy: 334, role: "cap", color: "var(--ink-2)", at: 5.3 });
-  const p2 = ga.pill("drug mechanism", { x: mb.r + 110, cy: 394, role: "cap", color: "var(--ink-2)", at: 5.3 });
-  ga.connect(p1, mb, { from: "l", to: "r", toAt: 0.18, at: 5.5 });
-  ga.connect(p2, mb, { from: "l", to: "r", toAt: 0.82, at: 5.5 });
+  header(c2, "02", "Bayesian drug response modeling");
+  // the priors (primary site, drug mechanism) flow into the model
+  const [p1, p2] = ga.scene(T.next(0.4), () => [
+    ga.pill("primary site", { x: c2.x0 + 222, cy: 334, role: "cap", color: "var(--ink-2)" }),
+    ga.pill("drug mechanism", { x: c2.x0 + 222, cy: 394, role: "cap", color: "var(--ink-2)" }),
+  ]);
+  let at = T.next(LAND);
+  const mb = ga.scene(at + LAND, () => {
+    const mb = ga.rect({ x: c2.x0, y: 318, w: 112, h: 92, fill: "var(--benefit-wash)" });
+    ga.icon("network", { cx: mb.cx, cy: mb.t + 35, size: 44, color: "var(--prussian)" });
+    ga.text("Bayesian model", { x: mb.cx, y: mb.b - 28, anchor: "middle", role: "tick", weight: 500, color: "var(--prussian)" });
+    return mb;
+  });
+  ga.connect(p1, mb, { from: "l", to: "r", toAt: 0.18, at, t: ARROW });
+  ga.connect(p2, mb, { from: "l", to: "r", toAt: 0.82, at, t: ARROW });
 
   // one of the 303 tissue-specific sensitivities (schematic curves)
-  const exMol = ga.icon("molecule", { cx: mb.cx, cy: 460, size: 34, color: "var(--ink-2)", at: 6.2 });
-  ga.connect(mb, exMol, { from: "b", to: "t", at: 6.0 });
-  ga.text("MEK/ERK inhibitors", { x: exMol.r + 12, y: 449, role: "label", at: 6.2 });
+  at = T.next(LAND);
+  const exMol = ga.icon("molecule", { cx: mb.cx, cy: 460, size: 34, color: "var(--ink-2)", at: at + LAND, anim: "fade" });
+  ga.connect(mb, exMol, { from: "b", to: "t", at, t: ARROW });
+  ga.text("MEK/ERK inhibitors", { x: exMol.r + 12, y: 449, role: "label", at: at + LAND, anim: "fade" });
+  // the atlas cell is ringed, then grows into the chart; both sites' doses land
+  // together and both fitted curves draw together, so the shift is the motion
+  const ring = at + LAND, zoom = T.next(LAND + 0.8), pts = T.next(0.2), fits = T.next(0.8);
   // the chart is the atlas cell, enlarged: it grows out of that cell
   const stage = ga.svg.querySelector(".ga-stage"), before = stage.childNodes.length;
-  const ex = GA.chart(ga, { x: c2.x0 + 40, y: 526, w: 340, h: 134, xd: [0, 1], yd: [0, 1.05], yTitle: "Viability", xTitle: "Dose (schematic)", at: 6.6 });
+  const ex = GA.chart(ga, { x: c2.x0 + 40, y: 526, w: 340, h: 134, xd: [0, 1], yd: [0, 1.05], yTitle: "Viability", xTitle: "Dose (schematic)", at: zoom + 0.3 });
   // measured: a few doses, replicates scattered by noise; the model's smooth curve follows
   const DOSES = [0.06, 0.22, 0.31, 0.52, 0.66, 0.9]; // uneven, as dilution series often are
   const reps = (f, color) => DOSES.flatMap((x) => [0, 1, 2].map(() => [x + (rnd() - 0.5) * 0.02, Math.min(1.04, Math.max(0.01, f(x) + (rnd() - 0.5) * 0.34)), color]));
   const fOther = resp(0.68, 11), fSkin = resp(0.34, 11);
-  ex.dots(reps(fOther, "var(--context)"), { r: 3.5, at: 7.0 });
-  ex.dots(reps(fSkin, "var(--organ-skin)"), { r: 3.5, at: 7.2 });
-  ex.fn(fOther, { color: "var(--context)", at: 7.6 });
-  ex.fn(fSkin, { color: "var(--organ-skin)", at: 7.9 });
-  ex.label("other sites", 0.74, 0.97, { color: "var(--muted)", role: "label", at: 8.4 });
-  ex.label("skin tumors", 0.02, 0.28, { color: "var(--rose-600)", role: "label", at: 8.4 });
+  ex.dots(reps(fOther, "var(--context)"), { r: 3.5, at: pts });
+  ex.dots(reps(fSkin, "var(--organ-skin)"), { r: 3.5, at: pts });
+  ex.fn(fOther, { color: "var(--context)", at: fits, t: 0.8 });
+  ex.fn(fSkin, { color: "var(--organ-skin)", at: fits, t: 0.8 });
+  ex.label("other sites", 0.74, 0.97, { color: "var(--muted)", role: "label", at: T.now });
+  ex.label("skin tumors", 0.02, 0.28, { color: "var(--rose-600)", role: "label", at: T.now });
+  T.wait(0.2);
   {
     const cx0 = colX[ZC], cy0 = rowY[ZR], zc = [cx0 + cw / 2, cy0 + ch / 2], cc = [ex.x0 + ex.w / 2, ex.y0 + ex.h / 2];
-    const g = ga.wrap(6.3, "zoom", 1.0);
+    const g = ga.wrap(zoom, "zoom", 1.0);
     g.style.setProperty("--zx", `${(zc[0] - cc[0]).toFixed(1)}px`);
     g.style.setProperty("--zy", `${(zc[1] - cc[1]).toFixed(1)}px`);
     [...stage.childNodes].slice(before, -1).forEach((n) => g.appendChild(n));
     // the source cell, inked, and dotted leaders from its corners to the plot's
-    ga.raw(`<rect x="${cx0}" y="${cy0}" width="${cw}" height="${ch}" fill="none" stroke="var(--ink)" stroke-width="2"/>`, { at: 6.0, anim: "pop", t: 0.4 });
-    ga.raw(`<path d="M${cx0 + cw} ${cy0}L${ex.x0} ${ex.y0}M${cx0 + cw} ${cy0 + ch}L${ex.x0} ${ex.y1}" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="1 4" stroke-linecap="round"/>`, { at: 6.3, anim: "fade", t: 0.5 });
+    ga.raw(`<rect x="${cx0}" y="${cy0}" width="${cw}" height="${ch}" fill="none" stroke="var(--ink)" stroke-width="2"/>`, { at: ring, anim: "pop", t: 0.4 });
+    ga.raw(`<path d="M${cx0 + cw} ${cy0}L${ex.x0} ${ex.y0}M${cx0 + cw} ${cy0 + ch}L${ex.x0} ${ex.y1}" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="1 4" stroke-linecap="round"/>`, { at: zoom, anim: "fade", t: 0.5 });
   }
-  conclusion(c2, "A Bayesian model harmonizes the studies and reveals 303 tissue-specific drug sensitivities", 8.5);
+  conclusion(c2, "A Bayesian model harmonizes the studies and reveals 303 tissue-specific drug sensitivities");
 
   // ---------------- 03 · Cell lines ----------------
-  header(c3, "03", "Immortalization biases cell line vulnerability", 9.2);
+  header(c3, "03", "Immortalization biases cell line vulnerability");
   const xA = c3.x0 + 72, xB = c3.x0 + 272;
-  B.monolayer({ cx: xA, cy: 322, w: 74, at: 9.5 });
-  B.organoid({ cx: xB, cy: 320, r: 24, at: 9.5 });
-  ga.text("cell lines", { x: xA, y: 354, anchor: "middle", role: "label", at: 9.6 });
-  ga.text("ex vivo", { x: xB, y: 354, anchor: "middle", role: "label", at: 9.6 });
+  ga.scene(T.next(0.6), () => {
+    B.monolayer({ cx: xA, cy: 322, w: 74 });
+    B.organoid({ cx: xB, cy: 320, r: 24 });
+    ga.text("cell lines", { x: xA, y: 354, anchor: "middle", role: "label" });
+    ga.text("ex vivo", { x: xB, y: 354, anchor: "middle", role: "label" });
+  });
+  // all samples appear scattered, then settle at once: the travel is the finding
+  const appear = T.next(0.2), settle = T.next(0.9);
 
   // samples placed by drug response: ex vivo clusters by cancer type, cell lines mix
   const EY = 440, TYPES = [["skin", -26, -16], ["colon", 26, -14], ["lungs", 0, 26]];
@@ -147,29 +177,32 @@ GA.build({
       const cl = [xA + rr * Math.cos(b), EY + rr * Math.sin(b) * 0.9];
       const dot = (p) => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="var(--organ-${k})" stroke="var(--paper)" stroke-width="1"/>`;
       // both start scattered; only the ex vivo samples settle into their types
-      B.moving(dot(ex), { appear: 9.9, at: 10.4 + ti * 0.12, t: 1.1, dx: (rnd() - 0.5) * 90, dy: (rnd() - 0.5) * 80 });
-      B.moving(dot(cl), { appear: 9.9, at: 10.4, t: 1.1, dx: (rnd() - 0.5) * 50, dy: (rnd() - 0.5) * 40 });
+      B.moving(dot(ex), { appear, at: settle, t: 0.9, dx: (rnd() - 0.5) * 90, dy: (rnd() - 0.5) * 80 });
+      B.moving(dot(cl), { appear, at: settle, t: 0.9, dx: (rnd() - 0.5) * 50, dy: (rnd() - 0.5) * 40 });
     }
   });
-  ga.text("samples, placed by drug response", { x: (xA + xB) / 2, y: EY + 60, anchor: "middle", role: "note", at: 11.3 });
+  ga.text("samples, placed by drug response", { x: (xA + xB) / 2, y: EY + 60, anchor: "middle", role: "note", at: T.next(0), anim: "fade" });
 
   // relative drug efficacy, cell lines vs ex vivo (schematic)
-  const top = 552, bot = 656;
-  ga.raw(`<path d="M${xA} ${top - 12}V${bot + 8}M${xB} ${top - 12}V${bot + 8}" stroke="var(--rule)" stroke-width="1.5"/>`, { at: 11.6, anim: "fade" });
+  // relative drug efficacy: frame, then every slope draws at once
+  const top = 552, bot = 656, frame = T.next(0.2), slopes = T.next(0.7);
+  ga.raw(`<path d="M${xA} ${top - 12}V${bot + 8}M${xB} ${top - 12}V${bot + 8}" stroke="var(--rule)" stroke-width="1.5"/>`, { at: frame, anim: "fade" });
   const slope = (ya, yb, color, width, at) => {
     ga.raw(`<path d="M${xA} ${ya}L${xB} ${yb}" stroke="${color}" stroke-width="${width}" stroke-linecap="round" pathLength="1" class="a-draw" style="--d:${at}s;--t:.8s"/>`, {});
     ga.raw(`<circle cx="${xA}" cy="${ya}" r="4.5" fill="${color}" stroke="var(--paper)"/><circle cx="${xB}" cy="${yb}" r="4.5" fill="${color}" stroke="var(--paper)"/>`, { at, anim: "fade", t: 0.3 });
   };
-  [[584, 594], [606, 600], [628, 634]].forEach(([a, b], i) => slope(a, b, "var(--context)", 2, 11.8 + i * 0.06));
-  slope(top, bot - 8, "var(--cat-2)", 2.5, 12.1);
-  slope(bot, top + 8, "var(--ink)", 2.5, 12.4);
-  ga.text("proliferation", { x: xB + 16, y: bot - 8 - 11, role: "label", color: "var(--cat-2-text)", at: 12.8 });
-  ga.text("cell–cell\ncommunication", { x: xB + 16, y: top + 8 - 11, role: "label", at: 12.8 });
-  ga.text("Relative drug efficacy (schematic)", { x: c3.x0, y: bot + 20, role: "cap", at: 11.6, anim: "fade" });
-  conclusion(c3, "Cell lines cluster less by cancer type and undervalue cell–cell communication targets", 13.2);
+  [[584, 594], [606, 600], [628, 634]].forEach(([a, b]) => slope(a, b, "var(--context)", 2, slopes));
+  slope(top, bot - 8, "var(--cat-2)", 2.5, slopes);
+  slope(bot, top + 8, "var(--ink)", 2.5, slopes);
+  ga.text("proliferation", { x: xB + 16, y: bot - 8 - 11, role: "label", color: "var(--cat-2-text)", at: T.now, anim: "fade" });
+  ga.text("cell–cell\ncommunication", { x: xB + 16, y: top + 8 - 11, role: "label", at: T.now, anim: "fade" });
+  ga.text("Relative drug efficacy (schematic)", { x: c3.x0, y: bot + 20, role: "cap", at: frame, anim: "fade" });
+  T.wait(0.2);
+  conclusion(c3, "Cell lines cluster less by cancer type and undervalue cell–cell communication targets");
 
   // ---------------- take-home ----------------
-  ga.text("Pooled and harmonized, ex vivo screens are a foundation for predictive functional precision oncology.", { x: ga.M, y: 816, w: 1472, role: "take", at: 13.9 });
+  const TAKE = "Pooled and harmonized, ex vivo screens are a foundation for predictive functional precision oncology.";
+  ga.text(TAKE, { x: ga.M, y: 816, w: 1472, role: "take", at: T.next(1.0) }); // the final frame holds it
 });
 </script>
 </body>
