@@ -7,7 +7,6 @@ cv:
   headline: PhD Candidate, Computational Biology & Medicine
   location: New York, NY
   email: feh4005@med.cornell.edu
-  website: https://fyng.github.io
   social_networks:
     - network: Google Scholar
       username: MFllmkIAAAAJ
@@ -22,6 +21,12 @@ cv:
       placeholder: English, Mandarin
       url:
 
+  # Section order and split follow common academic-CV practice: training and research
+  # first, then honors, then the scholarly record (preprints apart from peer-reviewed
+  # work, then abstracts, talks, patents), then teaching and service, and non-research
+  # work last (work and entrepreneurship, then other). Every section lists newest
+  # first. The web page picks each section's template from its entry type
+  # (_includes/cv/render.liquid), so titles are free.
   sections:
     Education:
       - institution: Weill Cornell Graduate School of Medical Sciences
@@ -40,79 +45,43 @@ cv:
         end_date: 2023-05
         highlights:
           - "GPA 3.96"
-          - "Activities: President, Singapore Students' Association (2021–2023); Theta Tau Professional Engineering Fraternity (2020–2022)"
 
-    Experience:
-      - company: Memorial Sloan Kettering Cancer Center, Tansey Lab
-        position: PhD Researcher
-        location: New York, NY
-        start_date: 2024-06
-        end_date: present
-        highlights:
-          - "Developing OncoState, a self-supervised transformer learning patient states from multimodal clinical trajectories of 99,000+ MSK-IMPACT patients; outperforms the IMDC risk model in advanced clear cell RCC."
-          - "Co-led a population-scale study of clinical and genetic determinants of systemic-therapy toxicity (co-first author, medRxiv 2026): developed the random forest toxicity model and the analysis and narrative for Figure 3."
-          - Contributed to [PPC](https://panpreclinical.org), a pan-cancer atlas of ex vivo drug screens for functional precision oncology.
+    Research Experience:
       - company: Memorial Sloan Kettering Cancer Center
         position: PhD Rotations
-        location: New York, NY
         start_date: 2023-08
         end_date: 2024-05
         highlights:
-          - "**Tansey Lab**: Bayesian active learning for nominating combination therapies from ex vivo drug screens"
-          - "**Chodera Lab**: Equivariant graph neural networks for small-molecule property prediction ([mtenn](https://github.com/choderalab/mtenn))"
-          - "**CMO Innovation Lab**: Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumors"
-          - "**Morris Lab**: BERT representation learning from tumor mutation profiles"
+          - "**Tansey Lab**: Bayesian active learning for nominating combination therapies from ex vivo drug screens."
+          - "**Chodera Lab**: Equivariant graph neural networks for small-molecule property prediction ([mtenn](https://github.com/choderalab/mtenn))."
+          - "**CMO Innovation Lab**: Computational pipeline for bisulfite- and enzyme-based DNA methylation sequencing of tumors."
+          - "**Morris Lab**: BERT representation learning from tumor mutation profiles."
       - company: Johns Hopkins University, Fan Lab
         position: Undergraduate Researcher
-        location: Baltimore, MD
         start_date: 2021-01
         end_date: 2023-05
         highlights:
-          - Built and benchmarked a reference-free LDA pipeline to deconvolve spatial transcriptomics data (STdeconvolve, *Nature Communications* 2022).
-          - Developed a torque-based method and simulation framework to quantify subcellular mRNA polarization.
-      - company: Hologic
-        position: Software Engineering Intern
-        start_date: 2022-05
-        end_date: 2022-08
-        highlights:
-          - Built an internal work-history search tool and automated release-note generation (3 h to 20 min).
-      - company: Johns Hopkins University, Biomedical Design
-        position: Team Lead, iMEDS
-        location: Baltimore, MD
-        start_date: 2022-08
-        end_date: 2023-05
-        highlights:
-          - Led a team of 7 building an algorithm to continuously monitor pediatric ICU sedation; interviewed 20+ clinicians.
+          - Reference-free deconvolution of spot-based spatial transcriptomics using LDA topic modeling.
+          - Quantification of subcellular mRNA polarization using a torque framework.
       - company: Johns Hopkins University, Institute for NanoBioTechnology
         position: Research Intern
-        location: Baltimore, MD
         start_date: 2021-05
         end_date: 2021-08
-        highlights:
-          - Optimized a point-of-care PCR assay (15% lower detection limit) and its embedded image-analysis and motor-control code.
-      - company: DioTeX Diagnostics
-        position: Co-Founder
-        location: Baltimore, MD
-        start_date: 2020-11
-        end_date: 2023-08
-        highlights:
-          - Led assay development for a lateral-flow test for internal hemorrhage; raised over $60,000 in non-dilutive funding.
+        summary: Microfluidic chip platform for rapid (<10 min) point-of-care PCR diagnostics.
       - company: National University of Singapore, Yu Lab
         position: Research Intern
-        location: Singapore
         start_date: 2019-11
         end_date: 2020-12
-        highlights:
-          - Trained a CNN for endoscopic image classification (91% accuracy); co-author in *Gastrointestinal Endoscopy*.
-      - company: Singapore Armed Forces
-        position: 3rd Sergeant
-        location: Singapore
-        start_date: 2018-01
-        end_date: 2019-10
-        highlights:
-          - Led a detachment of 3 soldiers and co-supervised daily training for 15.
+        summary: Lesion invasion depth prediction from endoscopic images using a CNN.
 
-    Publications:
+    Honors and Awards:
+      - name: NIH DEBUT Challenge, Healthcare Technologies for Low-Resource Settings Prize
+        date: 2023
+      - name: VentureWell e-Fest Prize
+        date: 2023
+
+    # Bold marks me; \* marks equal contribution (noted on the entry it applies to).
+    Preprints:
       - title: Population-Scale Precision Safety in Oncology Reveals Clinical and Genetic Determinants of Systemic Therapy Toxicity
         authors:
           - Ziad Bakouny\*
@@ -124,7 +93,7 @@ cv:
           - Wesley Tansey
           - Jian Carrot-Zhang
           - Ed Reznik
-        journal: "medRxiv preprint; \\*equal contribution"
+        journal: "medRxiv; \\*equal contribution"
         date: 2026-09
         url: https://www.medrxiv.org/content/10.64898/2026.09.16.26363259
       - title: A Pan-Cancer Ex Vivo Drug Screen Atlas for Functional Precision Oncology
@@ -138,9 +107,11 @@ cv:
           - Erin Coyne
           - "**Feiyang Huang**"
           - Wesley Tansey
-        journal: bioRxiv preprint
+        journal: bioRxiv
         date: 2026-02
         url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12934811/
+
+    Peer-Reviewed Publications:
       - title: Reference-free cell type deconvolution of multi-cellular pixel-resolution spatially resolved transcriptomics data
         authors:
           - Brendan F Miller
@@ -176,25 +147,86 @@ cv:
         doi: 10.1158/0008-5472.CAN-19-0255
 
     Conference Abstracts:
-      - bullet: "Bakouny Z, Guo XA, Walser R, **Huang F**, et al. Pan-cancer discovery of clinical and genomic determinants of immune-related adverse events. *Journal of Clinical Oncology* 44(16_suppl):11132 (ASCO 2026)."
-      - bullet: "Wu S, Pejic B, Roy S, **Huang F**, et al. Development of a computational model of SBS scores in critically ill children. *Pediatric Critical Care Medicine* 25(11S):e87 (2024)."
-
-    Patents:
-      - bullet: "Parent C, Simon E, **Huang F**, Ruci A, Zhang E. Methods and devices for quantitatively estimating thrombomodulin. US Patent App. 19/240,058 (2025)."
-      - bullet: "Eng R, Parent C, Hayat A, Ruci A, Krishnan A, **Huang F**, Simon E, Zhang E. Methods and devices for quantitatively estimating syndecan-1. US Patent App. 17/715,294 (2022)."
+      - title: Pan-cancer discovery of clinical and genomic determinants of immune-related adverse events
+        authors:
+          - Ziad Bakouny
+          - X Alex Guo
+          - Rohan Walser
+          - "**Feiyang Huang**"
+          - et al.
+        journal: "Journal of Clinical Oncology 44(16_suppl), 11132; ASCO 2026"
+        date: 2026
+        doi: 10.1200/JCO.2026.44.16_suppl.11132
+      - title: Development of a computational model of SBS scores in critically ill children
+        authors:
+          - S Wu
+          - B Pejic
+          - S Roy
+          - "**Feiyang Huang**"
+          - et al.
+        journal: Pediatric Critical Care Medicine 25(11S), e87
+        date: 2024
+        doi: 10.1097/01.pcc.0001085444.27374.df
 
     Presentations:
-      - bullet: "45th Vincent du Vigneaud Research Symposium, Weill Cornell Medicine, New York, NY (2026). **Huang F**, Tansey W. OncoState: learning patient states from clinical trajectories in cancer. Poster #66."
-      - bullet: "Military Health System Research Symposium, Kissimmee, FL (2022). Towards point-of-care internal hemorrhage detection through a syndecan-1 lateral flow assay. Oral presentation."
-      - bullet: "Johns Hopkins BME Design Day, Baltimore, MD (2022). DioTeX: Hemorrhage Diagnostics. Poster."
+      - name: "OncoState: Learning patient states from clinical trajectories in cancer"
+        date: 2026
+        summary: Poster. 45th Vincent du Vigneaud Research Symposium, Weill Cornell Medicine, New York, NY.
+      - name: Towards point-of-care internal hemorrhage detection through a syndecan-1 lateral flow assay
+        date: 2022
+        summary: Oral presentation. Military Health System Research Symposium, Kissimmee, FL.
 
-    Honors and Awards:
-      - name: NIH DEBUT Challenge, Healthcare Technologies for Low-Resource Settings Prize
-        date: 2023
-        summary: With the DioTeX team; $15,000.
-      - name: VentureWell e-Fest Prize
-        date: 2023
-        summary: With the DioTeX team; $10,000.
+    # Patent number; title (no inventors or dates), grouped by status as in academic CVs.
+    Patents:
+      - label: Granted
+        details: "US 12,105,099 B2; Methods and devices for quantitatively estimating syndecan-1"
+      - label: Pending
+        details: "US 19/240,058; Methods and devices for quantitatively estimating thrombomodulin"
 
     Teaching:
-      - bullet: "Course Assistant, EN.601.230 Mathematical Foundations for Computer Science, Johns Hopkins University (Fall 2022)."
+      - name: Course Assistant, Mathematical Foundations for Computer Science
+        date: Fall 2022
+        summary: Johns Hopkins University
+
+    Leadership and Service:
+      - company: Singapore Students' Association, Johns Hopkins University
+        position: President
+        start_date: 2021
+        end_date: 2023
+      - company: Theta Tau Professional Engineering Fraternity, Johns Hopkins University
+        position: Member
+        start_date: 2020
+        end_date: 2022
+
+    Work and Entrepreneurship Experience:
+      - company: DioTeX Diagnostics
+        position: Co-Founder
+        start_date: 2020-11
+        end_date: 2023-08
+        highlights:
+          - Developed a lateral flow test for internal hemorrhage.
+          - Raised over $60,000 in nondilutive funding.
+      - company: BME Design Team
+        position: Team Leader
+        start_date: 2022-08
+        end_date: 2023-05
+        highlights:
+          - Developed a continuous monitoring solution using accelerometry and vitals for sedative dosage adjustment in the pediatric ICU.
+          - Led a team of 7 undergraduates and managed the project.
+          - Launched an IRB study to generate a dataset of regular interval, nurse annotated clinical sedation score.
+          - Obtained $100,000 in competitive internal grant funding.
+          - Interviewed 20 clinicians for needs discovery.
+      - company: Hologic
+        position: Software Engineering Intern
+        start_date: 2022-05
+        end_date: 2022-08
+        highlights:
+          - Built an internal work history search tool and automated release note generation.
+
+    Other Experience:
+      - company: Singapore Armed Forces
+        position: 3rd Sergeant
+        start_date: 2018-01
+        end_date: 2019-10
+        highlights:
+          - Led a detachment of 3 soldiers and co-supervised daily training for 15 soldiers.
