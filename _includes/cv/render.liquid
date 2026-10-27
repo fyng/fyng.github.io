@@ -1,0 +1,102 @@
+{% comment %}
+  Local override of al_folio_cv cv/render.liquid (RenderCV only; /cv/ sets cv_format: rendercv).
+  The gem picks a template by section *name* and pulls `Experience` to the top, so any other
+  section of experience entries (e.g. "Research Experience") vanished from the page. Here the
+  template is picked by entry *type*, as RenderCV itself does, and sections keep their cv.yml order.
+{% endcomment %}
+
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">
+      {{ page.title }}
+      {% if page.cv_pdf %}
+        <a
+          {% if page.cv_pdf contains '://' %}
+            href="{{ page.cv_pdf }}"
+          {% else %}
+            href="{{ page.cv_pdf | relative_url }}"
+          {% endif %}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="float-right"
+        >
+          <i class="fa-solid fa-file-pdf"></i>
+        </a>
+      {% endif %}
+    </h1>
+    {% if page.description %}
+      <p class="post-description">{{ page.description }}</p>
+    {% endif %}
+  </header>
+
+  <article>
+    <div class="cv">
+      {% assign cv = site.data.cv.cv %}
+      {% if cv %}
+        <div class="card mt-3 p-3">
+          <h3 class="card-title font-weight-medium">Contact Information</h3>
+          <table class="table table-cv table-sm table-borderless">
+            {% if cv.name %}
+              <tr>
+                <td class="p-1 pr-2 font-weight-bold"><b>Name</b></td>
+                <td class="p-1 pl-2 font-weight-light">{{ cv.name }}</td>
+              </tr>
+            {% endif %}
+            {% if cv.email %}
+              <tr>
+                <td class="p-1 pr-2 font-weight-bold"><b>Email</b></td>
+                <td class="p-1 pl-2 font-weight-light">{{ cv.email }}</td>
+              </tr>
+            {% endif %}
+            {% if cv.website %}
+              <tr>
+                <td class="p-1 pr-2 font-weight-bold"><b>Website</b></td>
+                <td class="p-1 pl-2 font-weight-light">
+                  <a href="{{ cv.website }}" target="_blank">{{ cv.website }}</a>
+                </td>
+              </tr>
+            {% endif %}
+          </table>
+        </div>
+
+        {% for section_pair in cv.sections %}
+          {% assign section_title = section_pair[0] %}
+          {% assign entries = section_pair[1] %}
+          {% assign first = entries | first %}
+
+          <a class="anchor" id="{{ section_title | slugify }}"></a>
+          <div class="card mt-3 p-3">
+            <h3 class="card-title font-weight-medium">{{ section_title }}</h3>
+            <div>
+              {% if first.institution %}
+                {% assign entries = entries | al_cv_sort_by_date %}
+                {% include cv/education.liquid %}
+              {% elsif first.company or first.position %}
+                {% assign entries = entries | al_cv_sort_by_date %}
+                {% include cv/experience.liquid %}
+              {% elsif first.authors %}
+                {% include cv/publications.liquid %}
+              {% elsif first.name %}
+                {% include cv/awards.liquid %}
+              {% else %}
+                {% for entry in entries %}
+                  {% if entry.bullet %}
+                    <ul class="card-text font-weight-light list-group list-group-flush">
+                      <li class="list-group-item">{{ entry.bullet | markdownify | remove: '<p>' | remove: '</p>' }}</li>
+                    </ul>
+                  {% elsif entry.label %}
+                    <div class="card-text font-weight-light">
+                      <strong>{{ entry.label }}:</strong> {{ entry.details }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No CV data found. Please configure RenderCV data in _data/cv.yml.</p>
+      {% endif %}
+    </div>
+  </article>
+</div>

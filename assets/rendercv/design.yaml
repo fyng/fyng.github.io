@@ -40,6 +40,9 @@ design:
     bold:
       name: false
       section_titles: false
+  # _data/classic/Header.j2.typ overrides the header layout: name and headline on the
+  # left; email and social networks as linked icons on the right, location and
+  # languages beneath them. The `connections` settings below no longer apply.
   header:
     alignment: left
     space_below_name: 0.45cm
@@ -57,7 +60,12 @@ design:
     show_time_spans_in: []
     space_between_regular_entries: 0.7em
   entries:
-    date_and_location_width: 3.6cm
+    date_and_location_width: 2.1cm
   templates:
     footer: "*NAME · PAGE_NUMBER/TOTAL_PAGES*"
     top_note: "*Updated CURRENT_DATE*"
+    # Start and end on separate lines keeps the date column narrow, so descriptions get the width.
+    date_range: "START_DATE –\nEND_DATE"
+    # Title and its summary run on as one paragraph (presentations, teaching).
+    normal_entry:
+      main_column: "**NAME** SUMMARY\nHIGHLIGHTS"
